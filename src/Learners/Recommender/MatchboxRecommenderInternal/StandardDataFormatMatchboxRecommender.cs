@@ -1140,7 +1140,14 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
                 if (deserializedVersion == CustomSerializationVersion)
                 {
-                    this.indexedEntitySet = new IndexedSet<TEntity>(reader);
+                    try
+                    {
+                        this.indexedEntitySet = new IndexedSet<TEntity>(reader);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new ArgumentException($"Could not deserialize indexed items. You may need to customise the IWriter/IReader implementation to support '{typeof(TEntity).FullName}'.", e);
+                    }
                 }
             }
 
@@ -1206,7 +1213,14 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             public void SaveForwardCompatible(IWriter writer)
             {
                 writer.Write(CustomSerializationVersion);
-                this.indexedEntitySet.SaveForwardCompatible(writer);
+                try
+                {
+                    this.indexedEntitySet.SaveForwardCompatible(writer);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException($"Could not serialize indexed items. You may need to customise the IWriter/IReader implementation to support '{typeof(TEntity).FullName}'.", e);
+                }
             }
         }
 

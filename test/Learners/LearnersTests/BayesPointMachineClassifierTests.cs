@@ -551,13 +551,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
                 this.denseNativeTrainingData, 
                 this.denseNativePredictionData,
                 this.expectedPredictiveBernoulliDistributions,
                 this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -851,13 +852,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.expectedPredictiveBernoulliDistributions,
                 this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -1110,13 +1112,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.expectedPredictiveDiscreteDistributions,
                 this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -1392,13 +1395,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.expectedPredictiveDiscreteDistributions,
                 this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -1650,13 +1654,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -1882,13 +1887,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -2105,13 +2111,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.expectedPredictiveDiscreteStandardDistributions,
                 this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -2347,13 +2354,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.expectedPredictiveDiscreteStandardDistributions,
                 this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -2600,13 +2608,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -2870,13 +2879,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -3130,13 +3140,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -3413,13 +3424,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -3624,13 +3636,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -3857,13 +3870,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -4081,13 +4095,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -4324,13 +4339,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -5028,12 +5044,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
         /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
         private static void TestRegressionSerialization<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier,
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BayesPointMachineClassifierPredictionSettings<TLabel>> classifier,
             TInstanceSource trainingData,
             TInstanceSource testData,
             IEnumerable<TLabelDistribution> expectedLabelDistributions,
             IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
-            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction,
+            Func<string, IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BayesPointMachineClassifierPredictionSettings<TLabel>>> load)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             const string TrainedFileName = "trainedClassifier.bin";
@@ -5042,13 +5059,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
 
-            classifier.Save(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName);
             classifier.Train(trainingData);
-            classifier.Save(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName);
 
             // Deserialize and test
-            var trainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(TrainedFileName);
-            var untrainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(UntrainedFileName);
+            var trainedClassifier = load(TrainedFileName);
+            var untrainedClassifier = load(UntrainedFileName);
 
             untrainedClassifier.Train(trainingData);
 

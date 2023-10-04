@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             BayesPointMachineClassifierModuleUtilities.WriteDataSetInfo(testSet);            
 
             var classifier =
-                BayesPointMachineClassifier.LoadMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string>(modelFile, Mappings.Classifier);
 
             // Predict labels
             var predictions = classifier.PredictDistribution(testSet);

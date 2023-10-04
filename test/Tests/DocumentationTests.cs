@@ -1452,25 +1452,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine(engine.Infer(mean));
         }
 
-#if NETFRAMEWORK
-        internal void BinarySerializationExample()
-        {
-            Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
-            BinaryFormatter serializer = new BinaryFormatter();
-            // write to disk
-            using (FileStream stream = new FileStream("temp.bin", FileMode.Create))
-            {
-                serializer.Serialize(stream, d);
-            }
-            // read from disk
-            using (FileStream stream = new FileStream("temp.bin", FileMode.Open))
-            {
-                Dirichlet d2 = (Dirichlet)serializer.Deserialize(stream);
-                Console.WriteLine(d2);
-            }
-        }
-#endif
-
         internal void XmlSerializationExample()
         {
             Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);

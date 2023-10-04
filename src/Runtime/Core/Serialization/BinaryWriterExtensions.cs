@@ -6,41 +6,17 @@ namespace Microsoft.ML.Probabilistic.Serialization
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     using Microsoft.ML.Probabilistic.Distributions;
 
     using GaussianMatrix = Distributions.DistributionRefArray<Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>, double[]>;
 
     /// <summary>
-    /// Provides extension methods for <see cref="IWriter"/>.
+    /// Provides extension methods for <see cref="IReader"/>.
     /// </summary>
     public static class BinaryWriterExtensions
     {
-        /// <summary>
-        /// Writes the specified object in binary to the stream.
-        /// </summary>
-        /// <param name="writer">The binary writer.</param>
-        /// <param name="obj">The object to write to the stream.</param>
-        public static void WriteObject(this BinaryWriter writer, object obj)
-        {
-            if (writer == null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-
-            byte[] array = ObjectToByteArray(obj);
-            writer.Write(array.Length);
-            writer.Write(array);
-        }
-
         /// <summary>
         /// Writes the specified <see cref="Guid"/> in binary to the stream.
         /// </summary>
@@ -198,26 +174,5 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 writer.Write(element);
             }
         }
-
-        #region Helper methods
-
-        /// <summary>
-        /// Converts an object to a byte array.
-        /// </summary>
-        /// <param name="obj">The object to convert.</param>
-        /// <returns>The byte array of the specified object.</returns>
-        private static byte[] ObjectToByteArray(object obj)
-        {
-            Debug.Assert(obj != null, "The object must not be null.");
-
-            using (var memoryStream = new MemoryStream())
-            {
-                var binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(memoryStream, obj);
-                return memoryStream.ToArray();
-            }
-        }
-
-        #endregion
     }
 }

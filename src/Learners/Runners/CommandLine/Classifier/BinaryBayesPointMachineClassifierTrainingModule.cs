@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 Console.WriteLine("Log evidence = {0,10:0.0000}", classifier.LogModelEvidence);
             }
 
-            classifier.Save(modelFile);
+            classifier.SaveForwardCompatible(modelFile);
 
             return true;
         }

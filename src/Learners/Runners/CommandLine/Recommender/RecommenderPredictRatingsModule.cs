@@ -35,8 +35,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             }
 
             RecommenderDataset testDataset = RecommenderDataset.Load(datasetFile);
-            
-            var trainedModel = MatchboxRecommender.Load<RecommenderDataset, User, Item, RatingDistribution, DummyFeatureSource>(trainedModelFile);
+            var trainedModel = MatchboxRecommender.LoadBackwardCompatible<RecommenderDataset, RatedUserItem, User, Item, int, DummyFeatureSource>(trainedModelFile, Mappings.StarRatingRecommender);
             IDictionary<User, IDictionary<Item, int>> predictions = trainedModel.Predict(testDataset);
             RecommenderPersistenceUtils.SavePredictedRatings(predictionsFile, predictions);
 

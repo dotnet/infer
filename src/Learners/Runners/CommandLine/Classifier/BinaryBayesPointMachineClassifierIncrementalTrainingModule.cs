@@ -40,13 +40,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             var trainingSet = ClassifierPersistenceUtils.LoadLabeledFeatureValues(trainingSetFile);
             BayesPointMachineClassifierModuleUtilities.WriteDataSetInfo(trainingSet);
 
-            var classifier = BayesPointMachineClassifier.LoadBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(inputModelFile);
+            var classifier = BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string>(inputModelFile, Mappings.Classifier);
             classifier.Settings.Training.IterationCount = iterationCount;
             classifier.Settings.Training.BatchCount = batchCount;
 
             classifier.TrainIncremental(trainingSet);
 
-            classifier.Save(outputModelFile);
+            classifier.SaveForwardCompatible(outputModelFile);
 
             return true;
         }

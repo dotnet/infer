@@ -4,7 +4,11 @@
 
 namespace Microsoft.ML.Probabilistic.Learners.Runners
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.ML.Probabilistic.Learners.Mappings;
+    using Microsoft.ML.Probabilistic.Math;
 
     /// <summary>
     /// A command-line module to sample weights from a trained binary Bayes point machine classifier model.
@@ -31,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             }
 
             var classifier =
-                BayesPointMachineClassifier.LoadBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string>(modelFile, Mappings.Classifier);
 
             BayesPointMachineClassifierModuleUtilities.SampleWeights(classifier, samplesFile);
 

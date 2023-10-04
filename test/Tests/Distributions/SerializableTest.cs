@@ -82,18 +82,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
-#if NETFRAMEWORK
-        [Fact]
-        public void BinaryFormatterTest()
-        {
-            var mc = new MyClass();
-            mc.Initialize(skipStringDistributions: true);
-
-            var mc2 = CloneBinaryFormatter(mc);
-            mc.AssertEqualTo(mc2);
-        }
-#endif
-
         [Fact]
         public void JsonNetSerializerTest()
         {
@@ -104,7 +92,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             mc.AssertEqualTo(mc2);
         }
 
-#if NETFRAMEWORK
         [Fact]
         public void VectorSerializeTests()
         {
@@ -113,16 +100,20 @@ namespace Microsoft.ML.Probabilistic.Tests
             Vector vdense = Vector.FromArray(fromArray);
             Vector vsparse = Vector.FromArray(fromArray, Sparsity.Sparse);
             Vector vapprox = Vector.FromArray(fromArray, approxSparsity);
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter serializer = new BinaryFormatter();
-            serializer.Serialize(stream, vdense);
-            serializer.Serialize(stream, vsparse);
-            serializer.Serialize(stream, vapprox);
+            MemoryStream vdenseStream = new MemoryStream();
+            MemoryStream vsparseStream = new MemoryStream();
+            MemoryStream vapproxStream = new MemoryStream();
+            var serializer = new DataContractSerializer(typeof(Vector), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            serializer.WriteObject(vdenseStream, vdense);
+            serializer.WriteObject(vsparseStream, vsparse);
+            serializer.WriteObject(vapproxStream, vapprox);
 
-            stream.Position = 0;
-            Vector vdense2 = (Vector) serializer.Deserialize(stream);
-            SparseVector vsparse2 = (SparseVector) serializer.Deserialize(stream);
-            ApproximateSparseVector vapprox2 = (ApproximateSparseVector) serializer.Deserialize(stream);
+            vdenseStream.Position = 0;
+            vsparseStream.Position = 0;
+            vapproxStream.Position = 0;
+            Vector vdense2 = (Vector)serializer.ReadObject(vdenseStream);
+            SparseVector vsparse2 = (SparseVector)serializer.ReadObject(vsparseStream);
+            ApproximateSparseVector vapprox2 = (ApproximateSparseVector)serializer.ReadObject(vapproxStream);
 
             Assert.Equal(6, vdense2.Count);
             for (int i = 0; i < fromArray.Length; i++) Assert.Equal(fromArray[i], vdense2[i]);
@@ -142,7 +133,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(3, vapprox2.SparseValues.Count);
             Assert.True(vapprox2.HasCommonElements);
         }
-#endif
 
         [DataContract]
         [Serializable]
@@ -305,19 +295,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return (T)ser.ReadObject(ms);
             }
         }
-
-#if NETFRAMEWORK
-        private static T CloneBinaryFormatter<T>(T obj)
-        {
-            var bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                ms.Position = 0;
-                return (T)bf.Deserialize(ms);
-            }
-        }
-#endif
 
         private static T CloneJsonNet<T>(T obj)
         {

@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             }
 
             var classifier =
-                BayesPointMachineClassifier.LoadMulticlassClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string, IDictionary<string, double>>(modelFile);
+                BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier<IList<LabeledFeatureValues>, LabeledFeatureValues, IList<LabelDistribution>, string>(modelFile, Mappings.Classifier);
 
             BayesPointMachineClassifierModuleUtilities.SampleWeights(classifier, samplesFile);
 

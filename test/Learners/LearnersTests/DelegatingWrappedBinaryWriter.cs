@@ -2,18 +2,27 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace Microsoft.ML.Probabilistic.Serialization
+namespace Microsoft.ML.Probabilistic.Learners.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.ML.Probabilistic.Serialization;
 
-    public class WrappedBinaryWriter : IWriter, IDisposable
+    internal class DelegatingWrappedBinaryWriter : IWriter, IDisposable
     {
-        BinaryWriter binaryWriter;
+        readonly BinaryWriter binaryWriter;
+        readonly Func<object, string> writeObject;
 
-        public WrappedBinaryWriter(BinaryWriter binaryWriter)
+        public DelegatingWrappedBinaryWriter(
+            BinaryWriter binaryWriter,
+            Func<object, string> writeObject)
         {
             this.binaryWriter = binaryWriter;
+            this.writeObject = writeObject;
         }
 
         public void Dispose()
@@ -48,7 +57,8 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
         public void WriteObject(object value)
         {
-            throw new NotImplementedException();
+            var objectToWrite = writeObject(value);
+            Write(objectToWrite);
         }
     }
 }
