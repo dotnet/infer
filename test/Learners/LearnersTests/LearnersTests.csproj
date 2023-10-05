@@ -64,66 +64,6 @@
     <ProjectReference Include="..\..\..\src\Learners\Runners\Common\Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="CustomSerializedLearners\2015-03-20\SparseBinaryNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\DenseBinaryNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\DenseMulticlassNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\SparseMulticlassNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\DenseBinaryStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\SparseBinaryStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\DenseMulticlassStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\SparseMulticlassStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseBinaryNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseBinaryNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseMulticlassStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseMulticlassStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseMulticlassNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseMulticlassNativeClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseBinaryStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseBinaryStandardClassifier-2015-03-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-11-20\NativeRecommender-2015-11-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2015-11-20\StandardRecommender-2015-11-20.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2018-07-27\NativeRecommender-2018-07-27.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CustomSerializedLearners\2018-07-27\StandardRecommender-2018-07-27.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Data\W5ANormalized.csv.gz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

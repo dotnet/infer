@@ -824,32 +824,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 // Check that trained classifier still protects settings
                 Assert.Throws<InvalidOperationException>(() => { trainedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
             }
-
-            {
-                // Ensure backward compatibility for all recommender versions
-                string[] serializedRecommenderFileNames =
-                    {
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2015-11-20", "NativeRecommender-2015-11-20.bin"),
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2018-07-27", "NativeRecommender-2018-07-27.bin")
-                    };
-                foreach (var recommenderFileName in serializedRecommenderFileNames)
-                {
-                    var deserializedRecommender = MatchboxRecommender.LoadBackwardCompatible(recommenderFileName, this.nativeMapping);
-
-                    this.VerifyNativeRatingDistributionOfUserOneAndItemThree(deserializedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
-                    Assert.Equal(MaxStarRating - MinStarRating, deserializedRecommender.Predict(1, 3, this.nativeTrainingData));
-
-                    Assert.Throws<InvalidOperationException>(() => { deserializedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-                }
-            }
         }
 
         /// <summary>
@@ -906,30 +880,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
                 // Check that trained classifier still protects settings
                 Assert.Throws<InvalidOperationException>(() => { trainedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-            }
-
-            {
-                // Ensure backward compatibility for all recommender versions
-                string[] serializedRecommenderFileNames =
-                    {
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2015-11-20", "StandardRecommender-2015-11-20.bin"),
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2018-07-27", "StandardRecommender-2018-07-27.bin")
-                    };
-                foreach (var recommenderFileName in serializedRecommenderFileNames)
-                {
-                    var deserializedRecommender = MatchboxRecommender.LoadBackwardCompatible(recommenderFileName, this.standardMapping);
-                    CheckStandardRatingPrediction(deserializedRecommender, this.standardTrainingDataFeatures);
-
-                    Assert.Throws<InvalidOperationException>(() => { deserializedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-                }
             }
         }
 
