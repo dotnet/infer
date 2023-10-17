@@ -9,6 +9,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
+    using System.Collections.Generic;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/doc/*'/>
     [Quality(QualityBand.Preview)]
@@ -290,6 +292,118 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Rprop"]/message_doc[@name="MarginalAverageConditional(Gaussian, Gaussian, RpropBufferData, Gaussian)"]/*'/>
         public static Gaussian MarginalAverageConditional([IgnoreDependency] Gaussian use, [IgnoreDependency] Gaussian def, [RequiredArgument] RpropBufferData buffer, Gaussian result)
+        {
+            result.Point = buffer.nextPoint;
+            return result;
+        }
+    }
+
+    public class VectorRpropBufferData
+    {
+        public Vector nextPoint;
+        Vector prevPoint;
+
+        // unit vector
+        Vector prevDeriv;
+        double stepsize = 1e-4;
+        const double stepUp = 1.2;
+        Vector velocity;
+        
+        public void SetNextPoint(Vector currPoint, Vector currDeriv)
+        {
+            // Make currDeriv a unit vector
+            currDeriv /= Math.Sqrt(currDeriv.Inner(currDeriv));
+            bool useVelocity = false;
+            if (useVelocity)
+            {
+                if (prevDeriv != null)
+                {
+                    velocity.Scale(stepUp);
+                    Vector u = currDeriv - prevDeriv;
+                    if (u.Inner(currDeriv) * u.Inner(prevDeriv) < 0)
+                    {
+                        u /= Math.Sqrt(u.Inner(u));
+                        // a*(v - u(u'v)) -0.5 u(u'v)
+                        velocity -= u * u.Inner(velocity) * (stepUp + 0.5);
+                    }
+                }
+                else
+                {
+                    velocity = currDeriv * 1e-4;
+                }
+                nextPoint = currPoint + velocity;
+            }
+            else
+            {
+                if (prevDeriv != null)
+                {
+                    double gg = currDeriv.Inner(prevDeriv);
+                    if (gg < 0)
+                    {
+                        // Gradient has reversed direction.
+                        // Stop at the halfway point.
+                        //   (x + s*g)'g0 = (x0 + x)'g0/2
+                        double xg0 = prevDeriv.Inner(prevPoint);
+                        double xg = prevDeriv.Inner(currPoint);
+                        stepsize = (xg0 - xg) / 2 / gg;
+                    }
+                    else
+                    {
+                        // Gradient has the same direction.  Accelerate.
+                        stepsize *= stepUp;
+                    }
+                }
+                nextPoint = currPoint + currDeriv * stepsize;
+            }
+            prevPoint = currPoint;
+            prevDeriv = currDeriv;
+        }
+    }
+
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
+    [Buffers("buffer")]
+    [Quality(QualityBand.Preview)]
+    public class VariablePointOp_RpropVectorGaussian : VariablePointOpBase
+    {
+        [Skip]
+        public static VectorRpropBufferData BufferInit()
+        {
+            return new VectorRpropBufferData();
+        }
+
+        // must compute new marginal here since Marginal method cannot modify buffer
+        // Buffer must be called once per iter, so cannot be fresh or have triggers
+        [SkipIfAllUniform]
+        public static VectorRpropBufferData Buffer([NoInit] VectorGaussian use, VectorGaussian def, VectorGaussian to_marginal, VectorRpropBufferData buffer)
+        {
+            var currDist = use * def;
+            if (currDist.IsPointMass)
+            {
+                buffer.nextPoint = currDist.Point;
+                return buffer;
+            }
+            // cannot use buffer.nextPoint as currPoint since Marginal could be initialized by user
+            Vector currPoint;
+            if (to_marginal.IsPointMass)
+            {
+                currPoint = to_marginal.Point.Clone();
+            }
+            else
+            {
+                currPoint = currDist.GetMean();
+            }
+            buffer.SetNextPoint(currPoint, GetDerivative(currDist, currPoint));
+            return buffer;
+        }
+
+        public static Vector GetDerivative(VectorGaussian dist, Vector point)
+        {
+            // deriv of -0.5*prec*x^2+pm*x
+            // is -prec*x + pm
+            return dist.MeanTimesPrecision - dist.Precision * point;
+        }
+
+        public static VectorGaussian MarginalAverageConditional([IgnoreDependency] VectorGaussian use, [IgnoreDependency] VectorGaussian def, [RequiredArgument] VectorRpropBufferData buffer, VectorGaussian result)
         {
             result.Point = buffer.nextPoint;
             return result;

@@ -84,7 +84,7 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new EpTests().PointEstimateTest();
+            new EpTests().PointEstimateTest2();
 
             //new OperatorTests().GammaUpper_IsDecreasingInX();
 

@@ -4148,7 +4148,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        // TODO: throw if InitialisationAffectsSchedule is not true
         [Fact]
         public void PointEstimateTest()
         {
@@ -4162,27 +4161,108 @@ namespace Microsoft.ML.Probabilistic.Tests
             //Variable.ConstrainTrue(xNoisy > 0);
             //x.InitialiseTo(Gaussian.PointMass(1));
             //y.InitialiseTo(Gaussian.PointMass(10));
-            x.InitialiseTo(Gaussian.PointMass(-0.0588738));
-            y.InitialiseTo(Gaussian.PointMass(-0.0584));
+            double xInit = -0.0588738;
+            double yInit = -0.0584;
+            x.InitialiseTo(Gaussian.PointMass(xInit));
+            y.InitialiseTo(Gaussian.PointMass(yInit));
             x.AddAttribute(new PointEstimate());
             y.AddAttribute(new PointEstimate());
+            x.AddAttribute(QueryTypes.Marginal);
+            y.AddAttribute(QueryTypes.Marginal);
+            x.AddAttribute(QueryTypes.MarginalDividedByPrior);
+            y.AddAttribute(QueryTypes.MarginalDividedByPrior);
 
             InferenceEngine engine = new InferenceEngine();
             engine.ShowProgress = false;
-            engine.Compiler.UseExistingSourceFiles = true;
+            //engine.Compiler.UseExistingSourceFiles = true;
             engine.Compiler.InitialisationAffectsSchedule = true;
             engine.Compiler.GivePriorityTo(typeof(GaussianFromMeanAndVarianceOp_PointVariance));
             double xPrevious = double.NaN, yPrevious = double.NaN;
-            List<string> lines = new List<string>();
-            for (int iter = 1; iter <= 20000; iter++)
+            List<string> lines = new List<string>()
+            {
+                $"{xInit}, {yInit}"
+            };
+            for (int iter = 1; iter <= 50000; iter++)
             {
                 engine.NumberOfIterations = iter;
                 double xActual = engine.Infer<Gaussian>(x).Point;
                 double yActual = engine.Infer<Gaussian>(y).Point;
-                Trace.WriteLine($"{iter} {xActual} {yActual}");
+                Gaussian xB = engine.Infer<Gaussian>(x, QueryTypes.MarginalDividedByPrior);
+                Gaussian yB = engine.Infer<Gaussian>(y, QueryTypes.MarginalDividedByPrior);
+                double xDeriv, xDeriv2;
+                (xB * Gaussian.FromMeanAndVariance(0, 1)).GetDerivatives(xActual, out xDeriv, out xDeriv2);
+                double yDeriv, yDeriv2;
+                (yB * Gaussian.FromMeanAndVariance(0, 1)).GetDerivatives(yActual, out yDeriv, out yDeriv2);
+                double gradientNorm = System.Math.Sqrt(xDeriv * xDeriv + yDeriv * yDeriv);
+                Trace.WriteLine($"{iter} {xActual} {yActual} {gradientNorm}");
                 string line = $"{xActual}, {yActual}";
                 lines.Add(line);
-                if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
+                //if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
+                if (gradientNorm < 1e-8)
+                {
+                    Trace.WriteLine($"Converged after {iter} iterations");
+                    break;
+                }
+                xPrevious = xActual;
+                yPrevious = yActual;
+            }
+            System.IO.File.WriteAllLines("points.csv", lines);
+        }
+
+        [Fact]
+        public void PointEstimateTest2()
+        {
+            Range dim = new Range(2);
+            var array = Variable.Array<double>(dim);
+            array.Name = nameof(array);
+            array[0] = Variable.GaussianFromMeanAndVariance(0, 1);
+            array[1] = Variable.GaussianFromMeanAndVariance(0, 1);
+            var vector = Variable.Vector(array).Named("vector");
+            var x = Variable.GetItem(vector, 0).Named("x");
+            var y = Variable.GetItem(vector, 1).Named("y");
+            Variable.ConstrainEqualRandom(x, new Gaussian(-0.03945, 0.03732));
+            Variable.ConstrainEqualRandom(y, new Gaussian(-0.08798, 0.07365));
+            var xNoisy = Variable.GaussianFromMeanAndVariance(x, 1e-8);
+            xNoisy.Name = nameof(xNoisy);
+            Variable.ConstrainTrue(xNoisy < y);
+            //Variable.ConstrainTrue(xNoisy > 0);
+            //x.InitialiseTo(Gaussian.PointMass(1));
+            //y.InitialiseTo(Gaussian.PointMass(10));
+            double xInit = -0.0588738;
+            double yInit = -0.0584;
+            //x.InitialiseTo(Gaussian.PointMass(xInit));
+            //y.InitialiseTo(Gaussian.PointMass(yInit));
+            //x.AddAttribute(new PointEstimate());
+            //y.AddAttribute(new PointEstimate());
+            vector.InitialiseTo(VectorGaussian.PointMass(Vector.FromArray(xInit, yInit)));
+            vector.AddAttribute(new PointEstimate());
+            vector.AddAttribute(QueryTypes.Marginal);
+            vector.AddAttribute(QueryTypes.MarginalDividedByPrior);
+            VectorGaussian vectorPrior = VectorGaussian.FromMeanAndVariance(Vector.FromArray(0, 0), PositiveDefiniteMatrix.IdentityScaledBy(2, 1));
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+            engine.Compiler.InitialisationAffectsSchedule = true;
+            engine.Compiler.GivePriorityTo(typeof(GaussianFromMeanAndVarianceOp_PointVariance));
+            double xPrevious = double.NaN, yPrevious = double.NaN;
+            List<string> lines = new List<string>()
+            {
+                $"{xInit}, {yInit}"
+            };
+            for (int iter = 1; iter <= 20000; iter++)
+            {
+                engine.NumberOfIterations = iter;
+                var vectorActual = engine.Infer<VectorGaussian>(vector).Point;
+                double xActual = vectorActual[0];
+                double yActual = vectorActual[1];
+                VectorGaussian arrayB = engine.Infer<VectorGaussian>(vector, QueryTypes.MarginalDividedByPrior);
+                Vector gradient = VariablePointOp_RpropVectorGaussian.GetDerivative(arrayB*vectorPrior, vectorActual);
+                double gradientNorm = System.Math.Sqrt(gradient.Inner(gradient));
+                Trace.WriteLine($"{iter} {xActual} {yActual} {gradientNorm}");
+                string line = $"{xActual}, {yActual}";
+                lines.Add(line);
+                //if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
+                if (gradientNorm < 1e-8)
                 {
                     Trace.WriteLine($"Converged after {iter} iterations");
                     break;

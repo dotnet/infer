@@ -152,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (!context.InputAttributes.Has<InitialiseTo>(ivd))
                 {
-                    Error($"{ivd.Name} has {nameof(PointEstimate)} but is not initialised");
+                    //Error($"{ivd.Name} has {nameof(PointEstimate)} but is not initialised");
                 }
                 if (!compiler.InitialisationAffectsSchedule)
                 {
