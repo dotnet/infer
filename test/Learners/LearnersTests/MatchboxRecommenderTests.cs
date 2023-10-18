@@ -724,17 +724,17 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 var recommender = this.CreateStandardDataFormatMatchboxRecommender();
                 recommender.Settings.Training.BatchCount = BatchCount;
 
-                MatchboxRecommender.SaveRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(recommender, NotTrainedFileName, SerializeUserOrItem);
+                recommender.Save<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(NotTrainedFileName, SerializeUserOrItem);
                 recommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
-                MatchboxRecommender.SaveRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(recommender, TrainedFileName, SerializeUserOrItem);
+                recommender.Save<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(TrainedFileName, SerializeUserOrItem);
 
                 CheckStandardRatingPrediction(recommender, this.standardTrainingDataFeatures);
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = MatchboxRecommender.LoadRecommender<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(TrainedFileName, DeserializeUserOrItem, this.standardMapping);
-                var notTrainedRecommender = MatchboxRecommender.LoadRecommender<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(NotTrainedFileName, DeserializeUserOrItem, this.standardMapping);
+                var trainedRecommender = MatchboxRecommender.Load<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(TrainedFileName, DeserializeUserOrItem, this.standardMapping);
+                var notTrainedRecommender = MatchboxRecommender.Load<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(NotTrainedFileName, DeserializeUserOrItem, this.standardMapping);
 
                 notTrainedRecommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
 

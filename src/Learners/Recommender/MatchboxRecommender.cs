@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="recommender">The recommender.</param>
         /// <param name="fileName">The filename</param>
         /// <param name="formatObject">Used to format objects of type TUser or TItem.</param>
-        public static void SaveRecommender<TInstanceSource, TUser, TItem, TRating, TFeatureSource>(this IMatchboxRecommender<TInstanceSource, TUser, TItem, TRating, TFeatureSource> recommender, string fileName, Func<object, string> formatObject)
+        public static void Save<TInstanceSource, TUser, TItem, TRating, TFeatureSource>(this IMatchboxRecommender<TInstanceSource, TUser, TItem, TRating, TFeatureSource> recommender, string fileName, Func<object, string> formatObject)
         {
             using (Stream stream = File.Open(fileName, FileMode.Create))
             {
@@ -105,7 +105,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="deserializeItemOrUser">Deserialize a TItem or TUser.</param>
         /// <param name="mapping">The mapping to use.</param>
         /// <returns>The loaded matchbox recommender.</returns>
-        public static IMatchboxRecommender<TInstanceSource, TUser, TItem, RatingDistribution, TFeatureSource> LoadRecommender<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(string fileName, DelegatingWrappedBinaryReader.ParseDelegate deserializeItemOrUser, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
+        public static IMatchboxRecommender<TInstanceSource, TUser, TItem, RatingDistribution, TFeatureSource> Load<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(string fileName, DelegatingWrappedBinaryReader.ParseDelegate deserializeItemOrUser, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
         {
             using (Stream stream = File.Open(fileName, FileMode.Open))
             {
