@@ -675,24 +675,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
         }
 
-        class DeserializeUserOrItem : DelegatingWrappedBinaryReader.IObjectReader
-        {
-            public T ReadObject<T>(string str)
-            {
-                if (typeof(T) == typeof(User))
-                {
-                    return (T)(object)new User { Id = str };
-                }
-
-                if (typeof(T) == typeof(Item))
-                {
-                    return (T)(object)new Item { Id = str };
-                }
-
-                throw new InvalidOperationException($"Cannot deserialize type: {typeof(T)}");
-            }
-        }
-
         /// <summary>
         /// Tests serialization/deserialization of the recommender operating on the standard data format.
         /// </summary>
@@ -722,51 +704,42 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 throw new InvalidOperationException($"Cannot serialize type: {obj?.GetType()}");
             }
 
+            object DeserializeUserOrItem(string str, Type type)
+            {
+                if (type == typeof(User))
+                {
+                    return new User { Id = str };
+                }
+
+                if (type == typeof(Item))
+                {
+                    return new Item { Id = str };
+                }
+
+                throw new InvalidOperationException($"Cannot deserialize type: {type}");
+            }
+
             // Train and serialize
             {
                 var recommender = this.CreateStandardDataFormatMatchboxRecommender();
                 recommender.Settings.Training.BatchCount = BatchCount;
 
-                SaveRecommender(NotTrainedFileName, recommender);
+                MatchboxRecommender.SaveRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(recommender, NotTrainedFileName, SerializeUserOrItem);
                 recommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
-                SaveRecommender(TrainedFileName, recommender);
+                MatchboxRecommender.SaveRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(recommender, TrainedFileName, SerializeUserOrItem);
 
                 CheckStandardRatingPrediction(recommender, this.standardTrainingDataFeatures);
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = LoadRecommender(TrainedFileName);
-                var notTrainedRecommender = LoadRecommender(NotTrainedFileName);
+                var trainedRecommender = MatchboxRecommender.LoadRecommender<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(TrainedFileName, DeserializeUserOrItem, this.standardMapping);
+                var notTrainedRecommender = MatchboxRecommender.LoadRecommender<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(NotTrainedFileName, DeserializeUserOrItem, this.standardMapping);
 
                 notTrainedRecommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
 
                 CheckStandardRatingPrediction(trainedRecommender, this.standardTrainingDataFeatures);
                 CheckStandardRatingPrediction(notTrainedRecommender, this.standardTrainingDataFeatures);
-            }
-
-            // Cannot just call recommender.SaveForwardCompatible(TrainedFileName); because we need to specially handle Users and Items.
-            void SaveRecommender(string fileName, IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> recommender)
-            {
-                using (Stream stream = File.Open(fileName, FileMode.Create))
-                {
-                    using (var writer = new DelegatingWrappedBinaryWriter(new BinaryWriter(stream, Encoding.UTF8, true), SerializeUserOrItem))
-                    {
-                        recommender.SaveForwardCompatible(writer);
-                    }
-                }
-            }
-
-            // Cannot just call MatchboxRecommender.LoadBackwardCompatible<StandardDataset, Tuple< User, Item, int?>, User, Item, int, FeatureProvider>(TrainedFileName, this.standardMapping); because we need to specially handle Users and Items.
-            IMatchboxRecommender<StandardDataset, User, Item, RatingDistribution, FeatureProvider> LoadRecommender(string fileName)
-            {
-                using (Stream stream = File.Open(fileName, FileMode.Open))
-                {
-                    using (var reader = new DelegatingWrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true), new DeserializeUserOrItem()))
-                    {
-                        return MatchboxRecommender.LoadBackwardCompatible<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(reader, this.standardMapping);
-                    }
-                }
             }
         }
 
