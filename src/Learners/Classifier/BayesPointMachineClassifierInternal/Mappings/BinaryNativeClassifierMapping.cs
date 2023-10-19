@@ -82,8 +82,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                     }
                     else
                     {
-                        this.positiveClassLabel = reader.ReadObject<TLabel>();
-                        this.negativeClassLabel = reader.ReadObject<TLabel>();
+                        throw new NotSupportedException($"Cannot deserialize version '{deserializedVersion}'.");
                     }
                 }
             }
@@ -159,16 +158,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
                 writer.Write(this.areClassLabelsSet);
                 if (this.areClassLabelsSet)
                 {
-                    if (CustomSerializationVersion >= 2 && string.Empty.Length == 0)
-                    {
-                        writer.Write(this.StandardMapping.LabelToString(this.positiveClassLabel));
-                        writer.Write(this.StandardMapping.LabelToString(this.negativeClassLabel));
-                    }
-                    else
-                    {
-                        writer.WriteObject(this.positiveClassLabel);
-                        writer.WriteObject(this.negativeClassLabel);
-                    }
+                    writer.Write(this.StandardMapping.LabelToString(this.positiveClassLabel));
+                    writer.Write(this.StandardMapping.LabelToString(this.negativeClassLabel));
                 }
             }
         }

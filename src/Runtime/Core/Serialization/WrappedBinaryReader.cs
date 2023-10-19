@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
         public T ReadObject<T>()
         {
-            return binaryReader.ReadObject<T>();
+            throw new NotImplementedException();
         }
 
         public string ReadString()

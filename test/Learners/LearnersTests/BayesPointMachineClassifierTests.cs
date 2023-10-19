@@ -527,21 +527,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveBernoulliDistributions,
                 this.expectedIncrementalPredictiveBernoulliDistributions,
                 CheckPredictedBernoulliDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "DenseBinaryNativeClassifier-2015-03-20.bin") };
-            CheckBinaryNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.expectedPredictiveBernoulliDistributions,
-                this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -551,13 +536,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
                 this.denseNativeTrainingData, 
                 this.denseNativePredictionData,
                 this.expectedPredictiveBernoulliDistributions,
                 this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -827,21 +813,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveBernoulliDistributions,
                 this.expectedIncrementalPredictiveBernoulliDistributions,
                 CheckPredictedBernoulliDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "SparseBinaryNativeClassifier-2015-03-20.bin") };
-            CheckBinaryNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryNativeMapping,
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.expectedPredictiveBernoulliDistributions,
-                this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -851,13 +822,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.expectedPredictiveBernoulliDistributions,
                 this.expectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -1086,21 +1058,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveDiscreteDistributions,
                 this.expectedIncrementalPredictiveDiscreteDistributions,
                 CheckPredictedDiscreteDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "DenseMulticlassNativeClassifier-2015-03-20.bin") };
-            CheckMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.expectedPredictiveDiscreteDistributions,
-                this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -1110,13 +1067,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.expectedPredictiveDiscreteDistributions,
                 this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -1368,21 +1326,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveDiscreteDistributions,
                 this.expectedIncrementalPredictiveDiscreteDistributions,
                 CheckPredictedDiscreteDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "SparseMulticlassNativeClassifier-2015-03-20.bin") };
-            CheckMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassNativeMapping,
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.expectedPredictiveDiscreteDistributions,
-                this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -1392,13 +1335,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.expectedPredictiveDiscreteDistributions,
                 this.expectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -1578,21 +1522,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
                 CheckPredictedBernoulliDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "DenseBinaryStandardClassifier-2015-03-20.bin") };
-            CheckBinaryStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.expectedPredictiveBernoulliStandardDistributions,
-                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -1650,13 +1579,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -1858,21 +1788,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
                 CheckPredictedBernoulliDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "SparseBinaryStandardClassifier-2015-03-20.bin") };
-            CheckBinaryStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryStandardMapping,
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.expectedPredictiveBernoulliStandardDistributions,
-                this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -1882,13 +1797,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.expectedPredictiveBernoulliStandardDistributions,
                 this.expectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -2081,21 +1997,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveDiscreteStandardDistributions,
                 this.expectedIncrementalPredictiveDiscreteStandardDistributions,
                 CheckPredictedDiscreteDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "DenseMulticlassStandardClassifier-2015-03-20.bin") };
-            CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.expectedPredictiveDiscreteStandardDistributions,
-                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -2105,13 +2006,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void DenseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.expectedPredictiveDiscreteStandardDistributions,
                 this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -2323,21 +2225,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.expectedPredictiveDiscreteStandardDistributions,
                 this.expectedIncrementalPredictiveDiscreteStandardDistributions,
                 CheckPredictedDiscreteDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "SparseMulticlassStandardClassifier-2015-03-20.bin") };
-            CheckMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassStandardMapping,
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.expectedPredictiveDiscreteStandardDistributions,
-                this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -2347,13 +2234,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void SparseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, BayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.expectedPredictiveDiscreteStandardDistributions,
                 this.expectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -2576,21 +2464,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
                 CheckPredictedBernoulliDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseBinaryNativeClassifier-2015-03-20.bin") };
-            CheckGaussianPriorBinaryNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -2600,13 +2473,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -2846,21 +2720,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
                 CheckPredictedBernoulliDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseBinaryNativeClassifier-2015-03-20.bin") };
-            CheckGaussianPriorBinaryNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryNativeMapping,
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -2870,13 +2729,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseBinaryNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, bool, Bernoulli, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliDistributions,
-                CheckPredictedBernoulliDistributionNativeTestingDataset);
+                CheckPredictedBernoulliDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryNativeMapping));
         }
 
         /// <summary>
@@ -3106,21 +2966,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
                 CheckPredictedDiscreteDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseMulticlassNativeClassifier-2015-03-20.bin") };
-            CheckGaussianPriorMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassNativeMapping,
-                this.denseNativeTrainingData,
-                this.denseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -3130,13 +2975,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
                 this.denseNativeTrainingData,
                 this.denseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -3389,21 +3235,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
                 CheckPredictedDiscreteDistributionNativeTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseMulticlassNativeClassifier-2015-03-20.bin") };
-            CheckGaussianPriorMulticlassNativeClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassNativeMapping,
-                this.sparseNativeTrainingData,
-                this.sparseNativePredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
         }
 
         /// <summary>
@@ -3413,13 +3244,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseMulticlassNativeSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<NativeDataset, int, NativeDataset, int, Discrete, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassNativeMapping),
                 this.sparseNativeTrainingData,
                 this.sparseNativePredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteDistributions,
-                CheckPredictedDiscreteDistributionNativeTestingDataset);
+                CheckPredictedDiscreteDistributionNativeTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassNativeMapping));
         }
 
         /// <summary>
@@ -3600,21 +3432,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
                 CheckPredictedBernoulliDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseBinaryStandardClassifier-2015-03-20.bin") };
-            CheckGaussianPriorBinaryStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -3624,13 +3441,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -3833,21 +3651,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
                 CheckPredictedBernoulliDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseBinaryStandardClassifier-2015-03-20.bin") };
-            CheckGaussianPriorBinaryStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.binaryStandardMapping,
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -3857,13 +3660,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseBinaryStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorBinaryClassifier(this.binaryStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveBernoulliStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveBernoulliStandardDistributions,
-                CheckPredictedBernoulliDistributionStandardTestingDataset);
+                CheckPredictedBernoulliDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorBinaryClassifier(filename, this.binaryStandardMapping));
         }
 
         /// <summary>
@@ -4057,21 +3861,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
                 CheckPredictedDiscreteDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorDenseMulticlassStandardClassifier-2015-03-20.bin") };
-            CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassStandardMapping,
-                this.denseStandardTrainingData,
-                this.denseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -4081,13 +3870,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianDenseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.denseStandardTrainingData,
                 this.denseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -4300,21 +4090,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
                 CheckPredictedDiscreteDistributionStandardTestingDataset);
-
-            // Ensure backward compatibility for all classifier versions
-            string[] serializedClassifiers = { Path.Combine(
-#if NETCOREAPP
-                Path.GetDirectoryName(typeof(BayesPointMachineClassifierTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                "CustomSerializedLearners", "2015-03-20", "GaussianPriorSparseMulticlassStandardClassifier-2015-03-20.bin") };
-            CheckGaussianPriorMulticlassStandardClassiferCustomSerializationBackwardCompatibility(
-                serializedClassifiers,
-                this.multiclassStandardMapping,
-                this.sparseStandardTrainingData,
-                this.sparseStandardPredictionData,
-                this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
-                this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
         }
 
         /// <summary>
@@ -4324,13 +4099,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         [Fact]
         public void GaussianSparseMulticlassStandardSerializationRegressionTest()
         {
-            TestRegressionSerialization(
+            TestRegressionSerialization<StandardDataset, string, StandardDataset, string, IDictionary<string, double>, GaussianBayesPointMachineClassifierTrainingSettings>(
                 BayesPointMachineClassifier.CreateGaussianPriorMulticlassClassifier(this.multiclassStandardMapping),
                 this.sparseStandardTrainingData,
                 this.sparseStandardPredictionData,
                 this.gaussianPriorExpectedPredictiveDiscreteStandardDistributions,
                 this.gaussianPriorExpectedIncrementalPredictiveDiscreteStandardDistributions,
-                CheckPredictedDiscreteDistributionStandardTestingDataset);
+                CheckPredictedDiscreteDistributionStandardTestingDataset,
+                filename => BayesPointMachineClassifier.LoadBackwardCompatibleGaussianPriorMulticlassClassifier(filename, this.multiclassStandardMapping));
         }
 
         /// <summary>
@@ -5028,12 +4804,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// <param name="expectedIncrementalLabelDistributions">The expected label distributions for incremental training.</param>
         /// <param name="checkPrediction">A method which asserts the equality of expected and predicted distributions.</param>
         private static void TestRegressionSerialization<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings>(
-            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>> classifier,
+            IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BayesPointMachineClassifierPredictionSettings<TLabel>> classifier,
             TInstanceSource trainingData,
             TInstanceSource testData,
             IEnumerable<TLabelDistribution> expectedLabelDistributions,
             IEnumerable<TLabelDistribution> expectedIncrementalLabelDistributions,
-            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction)
+            Action<IEnumerable<TLabelDistribution>, IEnumerable<TLabelDistribution>, double> checkPrediction,
+            Func<string, IBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, BayesPointMachineClassifierTrainingSettings, BayesPointMachineClassifierPredictionSettings<TLabel>>> load)
             where TTrainingSettings : BayesPointMachineClassifierTrainingSettings
         {
             const string TrainedFileName = "trainedClassifier.bin";
@@ -5042,13 +4819,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Train and serialize
             classifier.Settings.Training.IterationCount = IterationCount;
 
-            classifier.Save(UntrainedFileName);
+            classifier.SaveForwardCompatible(UntrainedFileName);
             classifier.Train(trainingData);
-            classifier.Save(TrainedFileName);
+            classifier.SaveForwardCompatible(TrainedFileName);
 
             // Deserialize and test
-            var trainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(TrainedFileName);
-            var untrainedClassifier = BayesPointMachineClassifier.Load<TInstanceSource, TInstance, TLabelSource, TLabel, TLabelDistribution, TTrainingSettings, IBayesPointMachineClassifierPredictionSettings<TLabel>>(UntrainedFileName);
+            var trainedClassifier = load(TrainedFileName);
+            var untrainedClassifier = load(UntrainedFileName);
 
             untrainedClassifier.Train(trainingData);
 

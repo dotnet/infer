@@ -5,10 +5,8 @@
 namespace Microsoft.ML.Probabilistic.Serialization
 {
     using System;
-    using System.Diagnostics;
     using System.IO;
     using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     using Microsoft.ML.Probabilistic.Distributions;
 
@@ -88,21 +86,6 @@ namespace Microsoft.ML.Probabilistic.Serialization
             }
 
             return deserializedVersion;
-        }
-
-        /// <summary>
-        /// Reads an object from the reader of a binary stream.
-        /// </summary>
-        /// <param name="reader">The reader of the binary stream.</param>
-        /// <returns>The object constructed from the binary stream.</returns>
-        public static T ReadObject<T>(this BinaryReader reader)
-        {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return ByteArrayToObject<T>(reader.ReadByteArray());
         }
 
         /// <summary>
@@ -260,27 +243,5 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
             return new GammaArray(length, i => ReadGamma(reader));
         }
-
-        #region Helper methods
-
-        /// <summary>
-        /// Converts a byte array to an object.
-        /// </summary>
-        /// <param name="array">The byte array to convert.</param>
-        /// <returns>The object for the specified byte array.</returns>
-        private static T ByteArrayToObject<T>(byte[] array)
-        {
-            Debug.Assert(array != null, "The array must not be null.");
-
-            using (var memoryStream = new MemoryStream())
-            {
-                var binaryFormatter = new BinaryFormatter();
-                memoryStream.Write(array, 0, array.Length);
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                return (T)binaryFormatter.Deserialize(memoryStream);
-            }
-        }
-
-        #endregion
     }
 }

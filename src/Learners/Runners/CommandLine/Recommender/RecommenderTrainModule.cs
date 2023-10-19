@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             recommender.Settings.Training.UseUserFeatures = useUserFeatures;
             recommender.Settings.Training.UseItemFeatures = useItemFeatures;
             recommender.Train(trainingDataset);
-            recommender.Save(trainedModelFile);
+            recommender.SaveForwardCompatible(trainedModelFile);
 
             return true;
         }

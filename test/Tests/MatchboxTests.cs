@@ -13,13 +13,14 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Runtime.Serialization;
     using Xunit;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Models;
     using Microsoft.ML.Probabilistic.Utilities;
+    using Microsoft.ML.Probabilistic.Serialization;
     using Assert = Xunit.Assert;
     using GaussianArray = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>;
     using GaussianArrayArray =
@@ -679,20 +680,18 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
-#if NETFRAMEWORK
                 if (false)
                 {
-                    BinaryFormatter serializer = new BinaryFormatter();
+                    var serializer = new DataContractSerializer(typeof(DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
                     using (var writer = new FileStream("userTraits.bin", FileMode.Create))
                     {
-                        serializer.Serialize(writer, engine.Infer(userTraits));
+                        serializer.WriteObject(writer, (DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>)engine.Infer(userTraits));
                     }
                     using (var writer = new FileStream("itemTraits.bin", FileMode.Create))
                     {
-                        serializer.Serialize(writer, engine.Infer(itemTraits));
+                        serializer.WriteObject(writer, (DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>)engine.Infer(itemTraits));
                     }
                 }
-#endif
 
                 // test resetting inference
                 if (engine.Compiler.ReturnCopies)

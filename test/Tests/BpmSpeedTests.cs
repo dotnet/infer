@@ -6,12 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Models.Attributes;
+using Microsoft.ML.Probabilistic.Serialization;
 using Range = Microsoft.ML.Probabilistic.Models.Range;
 
 namespace Microsoft.ML.Probabilistic.Tests
@@ -136,21 +137,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             writer.Dispose();
-#if NETFRAMEWORK
-            // In the .NET 5.0 BinaryFormatter is obsolete
-            // and would produce errors. This test code should be migrated. 
-            // See https://aka.ms/binaryformatter
 
-            if (true)
+            using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
             {
-                BinaryFormatter serializer = new BinaryFormatter();
-                using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
-                {
-                    serializer.Serialize(stream, train.wPost);
-                    serializer.Serialize(stream, train.biasPost);
-                }
+                var gaussianArraySerializer = new DataContractSerializer(typeof(GaussianArray), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                gaussianArraySerializer.WriteObject(stream, train.wPost);
+
+                var gaussianSerializer = new DataContractSerializer(typeof(Gaussian), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                gaussianSerializer.WriteObject(stream, train.biasPost);
             }
-#endif
         }
 
         // (0.5,0.5):
@@ -170,16 +165,16 @@ namespace Microsoft.ML.Probabilistic.Tests
 #pragma warning restore 162
 #endif
 
-#if NETFRAMEWORK
         public static void Rcv1Test2()
         {
             GaussianArray wPost;
             Gaussian biasPost;
-            BinaryFormatter serializer = new BinaryFormatter();
             using (Stream stream = File.OpenRead(Path.Combine(dataFolder, "weights.bin")))
             {
-                wPost = (GaussianArray)serializer.Deserialize(stream);
-                biasPost = (Gaussian)serializer.Deserialize(stream);
+                var gaussianArraySerializer = new DataContractSerializer(typeof(GaussianArray), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                wPost = (GaussianArray)gaussianArraySerializer.ReadObject(stream);
+                var gaussianSerializer = new DataContractSerializer(typeof(Gaussian), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                biasPost = (Gaussian)gaussianSerializer.ReadObject(stream);
             }
             if (true)
             {
@@ -197,9 +192,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 if (yPred != instance.label) errors++;
                 count++;
             }
-            Console.WriteLine("error rate = {0} = {1}/{2}", (double) errors/count, errors, count);
+            Console.WriteLine("error rate = {0} = {1}/{2}", (double)errors/count, errors, count);
         }
-#endif
 
         public static void Rcv1Test3()
         {

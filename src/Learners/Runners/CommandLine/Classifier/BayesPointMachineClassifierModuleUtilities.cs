@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             // Save trained model
             if (!string.IsNullOrEmpty(modelFileName))
             {
-                classifier.Save(modelFileName);
+                classifier.SaveForwardCompatible(modelFileName);
             }
         }
 

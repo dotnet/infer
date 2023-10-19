@@ -68,44 +68,53 @@ namespace Microsoft.ML.Probabilistic.Learners
 
         #endregion
 
-        #region .NET binary deserialization
-        
-        /// <summary>
-        /// Deserializes a Matchbox recommender from a file.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TUser">The type of a user.</typeparam>
-        /// <typeparam name="TItem">The type of an item.</typeparam>
-        /// <typeparam name="TRatingDistribution">The type of a distribution over ratings.</typeparam>
-        /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
-        /// <param name="fileName">The file name.</param>
-        /// <returns>The deserialized recommender object.</returns>
-        public static IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>
-            Load<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>(string fileName)
-        {
-            return Utilities.Load<IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>>(fileName);
-        }
-        
-        /// <summary>
-        /// Deserializes a recommender from a given stream and formatter.
-        /// </summary>
-        /// <typeparam name="TInstanceSource">The type of a source of instances.</typeparam>
-        /// <typeparam name="TUser">The type of a user.</typeparam>
-        /// <typeparam name="TItem">The type of an item.</typeparam>
-        /// <typeparam name="TRatingDistribution">The type of a distribution over ratings.</typeparam>
-        /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
-        /// <param name="stream">The stream.</param>
-        /// <param name="formatter">The formatter.</param>
-        /// <returns>The deserialized recommender object.</returns>
-        public static IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>
-            Load<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>(Stream stream, IFormatter formatter)
-        {
-            return Utilities.Load<IMatchboxRecommender<TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource>>(stream, formatter);
-        }
-
-        #endregion
-
         #region Custom binary deserialization
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of an instance source.</typeparam>
+        /// <typeparam name="TUser">The type of a user.</typeparam>
+        /// <typeparam name="TItem">The type of an item.</typeparam>
+        /// <typeparam name="TRating">The type of a rating.</typeparam>
+        /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
+        /// <param name="recommender">The recommender.</param>
+        /// <param name="fileName">The filename</param>
+        /// <param name="formatObject">Used to format objects of type TUser or TItem.</param>
+        public static void Save<TInstanceSource, TUser, TItem, TRating, TFeatureSource>(this IMatchboxRecommender<TInstanceSource, TUser, TItem, TRating, TFeatureSource> recommender, string fileName, Func<object, string> formatObject)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Create))
+            {
+                using (var writer = new DelegatingWrappedBinaryWriter(new BinaryWriter(stream, Encoding.UTF8, true), formatObject))
+                {
+                    recommender.SaveForwardCompatible(writer);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TInstanceSource">The type of an instance source.</typeparam>
+        /// <typeparam name="TInstance">The type of an instance.</typeparam>
+        /// <typeparam name="TUser">The type of a user.</typeparam>
+        /// <typeparam name="TItem">The type of an item.</typeparam>
+        /// <typeparam name="TRating">The type of a rating.</typeparam>
+        /// <typeparam name="TFeatureSource">The type of a feature source.</typeparam>
+        /// <param name="fileName">The filename.</param>
+        /// <param name="deserializeItemOrUser">Deserialize a TItem or TUser.</param>
+        /// <param name="mapping">The mapping to use.</param>
+        /// <returns>The loaded matchbox recommender.</returns>
+        public static IMatchboxRecommender<TInstanceSource, TUser, TItem, RatingDistribution, TFeatureSource> Load<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(string fileName, DelegatingWrappedBinaryReader.ParseDelegate deserializeItemOrUser, IStarRatingRecommenderMapping<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector> mapping)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Open))
+            {
+                using (var reader = new DelegatingWrappedBinaryReader(new BinaryReader(stream, Encoding.UTF8, true), deserializeItemOrUser))
+                {
+                    return MatchboxRecommender.LoadBackwardCompatible<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(reader, mapping);
+                }
+            }
+        }
 
         /// <summary>
         /// Deserializes a Matchbox recommender from a reader to a binary stream and a native data format mapping.

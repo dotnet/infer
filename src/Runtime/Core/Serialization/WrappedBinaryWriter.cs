@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
         public void WriteObject(object value)
         {
-            binaryWriter.WriteObject(value);
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Text;
 
     using Xunit;
     using Assert = AssertHelper;
@@ -20,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using Microsoft.ML.Probabilistic.Serialization;
 
     using RatingDistribution = System.Collections.Generic.IDictionary<int, double>;
-    
+
     /// <summary>
     /// Tests for Matchbox recommender.
     /// </summary>
@@ -654,15 +655,15 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Train and serialize
             {
                 var recommender = this.CreateNativeDataFormatMatchboxRecommender();
-                recommender.Save(NotTrainedFileName);
+                recommender.SaveForwardCompatible(NotTrainedFileName);
                 recommender.Train(this.nativeTrainingData, this.nativeTrainingData);
-                recommender.Save(TrainedFileName);
+                recommender.SaveForwardCompatible(TrainedFileName);
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = MatchboxRecommender.Load<NativeDataset, int, int, Discrete, NativeDataset>(TrainedFileName);
-                var notTrainedRecommender = MatchboxRecommender.Load<NativeDataset, int, int, Discrete, NativeDataset>(NotTrainedFileName);
+                var trainedRecommender = MatchboxRecommender.LoadBackwardCompatible<NativeDataset, NativeDataset>(TrainedFileName, this.nativeMapping);
+                var notTrainedRecommender = MatchboxRecommender.LoadBackwardCompatible<NativeDataset, NativeDataset>(NotTrainedFileName, this.nativeMapping);
 
                 notTrainedRecommender.Train(this.nativeTrainingData, this.nativeTrainingData);
 
@@ -688,21 +689,52 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             this.standardTrainingDataFeatures.UserFeatures.Add(User.WithId("u2"), Vector.FromArray(4, 2, 1.3, 1.2, 2));
             this.standardTrainingDataFeatures.ItemFeatures.Add(Item.WithId("i4"), Vector.FromArray(6.3, 0.5));
 
+            string SerializeUserOrItem(object obj)
+            {
+                if (obj is User user)
+                {
+                    return user.Id;
+                }
+
+                if (obj is Item item)
+                {
+                    return item.Id;
+                }
+
+                throw new InvalidOperationException($"Cannot serialize type: {obj?.GetType()}");
+            }
+
+            object DeserializeUserOrItem(string str, Type type)
+            {
+                if (type == typeof(User))
+                {
+                    return new User { Id = str };
+                }
+
+                if (type == typeof(Item))
+                {
+                    return new Item { Id = str };
+                }
+
+                throw new InvalidOperationException($"Cannot deserialize type: {type}");
+            }
+
             // Train and serialize
             {
                 var recommender = this.CreateStandardDataFormatMatchboxRecommender();
                 recommender.Settings.Training.BatchCount = BatchCount;
-                recommender.Save(NotTrainedFileName);
+
+                recommender.Save<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(NotTrainedFileName, SerializeUserOrItem);
                 recommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
-                recommender.Save(TrainedFileName);
+                recommender.Save<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(TrainedFileName, SerializeUserOrItem);
 
                 CheckStandardRatingPrediction(recommender, this.standardTrainingDataFeatures);
             }
 
             // Deserialize and test
             {
-                var trainedRecommender = MatchboxRecommender.Load<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(TrainedFileName);
-                var notTrainedRecommender = MatchboxRecommender.Load<StandardDataset, User, Item, RatingDistribution, FeatureProvider>(NotTrainedFileName);
+                var trainedRecommender = MatchboxRecommender.Load<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(TrainedFileName, DeserializeUserOrItem, this.standardMapping);
+                var notTrainedRecommender = MatchboxRecommender.Load<StandardDataset, Tuple<User, Item, int?>, User, Item, int, FeatureProvider>(NotTrainedFileName, DeserializeUserOrItem, this.standardMapping);
 
                 notTrainedRecommender.Train(this.standardTrainingData, this.standardTrainingDataFeatures);
 
@@ -758,32 +790,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
                 // Check that trained classifier still protects settings
                 Assert.Throws<InvalidOperationException>(() => { trainedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-            }
-
-            {
-                // Ensure backward compatibility for all recommender versions
-                string[] serializedRecommenderFileNames =
-                    {
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2015-11-20", "NativeRecommender-2015-11-20.bin"),
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2018-07-27", "NativeRecommender-2018-07-27.bin")
-                    };
-                foreach (var recommenderFileName in serializedRecommenderFileNames)
-                {
-                    var deserializedRecommender = MatchboxRecommender.LoadBackwardCompatible(recommenderFileName, this.nativeMapping);
-
-                    this.VerifyNativeRatingDistributionOfUserOneAndItemThree(deserializedRecommender.PredictDistribution(1, 3, this.nativeTrainingData));
-                    Assert.Equal(MaxStarRating - MinStarRating, deserializedRecommender.Predict(1, 3, this.nativeTrainingData));
-
-                    Assert.Throws<InvalidOperationException>(() => { deserializedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-                }
             }
         }
 
@@ -841,30 +847,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
                 // Check that trained classifier still protects settings
                 Assert.Throws<InvalidOperationException>(() => { trainedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-            }
-
-            {
-                // Ensure backward compatibility for all recommender versions
-                string[] serializedRecommenderFileNames =
-                    {
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2015-11-20", "StandardRecommender-2015-11-20.bin"),
-                        Path.Combine(
-#if NETCOREAPP
-                            Path.GetDirectoryName(typeof(MatchboxRecommenderTests).Assembly.Location), // work dir is not the one with Microsoft.ML.Probabilistic.Learners.Tests.dll on netcore and neither is .Location on netfull
-#endif
-                            "CustomSerializedLearners", "2018-07-27", "StandardRecommender-2018-07-27.bin")
-                    };
-                foreach (var recommenderFileName in serializedRecommenderFileNames)
-                {
-                    var deserializedRecommender = MatchboxRecommender.LoadBackwardCompatible(recommenderFileName, this.standardMapping);
-                    CheckStandardRatingPrediction(deserializedRecommender, this.standardTrainingDataFeatures);
-
-                    Assert.Throws<InvalidOperationException>(() => { deserializedRecommender.Settings.Training.IterationCount = 10; }); // Guarded: Throw
-                }
             }
         }
 
