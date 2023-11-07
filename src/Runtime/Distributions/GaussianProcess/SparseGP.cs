@@ -12,11 +12,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System.Collections.Generic;
     using System.Text;
     using System.Runtime.Serialization;
-    using Math;
-    using Utilities;
     using Factors.Attributes;
-    using Microsoft.ML.Probabilistic.Serialization;
-    using Microsoft.ML.Probabilistic.Distributions.Kernels;
+    using Kernels;
+    using Math;
+    using Serialization;
+    using Utilities;
 
     #region Rank 1 potential
 

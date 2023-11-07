@@ -11,7 +11,6 @@ using System.Xml;
 
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
-using Microsoft.ML.Probabilistic.Serialization;
 using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Crowdsourcing

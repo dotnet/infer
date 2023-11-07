@@ -20,7 +20,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Models;
     using Microsoft.ML.Probabilistic.Utilities;
-    using Microsoft.ML.Probabilistic.Serialization;
     using Assert = Xunit.Assert;
     using GaussianArray = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>;
     using GaussianArrayArray =

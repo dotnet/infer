@@ -9,7 +9,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
-using Microsoft.ML.Probabilistic.Serialization;
 
 namespace Microsoft.ML.Probabilistic.Collections
 {
@@ -162,11 +161,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         private DataContractSerializer GetSerializer() =>
             new DataContractSerializer(
-                typeof(T),
-                new DataContractSerializerSettings
-                {
-                    //DataContractResolver = new InferDataContractResolver()
-                });
+                typeof(T));
 
         internal void StoreItem(int index, T value)
         {

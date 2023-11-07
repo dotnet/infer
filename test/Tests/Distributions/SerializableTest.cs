@@ -7,11 +7,9 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
 
     using Xunit;
 
@@ -23,7 +21,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Distributions.Kernels;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
-    using Microsoft.ML.Probabilistic.Serialization;
 
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 
@@ -289,7 +286,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             var ser = new DataContractSerializer(typeof(T), new DataContractSerializerSettings
             {
-                /*DataContractResolver = new InferDataContractResolver()*/
                 KnownTypes = new[]
                 {
                     // Not possible to add knowntypes to IDistribution (because it is an interface).

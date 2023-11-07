@@ -9,7 +9,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
     using Math;
     using Factors.Attributes;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Base type for all distributions that doesn't specify over which domain distribution is defined.
