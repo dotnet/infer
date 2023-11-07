@@ -306,6 +306,10 @@ namespace Microsoft.ML.Probabilistic.Math
     /// the sparsity, and most operations can be done via this general base class which will handle sparsity correctly.</remarks>
     [Serializable]
     [DataContract]
+    [KnownType(typeof(DenseVector))]
+    [KnownType(typeof(SparseVector))]
+    [KnownType(typeof(ApproximateSparseVector))]
+    [KnownType(typeof(PiecewiseVector))]
     public abstract class Vector : IList<double>, IReadOnlyList<double>, SettableTo<Vector>, ICloneable,
                                    CanSetAllElementsTo<double>, SettableToPower<Vector>, SettableToProduct<Vector>,
                                    SettableToWeightedSum<Vector>

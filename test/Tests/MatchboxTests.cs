@@ -682,7 +682,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 if (false)
                 {
-                    var serializer = new DataContractSerializer(typeof(DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                    var serializer = new DataContractSerializer(typeof(DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
                     using (var writer = new FileStream("userTraits.bin", FileMode.Create))
                     {
                         serializer.WriteObject(writer, (DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>)engine.Infer(userTraits));

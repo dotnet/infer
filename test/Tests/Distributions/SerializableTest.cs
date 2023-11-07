@@ -103,7 +103,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             MemoryStream vdenseStream = new MemoryStream();
             MemoryStream vsparseStream = new MemoryStream();
             MemoryStream vapproxStream = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(Vector), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            var serializer = new DataContractSerializer(typeof(Vector), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
             serializer.WriteObject(vdenseStream, vdense);
             serializer.WriteObject(vsparseStream, vsparse);
             serializer.WriteObject(vapproxStream, vapprox);
@@ -237,7 +237,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         .Append(StringDistribution.OneOf("b", "ccc")).Append("dddd");
                     this.stringDistribution2 = new StringDistribution();
                     this.stringDistribution2.SetToProduct(StringDistribution.OneOf("a", "b"),
-                        StringDistribution.OneOf("b", "c"));
+                    StringDistribution.OneOf("b", "c"));
                 }
             }
 
@@ -287,7 +287,20 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private static T CloneDataContract<T>(T obj)
         {
-            var ser = new DataContractSerializer(typeof(T), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });            
+            var ser = new DataContractSerializer(typeof(T), new DataContractSerializerSettings
+            {
+                /*DataContractResolver = new InferDataContractResolver()*/
+                KnownTypes = new[]
+                {
+                    // Not possible to add knowntypes to IDistribution (because it is an interface).
+                    typeof(DistributionStructArray<Gaussian, double>),
+                    typeof(DistributionRefArray<VectorGaussian, Vector>),
+                    typeof(DistributionStructArray2D<Gaussian, double>),
+                    typeof(DistributionRefArray2D<VectorGaussian, Vector>),
+                    typeof(DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>),
+                    typeof(DistributionRefArray<DistributionRefArray<VectorGaussian, Vector>,Vector[]>),
+                }
+            });
             using (var ms = new MemoryStream())
             {
                 ser.WriteObject(ms, obj);

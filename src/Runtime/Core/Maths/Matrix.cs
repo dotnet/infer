@@ -19,6 +19,7 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </summary>
     [Serializable]
     [DataContract]
+    [KnownType(typeof(PositiveDefiniteMatrix))]
     public class Matrix : IList<double>, IReadOnlyList<double>, ICloneable, SettableTo<Matrix>, CanSetAllElementsTo<double>
     {
 #pragma warning disable 1591

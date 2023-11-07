@@ -35,6 +35,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </para></remarks>
     [Serializable]
     [DataContract]
+    [KnownType(typeof(DenseVector))]
     [Quality(QualityBand.Mature)]
     public class Dirichlet : IDistribution<Vector>,
                              SettableTo<Dirichlet>, SettableToProduct<Dirichlet>, Diffable, SettableToUniform,

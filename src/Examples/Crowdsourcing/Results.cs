@@ -432,7 +432,7 @@ namespace Crowdsourcing
             if (serialize)
             {
                 var type = IsCommunityModel ? typeof(CommunityModel.Posteriors) : typeof(BCC.Posteriors);
-                DataContractSerializer serializer = new DataContractSerializer(type, new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+                DataContractSerializer serializer = new DataContractSerializer(type, new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
                 string posteriorsFileName = modelName + ".xml";
                 using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(posteriorsFileName, FileMode.Create)))
                 {
@@ -456,7 +456,7 @@ namespace Crowdsourcing
             ntwp.BackgroundLabelProb = BackgroundLabelProb;
             ntwp.CommunityProb = CommunityProb;
             ntwp.CommunityScoreMatrix = CommunityScoreMatrix;
-            DataContractSerializer serializer = new DataContractSerializer(typeof(NonTaskWorkerParameters), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            DataContractSerializer serializer = new DataContractSerializer(typeof(NonTaskWorkerParameters), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
             using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(fileName, FileMode.Create)))
             {
                 serializer.WriteObject(writer, ntwp);
@@ -472,7 +472,7 @@ namespace Crowdsourcing
         CommunityModel.Posteriors DeserializeCommunityPosteriors(string fileName, int numCommunities)
         {
             CommunityModel.Posteriors cbccPriors = new CommunityModel.Posteriors();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(NonTaskWorkerParameters), new DataContractSerializerSettings { DataContractResolver = new InferDataContractResolver() });
+            DataContractSerializer serializer = new DataContractSerializer(typeof(NonTaskWorkerParameters), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
             using (XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new FileStream(fileName, FileMode.Open), new XmlDictionaryReaderQuotas()))
             {
                 var ntwp = (NonTaskWorkerParameters)serializer.ReadObject(reader);

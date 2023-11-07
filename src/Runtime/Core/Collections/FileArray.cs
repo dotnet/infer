@@ -165,7 +165,7 @@ namespace Microsoft.ML.Probabilistic.Collections
                 typeof(T),
                 new DataContractSerializerSettings
                 {
-                    DataContractResolver = new InferDataContractResolver()
+                    //DataContractResolver = new InferDataContractResolver()
                 });
 
         internal void StoreItem(int index, T value)

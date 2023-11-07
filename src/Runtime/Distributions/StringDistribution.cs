@@ -12,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Automata;
     using Utilities;
     using Factors.Attributes;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Represents a distribution over strings that uses a weighted finite state automaton as the underlying weight function.
@@ -19,6 +20,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
     [Serializable]
     [DataContract]
     [Quality(QualityBand.Preview)]
+    [KnownType(typeof(StringDictionaryWeightFunction))]
+    [KnownType(typeof(SortedList<string, Weight>))]
+    [KnownType(typeof(WeightFunctions<string, char, ImmutableDiscreteChar, StringManipulator, StringAutomaton>.PointMassWeightFunction))]
     public class StringDistribution :
         SequenceDistribution<
             string,

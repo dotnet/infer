@@ -16,6 +16,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Utilities;
     using Factors.Attributes;
     using Microsoft.ML.Probabilistic.Serialization;
+    using Microsoft.ML.Probabilistic.Distributions.Kernels;
 
     #region Rank 1 potential
 
@@ -161,6 +162,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
     [Serializable]
     [Quality(QualityBand.Preview)]
     [DataContract]
+    [KnownType(typeof(GaussianProcess))]
+    [KnownType(typeof(SquaredExponential))]
+    [KnownType(typeof(ConstantFunction))]
     public class SparseGP :
         IGaussianProcess,
         IDistribution<IFunction>,
