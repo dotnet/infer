@@ -1456,7 +1456,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Dirichlet d = new Dirichlet(3.0, 1.0, 2.0);
             string fileName = "temp.xml";
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Dirichlet), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Dirichlet));
             // write to disk
             using (XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(new FileStream(fileName, FileMode.Create)))
             {

@@ -103,7 +103,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             MemoryStream vdenseStream = new MemoryStream();
             MemoryStream vsparseStream = new MemoryStream();
             MemoryStream vapproxStream = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(Vector), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
+            var serializer = new DataContractSerializer(typeof(Vector));
             serializer.WriteObject(vdenseStream, vdense);
             serializer.WriteObject(vsparseStream, vsparse);
             serializer.WriteObject(vapproxStream, vapprox);

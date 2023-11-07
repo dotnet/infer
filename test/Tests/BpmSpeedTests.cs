@@ -140,10 +140,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             using (Stream stream = File.Create(Path.Combine(dataFolder, "weights.bin")))
             {
-                var gaussianArraySerializer = new DataContractSerializer(typeof(GaussianArray), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
+                var gaussianArraySerializer = new DataContractSerializer(typeof(GaussianArray));
                 gaussianArraySerializer.WriteObject(stream, train.wPost);
 
-                var gaussianSerializer = new DataContractSerializer(typeof(Gaussian), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
+                var gaussianSerializer = new DataContractSerializer(typeof(Gaussian));
                 gaussianSerializer.WriteObject(stream, train.biasPost);
             }
         }
@@ -171,9 +171,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian biasPost;
             using (Stream stream = File.OpenRead(Path.Combine(dataFolder, "weights.bin")))
             {
-                var gaussianArraySerializer = new DataContractSerializer(typeof(GaussianArray), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
+                var gaussianArraySerializer = new DataContractSerializer(typeof(GaussianArray));
                 wPost = (GaussianArray)gaussianArraySerializer.ReadObject(stream);
-                var gaussianSerializer = new DataContractSerializer(typeof(Gaussian), new DataContractSerializerSettings { /*DataContractResolver = new InferDataContractResolver()*/ });
+                var gaussianSerializer = new DataContractSerializer(typeof(Gaussian));
                 biasPost = (Gaussian)gaussianSerializer.ReadObject(stream);
             }
             if (true)
