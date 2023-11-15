@@ -41,8 +41,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (iae.Expression is IArrayCreateExpression || iae.Expression is IObjectCreateExpression)
                 {
-                    string name = iae.Target.ToString();
-                    if (!name.Contains("_local") && !(iae.Target is IArrayIndexerExpression))
+                    string name;
+                    if (iae.Target is IVariableReferenceExpression ivre)
+                        name = ivre.Variable.Resolve().Name;
+                    else if (iae.Target is IVariableDeclarationExpression ivde)
+                        name = ivde.Variable.Name;
+                    else if (iae.Target is IFieldReferenceExpression ifre)
+                        name = ifre.Field.Name;
+                    else if (iae.Target is IPropertyReferenceExpression ipre)
+                        name = ipre.Property.Name;
+                    else
+                        name = null;
+                    if (name != null && !name.Contains("_local"))
                     {
                         var message = Builder.LiteralExpr("Allocating " + name);
                         var invoke = Builder.DelegateInvokeExpr();

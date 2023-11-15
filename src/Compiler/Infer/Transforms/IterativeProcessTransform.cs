@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        internal static bool debug;
+        internal static bool debug = true;
 
         // The algorithm instance 
         public IAlgorithm algorithm;
