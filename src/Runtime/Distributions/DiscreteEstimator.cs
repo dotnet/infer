@@ -38,12 +38,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The estimated distribution</returns>
         public Discrete GetDistribution(Discrete result)
         {
-            if (result == null) result = Distributions.Discrete.Uniform(NProb.Count);
+            if (result == null) result = Discrete.Uniform(NProb.Count);
             if (N > 0)
                 result.SetProbs(NProb*(1.0/N));
             else
                 result.SetToUniform();
             return result;
+        }
+
+        /// <summary>
+        /// Gets the maximum over all dimensions of the variance of the log probability.  Decreases as N increases.
+        /// </summary>
+        /// <returns></returns>
+        public double GetMaximumVarianceOfLog()
+        {
+            return 1.0 / NProb.Reduce(double.PositiveInfinity, (min, x) => x > 0 ? System.Math.Min(min, x) : min);
         }
 
         /// <summary>
