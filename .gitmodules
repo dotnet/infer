@@ -1,0 +1,3 @@
+[submodule "Pitchfork.TypeParsing"]
+	path = Pitchfork.TypeParsing
+	url = https://github.com/GrabYourPitchforks/Pitchfork.TypeParsing.git
