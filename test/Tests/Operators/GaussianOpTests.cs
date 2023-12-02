@@ -182,14 +182,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        internal void GetRootsTest()
+        [Fact]
+        public void GetRootsTest()
         {
             double[] coeffs = { -95.172, 66.429, -15.094, 1.1359 };
-            coeffs = new double[] { -1000, 0, -3000, 0, -3000, 0, -1000 };
+            //coeffs = new double[] { -1000, 0, -3000, 0, -3000, 0, -1000 };
             double[] rootsReal, rootsImag;
             GaussianOp_Slow.GetRoots(coeffs, out rootsReal, out rootsImag);
             Console.WriteLine("rootsReal = {0}", StringUtil.CollectionToString(rootsReal, " "));
             Console.WriteLine("rootsImag = {0}", StringUtil.CollectionToString(rootsImag, " "));
+            double[] rootsRealExpected = new double[] { 0.313719909680864, 0.19213449730936, 0.19213449730936 };
+            double[] rootsImagExpected = new double[] { 0, -0.0335941516159427, 0.0335941516159427 };
+            for (int i = 0; i < rootsRealExpected.Length; i++)
+            {
+                Assert.Equal(rootsRealExpected[i], rootsReal[i], 10);
+                Assert.Equal(rootsImagExpected[i], rootsImag[i], 10);
+            }
         }
 
         internal void GaussianOpQ_Timing()

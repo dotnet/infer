@@ -264,7 +264,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 sumX += x * fInvA;
                 sumX2 += x2 * fInvA;
             }
-            if (z == 0)
+            if (z < 1e-310)
             {
                 return GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
                 //throw new Exception("quadrature found zero mass");
