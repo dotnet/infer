@@ -59,6 +59,9 @@ namespace Microsoft.ML.Probabilistic.Serialization
             // first parse it to ensure that it is constructed from approved types.
             var mentionedTypes = GetMentionedTypes(typeName);
 
+            // If this list isn't long enough then users can add to KnownTypes any types
+            // they need. The exception thrown is very informative regarding which types are
+            // allowed.
             var allowedTypes = new List<Type>
             {
                 typeof(System.Char),
