@@ -5,6 +5,9 @@
 namespace Microsoft.ML.Probabilistic.Serialization
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Xml;
 
@@ -39,11 +42,278 @@ namespace Microsoft.ML.Probabilistic.Serialization
             var ty = knownTypeResolver.ResolveName(typeName, typeNamespace, declaredType, knownTypeResolver);
 
             if (ty != null) return ty;
+            
+            if (!typeNamespace.StartsWith(nsPrefix)) // Is this our namespace?
+            {
+                return null; // Cannot resolve.
+            }
 
-            if (typeNamespace.StartsWith(nsPrefix)) // Is this our namespace?
-                return Type.GetType($"{typeName}, {typeNamespace.Substring(nsPrefix.Length)}"); // If yes, try to load type
-            else
-                return null;  // If not, cannot resolve
+            // We limit the length of the type name we are willing to try to parse
+            // for security reasons.
+            if (typeName.Length > 10000)
+            {
+                throw new Exception("Type name exceeded maximum length");
+            }
+
+            // We avoid loading a type from a string for security reasons before we
+            // first parse it to ensure that it is constructed from approved types.
+            var mentionedTypes = GetMentionedTypes(typeName);
+
+            var allowedTypes = new List<Type>
+            {
+                typeof(System.Char),
+                typeof(System.Collections.Generic.SortedList<,>),
+                typeof(System.Double),
+                typeof(System.String),
+            };
+
+            // Add all types in Runtime
+            var runtimeTypes = Assembly
+                .GetExecutingAssembly()
+                .GetTypes();
+
+            allowedTypes.AddRange(runtimeTypes);
+
+            return ConstructTypeFromAllowedlist(mentionedTypes, allowedTypes);
+        }
+
+        internal class TypeId
+        {
+            public string Name { get; }
+            public TypeId[] Arguments { get; }
+            public bool IsArray { get; }
+
+            public TypeId(
+                string name,
+                TypeId[] arguments,
+                bool isArray)
+            {
+                Name  = name;
+                Arguments = arguments;
+                IsArray = isArray;
+            }
+        }
+
+        private static int ReadTypeNameExtension(string typeString, int cursor)
+        {
+            if (cursor == typeString.Length)
+            {
+                return cursor;
+            }
+
+            if (typeString[cursor] != ',')
+            {
+                return cursor;
+            }
+
+            while (true)
+            {
+
+                // If we reached the end of the string there is nothing following to read.
+                if (typeString.Length == cursor)
+                {
+                    return cursor;
+                }
+
+                // If we reached the typename delimiter there is nothing following to read.
+                if (typeString[cursor] == ']')
+                {
+                    return cursor;
+                }
+
+                cursor++;
+            }
+        }
+
+        private static (int cursor, bool isArray) ReadArrayMarker(string typeString, int cursor)
+        {
+            if (cursor == typeString.Length)
+            {
+                return (cursor, isArray: false);
+            }
+
+            if (typeString[cursor] != '[')
+            {
+                return (cursor, isArray: false);
+            }
+
+            if (cursor + 1 == typeString.Length)
+            {
+                throw new InvalidOperationException("Invalid type string");
+            }
+
+            if (typeString[cursor + 1] == ']')
+            {
+                return (cursor + 2, isArray: true);
+            }
+
+            return (cursor, isArray: false);
+        }
+
+        private static (int cursor, TypeId typeId) ReadTypeName(string typeString, int cursor)
+        {
+            // The format of a type name is
+            // Name[PossibleArgumentList][PossibleArrayMarker][PossibleExtension]
+            var startOfTypeName = cursor;
+
+            // First read the actual type name.
+            while (true)
+            {
+                if (typeString.Length < cursor)
+                {
+                    throw new InvalidOperationException("invalid type name.");
+                }
+
+                // If we reached the end of the string there is nothing following to read.
+                if (typeString.Length == cursor)
+                {
+                    break;
+                }
+
+                if (typeString[cursor] == '[' || typeString[cursor] == ',')
+                {
+                    break;
+                }
+
+                cursor++;
+            }
+
+            var name = typeString.Substring(startOfTypeName, cursor - startOfTypeName);
+
+            TypeId[] list;
+            (cursor, list) = ReadTypeList(typeString, cursor);
+
+            bool isArray;
+            (cursor, isArray) = ReadArrayMarker(typeString, cursor);
+
+            cursor = ReadTypeNameExtension(typeString, cursor);
+            return (cursor, new TypeId(name, list, isArray));
+        }
+
+        private static (int cursor, TypeId[] types) ReadTypeList(string typeString, int cursor)
+        {
+            // Type lists are delimited with square brackets, as is each type in the list, and they are separated by commas.
+            // For example, X`4[[A],[B],[C],[D]]
+            var list = new List<TypeId>();
+
+            if (typeString.Length == cursor)
+            {
+                return (cursor, new TypeId[0]);
+            }
+
+            if (typeString[cursor] != '[')
+            {
+                return (cursor, new TypeId[0]); 
+            }
+
+            if (typeString[cursor + 1] == ']')
+            {
+                return (cursor, new TypeId[0]);
+            }
+
+            cursor++;
+
+            while (true)
+            {
+                if (typeString[cursor] != '[')
+                {
+                    throw new InvalidOperationException("invalid type list element.");
+                }
+                cursor++;
+
+                TypeId item;
+                (cursor, item) = ReadTypeName(typeString, cursor);
+                list.Add(item);
+
+                if (typeString.Length < cursor)
+                {
+                    throw new InvalidOperationException("invalid cursor.");
+                }
+
+                if (typeString.Length == cursor)
+                {
+                    throw new InvalidOperationException("truncated type string.");
+                }
+
+                // Check for the closing bracket of the 
+                if (typeString[cursor] != ']')
+                {
+                    throw new InvalidOperationException("invalid type string.");
+                }
+
+                cursor++;
+
+                // there is not another item.
+                if (typeString[cursor] != ',')
+                {
+                    break;
+                }
+
+                cursor++;
+            }
+
+            if (typeString[cursor] != ']')
+            {
+                throw new InvalidOperationException("invalid type list termination.");
+            }
+            cursor++;
+
+            return (cursor, list.ToArray());
+        }
+
+        internal static TypeId GetMentionedTypes(string typeString)
+        {
+            var (endOfString, typeId) = ReadTypeName(typeString, cursor: 0);
+            if (endOfString != typeString.Length)
+            {
+                throw new InvalidOperationException("Invalid type string");
+            }
+
+            return typeId;
+        }
+
+        private static Type ConstructTypeFromAllowedlist(TypeId type, List<Type> allowedTypes)
+        {
+            // To avoid any possibility that an unexpected type is extracted from the string
+            // this method creates the type entirely from the allowedTypes list. That way even
+            // if there is an error in parsing of the type it is not possible for any type not
+            // in the allowed list to be created.
+            if (type.IsArray)
+            {
+                var itemType = new TypeId(type.Name, type.Arguments, isArray: false);
+                var resolvedItemType = ConstructTypeFromAllowedlist(itemType, allowedTypes);
+                return resolvedItemType.MakeArrayType();
+            }
+
+            if (type.Arguments.Length == 0)
+            {
+                var allowedListGenericDefinition = allowedTypes.SingleOrDefault(allowedType => allowedType.FullName == type.Name);
+                if (allowedListGenericDefinition == null)
+                {
+                    throw new Exception($"Type '{type.Name}' is not allowed.");
+                }
+
+                return allowedListGenericDefinition;
+            }
+
+            var genericDefinitionName = type.Name;
+            var allowedListEntry = allowedTypes.SingleOrDefault(allowedType => allowedType.FullName == genericDefinitionName);
+            if (allowedListEntry == null)
+            {
+                throw new Exception($"Type '{type.Name}' is not allowed.");
+            }
+
+            if (type.Arguments.Length != allowedListEntry.GetGenericArguments().Length)
+            {
+                throw new Exception($"Invalid operation: allowed list entry '{allowedListEntry.FullName}' does not match typeId '{type}' with regard to the number of generic arguments.");
+            }
+
+            var genericParameters = type
+                .Arguments
+                .Select(x => ConstructTypeFromAllowedlist(x, allowedTypes))
+                .ToArray();
+
+            return allowedListEntry.MakeGenericType(genericParameters);
         }
     }
 }
