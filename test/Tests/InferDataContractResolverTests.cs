@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             void TestCase(Type type)
             {
-                var mentionedTypes = InferDataContractResolver.GetMentionedTypes(type.FullName);
+                var mentionedTypes = InferDataContractResolver.GetTypeLayout(type.FullName);
 
                 var typeTree = AddMentionedTypes(type);
 
@@ -95,6 +95,35 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
 
                     return new InferDataContractResolver.TypeId(mentionedType.FullName, new InferDataContractResolver.TypeId[0], isArray: false);
+                }
+            }
+        }
+
+        [Fact]
+        public void InferDataContractResolverTests_RoundTripTypes()
+        {
+            TestCase(typeof(Tuple<Tuple<List<string>, Tuple<int>>>));
+            TestCase(typeof(string));
+            TestCase(typeof(string[]));
+            TestCase(typeof(List<string>));
+
+            TestAssembly(typeof(Gaussian).Assembly);
+
+            void TestAssembly(Assembly assembly)
+            {
+                var types = assembly.GetTypes();
+                foreach (var type in types)
+                {
+                    TestCase(type);
+                }
+            }
+
+            void TestCase(Type type)
+            {
+                var reconstructedType = InferDataContractResolver.ConstructTypeFromString(type.FullName);
+                if (type.FullName != reconstructedType.FullName)
+                {
+                    throw new InvalidOperationException("Round trip failed");
                 }
             }
         }
