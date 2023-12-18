@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Xunit;
 
 namespace Microsoft.ML.Probabilistic.Tests
@@ -24,11 +25,72 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        private static void VisitTypesRecursively(Type[] types, Action<Type> visitType)
+        {
+            var alreadyReviewed = new HashSet<Type>();
+
+            foreach (var type in types)
+            {
+                VisitTypesRecursively(type, visitType, alreadyReviewed);
+            }
+        }
+
+        private static void VisitTypesRecursively(Type type, Action<Type> visitType, HashSet<Type> alreadyReviewed)
+        {
+            // We aren't not interested in exceptions.
+            if (type.IsSubclassOf(typeof(Exception)))
+            {
+                return;
+            }
+
+            // We aren't interested in delegates.
+            if (type.IsSubclassOf(typeof(Delegate)))
+            {
+                return;
+            }
+
+            // There's nothing for us to test regarding open type parameters.
+            if (type.ContainsGenericParameters)
+            {
+                return;
+            }
+
+            // Avoid repeating review of type.
+            if (!alreadyReviewed.Add(type))
+            {
+                return;
+            }
+
+            visitType(type);
+
+            if (type.BaseType != null)
+            {
+                VisitTypesRecursively(type.BaseType, visitType, alreadyReviewed);
+            }
+
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                // We remove "by ref" because we don't care about this for serialization.
+                var typeToTest = property.PropertyType;
+
+                if (typeToTest.IsByRef)
+                {
+                    typeToTest = typeToTest.GetElementType();
+                }
+
+                VisitTypesRecursively(typeToTest, visitType, alreadyReviewed);
+            }
+
+            foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                VisitTypesRecursively(field.FieldType, visitType, alreadyReviewed);
+            }
+        }
+
         [Fact]
         public void InferDataContractResolverTests_RecoversTypes()
         {
             var alreadyTested = new HashSet<Type>();
-            var alreadyReviewed = new HashSet<Type>();
 
             TestCase(typeof(double[,]));
 
@@ -45,50 +107,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             void TestAssembly(Assembly assembly)
             {
                 var types = assembly.GetTypes();
-                foreach (var type in types)
-                {
-                    TestTypeRecursively(type);
-                }
-
-                void TestTypeRecursively(Type type)
-                {
-                    // There's nothing for us to test regarding open type parameters.
-                    if (type.ContainsGenericParameters)
-                    {
-                        return;
-                    }
-
-                    // Avoid repeating review of type.
-                    if (!alreadyReviewed.Add(type))
-                    {
-                        return;
-                    }
-
-                    TestCase(type);
-
-                    if (type.BaseType != null)
-                    {
-                        TestTypeRecursively(type.BaseType);
-                    }
-
-                    foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
-                    {
-                        // We remove "by ref" because we don't care about this for serialization.
-                        var typeToTest = property.PropertyType;
-
-                        if (typeToTest.IsByRef)
-                        {
-                            typeToTest = typeToTest.GetElementType();
-                        }
-
-                        TestTypeRecursively(typeToTest);
-                    }
-
-                    foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
-                    {
-                        TestTypeRecursively(field.FieldType);
-                    }
-                }
+                VisitTypesRecursively(types, TestCase);
             }
 
             void TestCase(Type type)
@@ -169,19 +188,38 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferDataContractResolverTests_RoundTripTypes()
         {
+            var alreadyReviewed = new HashSet<Type>();
+
             TestCase(typeof(Tuple<Tuple<List<string>, Tuple<int>>>));
             TestCase(typeof(string));
             TestCase(typeof(string[]));
             TestCase(typeof(List<string>));
 
-            TestAssembly(typeof(Gaussian).Assembly);
+            var runtimeTypes = typeof(Gaussian)
+                .Assembly
+                .GetTypes();
 
-            void TestAssembly(Assembly assembly)
+            foreach (var runtimeType in runtimeTypes)
             {
-                var types = assembly.GetTypes();
-                foreach (var type in types)
+                // We only test data contracts.
+                if (runtimeType.GetCustomAttribute<DataContractAttribute>() == null)
                 {
-                    TestCase(type);
+                    continue;
+                }
+
+                // First do a shallow test on the data contract itself.
+                TestCase(runtimeType);
+
+                // Then do a deep test on its public properties.
+                foreach (var property in runtimeType.GetProperties())
+                {
+                    VisitTypesRecursively(property.PropertyType, TestCase, alreadyReviewed);
+                }
+
+                // Then do a deep test on its public fields.
+                foreach (var field in runtimeType.GetFields())
+                {
+                    VisitTypesRecursively(field.FieldType, TestCase, alreadyReviewed);
                 }
             }
 

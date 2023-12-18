@@ -33,7 +33,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             // deserialization using that object.
             // AllowedType should only have open generic types or non-generic types (it should
             // not contain closed generic types).
-            var allowedTypes = new HashSet<Type>
+            var seedAllowedTypes = new HashSet<Type>
             {
                 typeof(Char),
                 typeof(SortedList<,>),
@@ -45,9 +45,28 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 typeof(Tuple<,,,>),
                 typeof(Tuple<,,,,>),
                 typeof(List<>),
+                typeof(Stack<>),
                 typeof(Int32),
                 typeof(Int64),
+                typeof(IEnumerable<>),
+                typeof(Queue<>),
+                typeof(IList<>),
+                typeof(IReadOnlyList<>),
+                typeof(Nullable<>),
+                typeof(IEqualityComparer<>),
+                typeof(IComparer<>),
+                typeof(ICollection<>),
+                typeof(Dictionary<,>),
+                typeof(ValueTuple<,>),
+                typeof(ValueTuple<,,,>),
+                typeof(IReadOnlyDictionary<,>),
             };
+
+            var allowedTypes = new HashSet<Type>();
+            foreach (var allowedType in seedAllowedTypes)
+            {
+                RecursivelyAddTypes(allowedType, allowedTypes);
+            }
 
             // Allow all types in Runtime
             var runtimeTypes = Assembly
@@ -104,6 +123,11 @@ namespace Microsoft.ML.Probabilistic.Serialization
             foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
             {
                 RecursivelyAddTypes(field.FieldType, types);
+            }
+
+            foreach (var nestedType in type.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                RecursivelyAddTypes(nestedType, types);
             }
         }
 
