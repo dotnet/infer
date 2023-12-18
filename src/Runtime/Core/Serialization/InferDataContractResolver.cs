@@ -33,7 +33,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             // deserialization using that object.
             // AllowedType should only have open generic types or non-generic types (it should
             // not contain closed generic types).
-            var allowedTypes = new List<Type>
+            var allowedTypes = new HashSet<Type>
             {
                 typeof(Char),
                 typeof(SortedList<,>),
@@ -53,9 +53,58 @@ namespace Microsoft.ML.Probabilistic.Serialization
             var runtimeTypes = Assembly
                 .GetExecutingAssembly()
                 .GetTypes();
-            allowedTypes.AddRange(runtimeTypes);
+
+            foreach (var runtimeType in runtimeTypes)
+            {
+                RecursivelyAddTypes(runtimeType, allowedTypes);
+            }
 
             return allowedTypes.ToDictionary(x => x.FullName);
+        }
+
+        private static void RecursivelyAddTypes(Type type, HashSet<Type> types)
+        {
+            // Skip closed generic types.
+            if (type.IsGenericType && !type.IsGenericTypeDefinition)
+            {
+                return;
+            }
+
+            // Skip generics with type parameters (these are types that appear
+            // inside a generic type definition).
+            if (type.ContainsGenericParameters && !type.IsGenericTypeDefinition)
+            {
+                return;
+            }
+
+            // Avoid repeatedly exploring the same types.
+            if (!types.Add(type))
+            {
+                return;
+            }
+
+            if (type.BaseType != null)
+            {
+                RecursivelyAddTypes(type.BaseType, types);
+            }
+
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                // We remove "by ref" because we don't care about this for serialization.
+                var typeToAdd = property.PropertyType;
+
+                if (typeToAdd.IsByRef)
+                {
+                    typeToAdd = typeToAdd.GetElementType();
+                }
+
+                RecursivelyAddTypes(typeToAdd, types);
+            }
+
+            foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                RecursivelyAddTypes(field.FieldType, types);
+            }
         }
 
         public override bool TryResolveType(
@@ -127,24 +176,26 @@ namespace Microsoft.ML.Probabilistic.Serialization
             public TypeId[] Arguments { get; }
 
             /// <summary>
-            /// Gets whether or not it is an array type.
+            /// Gets the layout of the array. For example,
+            /// int has a layout of {}.
+            /// int[][,,][][] has a layout of {1,3,1,1}
             /// </summary>
-            public bool IsArray { get; }
+            public int[] ArrayLayout { get; }
 
             /// <summary>
             /// Initializes an instance of <see cref="TypeId"/>.
             /// </summary>
             /// <param name="name">The name of the type (without array marker or argument list).</param>
             /// <param name="arguments">Gets the type arguments.</param>
-            /// <param name="isArray">Gets whether or not it is an array type.</param>
+            /// <param name="arrayLayout">Gets tha array layout.</param>
             public TypeId(
                 string name,
                 TypeId[] arguments,
-                bool isArray)
+                int[] arrayLayout)
             {
                 Name  = name;
                 Arguments = arguments;
-                IsArray = isArray;
+                ArrayLayout = arrayLayout;
             }
         }
 
@@ -197,23 +248,62 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// <param name="cursor">The index in the type string to read from.</param>
         /// <returns>
         /// cursor:
-        /// If there is no extension, then cursor is returned; if there is an array marker
+        /// If there is no array marker, then cursor is returned; if there is an array marker
         /// then one after the end of the extension is returned.
         /// 
-        /// isArray:
-        /// whether or not there is an array marker.
+        /// arrayLayout:
+        /// the layout of the array. For example,
+        /// int has a layout of {}.
+        /// int[][,,][][] has a layout of {1,3,1,1}
         /// </returns>
-        private static (int cursor, bool isArray) ReadArrayMarker(string typeString, int cursor)
+        private static (int cursor, int[] arrayLayout) ReadArrayMarker(string typeString, int cursor)
         {
-            // An array marker is "[]" so we just see if it is present.
+            // An array marker is a sequence of "[]"s for each array level.
+            // Each contains a number of commas indicating the number of dimensions
+            // in that array level.
+            // For example, int[][,,][,] is a 2-dimensional array of
+            // 3-dimensional arrays, of one dimensional arrays of ints.
+            var arrayLayout = new List<int>();
+            while (true)
+            {
+                int arrayDimension;
+                (cursor, arrayDimension) = ReadNextSingularArrayMarker(typeString, cursor);
+
+                if (arrayDimension == 0)
+                {
+                    return (cursor, arrayLayout.ToArray());
+                }
+
+                arrayLayout.Add(arrayDimension);
+            }
+        }
+
+        /// <summary>
+        /// Read the singular array marker if it exists.
+        /// </summary>
+        /// <param name="typeString">The type string.</param>
+        /// <param name="cursor">The location to read from in the type string.</param>
+        /// <returns>
+        /// cursor:
+        /// If there is no array marker, then cursor is returned; if there is an array marker
+        /// then one after the end of the extension is returned.
+        /// 
+        /// arrayDimension:
+        /// the number of dimensions the array marker indicates.
+        /// For example,
+        /// int has dimension 0
+        /// int[,,,] has dimension 4.
+        /// </returns>
+        private static (int cursor, int arrayDimension) ReadNextSingularArrayMarker(string typeString, int cursor)
+        {
             if (cursor == typeString.Length)
             {
-                return (cursor, isArray: false);
+                return (cursor, arrayDimension: 0);
             }
 
             if (typeString[cursor] != '[')
             {
-                return (cursor, isArray: false);
+                return (cursor, arrayDimension: 0);
             }
 
             if (cursor + 1 == typeString.Length)
@@ -221,12 +311,20 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 throw new InvalidOperationException("Invalid type string");
             }
 
-            if (typeString[cursor + 1] == ']')
+            // The number of commas indicates the number of dimensions.
+            int commaSkip = 0;
+            while (cursor + commaSkip + 1 < typeString.Length
+                && typeString[cursor + commaSkip + 1] == ',')
             {
-                return (cursor + 2, isArray: true);
+                commaSkip++;
             }
 
-            return (cursor, isArray: false);
+            if (typeString[cursor + commaSkip + 1] == ']')
+            {
+                return (cursor + commaSkip + 2, arrayDimension: commaSkip + 1);
+            }
+
+            return (cursor, arrayDimension: 0);
         }
 
         /// <summary>
@@ -274,11 +372,11 @@ namespace Microsoft.ML.Probabilistic.Serialization
             TypeId[] list;
             (cursor, list) = ReadTypeList(typeString, cursor);
 
-            bool isArray;
-            (cursor, isArray) = ReadArrayMarker(typeString, cursor);
+            int[] arrayLayout;
+            (cursor, arrayLayout) = ReadArrayMarker(typeString, cursor);
 
             cursor = ReadTypeNameExtension(typeString, cursor);
-            return (cursor, new TypeId(name, list, isArray));
+            return (cursor, new TypeId(name, list, arrayLayout));
         }
 
         /// <summary>
@@ -305,12 +403,21 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 return (cursor, new TypeId[0]);
             }
 
+            // We check for the marker that is used for type lists and arrays.
             if (typeString[cursor] != '[')
             {
                 return (cursor, new TypeId[0]); 
             }
 
+            // We verify that this is not a marker of a single dimensional array.
             if (typeString[cursor + 1] == ']')
+            {
+                return (cursor, new TypeId[0]);
+            }
+
+            // We verify that this is not a marker of a multi-dimensional array.
+            // (After this, it must be a type list marker.)
+            if (typeString[cursor + 1] == ',')
             {
                 return (cursor, new TypeId[0]);
             }
@@ -396,11 +503,26 @@ namespace Microsoft.ML.Probabilistic.Serialization
             // this method creates the type entirely from the allowedTypes list. That way even
             // if there is an error in parsing of the type it is not possible for any type not
             // in the allowed list to be created.
-            if (type.IsArray)
+            if (type.ArrayLayout.Length != 0)
             {
-                var itemType = new TypeId(type.Name, type.Arguments, isArray: false);
+                var itemType = new TypeId(type.Name, type.Arguments, arrayLayout: new int[0]);
                 var resolvedItemType = ConstructTypeFromAllowedlist(itemType);
-                return resolvedItemType.MakeArrayType();
+
+                for (int i = 0; i < type.ArrayLayout.Length; i++)
+                {
+                    if (type.ArrayLayout[i] == 1)
+                    {
+                        // MakeArrayType(1) creates an array of type T[*] instead of
+                        // the desired T[].
+                        resolvedItemType = resolvedItemType.MakeArrayType();
+                    }
+                    else
+                    {
+                        resolvedItemType = resolvedItemType.MakeArrayType(type.ArrayLayout[i]);
+                    }
+                }
+
+                return resolvedItemType;
             }
 
             if (type.Arguments.Length == 0)

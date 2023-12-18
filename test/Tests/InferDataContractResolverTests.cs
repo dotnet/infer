@@ -27,6 +27,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferDataContractResolverTests_RecoversTypes()
         {
+            var alreadyTested = new HashSet<Type>();
+            var alreadyReviewed = new HashSet<Type>();
+
+            TestCase(typeof(double[,]));
+
             TestCase(typeof(Tuple<Tuple<List<string>, Tuple<int>>>));
             TestCase(typeof(string));
             TestCase(typeof(string[]));
@@ -42,12 +47,58 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var types = assembly.GetTypes();
                 foreach (var type in types)
                 {
+                    TestTypeRecursively(type);
+                }
+
+                void TestTypeRecursively(Type type)
+                {
+                    // There's nothing for us to test regarding open type parameters.
+                    if (type.ContainsGenericParameters)
+                    {
+                        return;
+                    }
+
+                    // Avoid repeating review of type.
+                    if (!alreadyReviewed.Add(type))
+                    {
+                        return;
+                    }
+
                     TestCase(type);
+
+                    if (type.BaseType != null)
+                    {
+                        TestTypeRecursively(type.BaseType);
+                    }
+
+                    foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                    {
+                        // We remove "by ref" because we don't care about this for serialization.
+                        var typeToTest = property.PropertyType;
+
+                        if (typeToTest.IsByRef)
+                        {
+                            typeToTest = typeToTest.GetElementType();
+                        }
+
+                        TestTypeRecursively(typeToTest);
+                    }
+
+                    foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                    {
+                        TestTypeRecursively(field.FieldType);
+                    }
                 }
             }
 
             void TestCase(Type type)
             {
+                // Avoid repeating tests.
+                if (!alreadyTested.Add(type))
+                {
+                    return;
+                }
+
                 var mentionedTypes = InferDataContractResolver.GetTypeLayout(type.FullName);
 
                 var typeTree = AddMentionedTypes(type);
@@ -61,9 +112,17 @@ namespace Microsoft.ML.Probabilistic.Tests
                         throw new InvalidOperationException("Incorrect name");
                     }
 
-                    if (x.IsArray != y.IsArray)
+                    if (x.ArrayLayout.Length != y.ArrayLayout.Length)
                     {
                         throw new InvalidOperationException($"Incorrect isArray");
+                    }
+
+                    for (int i = 0; i < x.ArrayLayout.Length; i++)
+                    {
+                        if (x.ArrayLayout[i] != y.ArrayLayout[i])
+                        {
+                            throw new InvalidOperationException($"Incorrect array layout entry");
+                        }
                     }
 
                     if (x.Arguments.Length != y.Arguments.Length)
@@ -87,16 +146,22 @@ namespace Microsoft.ML.Probabilistic.Tests
                             .Select(AddMentionedTypes)
                             .ToArray();
 
-                        return new InferDataContractResolver.TypeId(genericType.FullName, typeArguments, isArray: false);
+                        return new InferDataContractResolver.TypeId(genericType.FullName, typeArguments, arrayLayout: new int[0]);
                     }
 
                     if (mentionedType.IsArray)
                     {
-                        var elementType = AddMentionedTypes(mentionedType.GetElementType());
-                        return new InferDataContractResolver.TypeId(elementType.Name, elementType.Arguments, isArray: true);
+                        var arrayLayout = new List<int>();
+                        while (mentionedType.IsArray)
+                        {
+                            arrayLayout.Add(mentionedType.GetArrayRank());
+                            mentionedType = mentionedType.GetElementType();
+                        }
+                        var elementType = AddMentionedTypes(mentionedType);
+                        return new InferDataContractResolver.TypeId(elementType.Name, elementType.Arguments, arrayLayout: arrayLayout.ToArray());
                     }
 
-                    return new InferDataContractResolver.TypeId(mentionedType.FullName, new InferDataContractResolver.TypeId[0], isArray: false);
+                    return new InferDataContractResolver.TypeId(mentionedType.FullName, new InferDataContractResolver.TypeId[0], arrayLayout: new int[0]);
                 }
             }
         }
