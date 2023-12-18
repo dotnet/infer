@@ -26,6 +26,13 @@ namespace Microsoft.ML.Probabilistic.Serialization
             // If this list isn't long enough then users can add to KnownTypes any types
             // they need. The exception thrown is very informative regarding which types are
             // allowed.
+            // There are two KnownType mechanisms, the KnownTypeAttribute that can be placed
+            // on types which declare the types as known when deserialising the given type.
+            // The other KnownType mechanism is to explicitly add types to the
+            // DataContractSerializer.KnownTypes collection, which whitelists the type for all
+            // deserialization using that object.
+            // AllowedType should only have open generic types or non-generic types (it should
+            // not contain closed generic types).
             var allowedTypes = new List<Type>
             {
                 typeof(Char),
@@ -332,7 +339,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
                     throw new InvalidOperationException("truncated type string.");
                 }
 
-                // Check for the closing bracket of the 
+                // Check for the closing bracket of the type string.
                 if (typeString[cursor] != ']')
                 {
                     throw new InvalidOperationException("invalid type string.");
@@ -377,6 +384,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
             return typeId;
         }
 
+        private static string ConstructHelpfulExceptionMessage(string typeName) =>
+            $"Type '{typeName}' is not allowed. Whitelist it by adding it " +
+            $"to {nameof(DataContractSerializer)}.{nameof(DataContractSerializer.KnownTypes)}" +
+            $" on the serializer you are using; or by declaring it using" +
+            $" {nameof(KnownTypeAttribute)} on the ultimate target type you are deserializing into.";
+
         internal static Type ConstructTypeFromAllowedlist(TypeId type)
         {
             // To avoid any possibility that an unexpected type is extracted from the string
@@ -394,7 +407,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             {
                 if (!allowedTypes.TryGetValue(type.Name, out var simpleType))
                 {
-                    throw new Exception($"Type '{type.Name}' is not allowed.");
+                    throw new Exception(ConstructHelpfulExceptionMessage(type.Name));
                 }
 
                 return simpleType;
@@ -403,7 +416,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             var genericDefinitionName = type.Name;
             if (!allowedTypes.TryGetValue(genericDefinitionName, out var allowedListEntry))
             {
-                throw new Exception($"Type '{type.Name}' is not allowed.");
+                throw new Exception(ConstructHelpfulExceptionMessage(type.Name));
             }
 
             if (type.Arguments.Length != allowedListEntry.GetGenericArguments().Length)

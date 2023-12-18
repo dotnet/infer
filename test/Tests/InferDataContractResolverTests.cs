@@ -52,6 +52,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 var typeTree = AddMentionedTypes(type);
 
+                AssertAreEqual(mentionedTypes, typeTree);
+
                 void AssertAreEqual(InferDataContractResolver.TypeId x, InferDataContractResolver.TypeId y)
                 {
                     if (x.Name != y.Name)
