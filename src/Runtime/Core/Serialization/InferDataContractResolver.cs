@@ -174,7 +174,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             // We avoid loading a type from a string for security reasons before we
             // first parse it to ensure that it is constructed from approved types.
-            var typeLayout = GetTypeLayout(typeString);
+            var typeLayout = ParseTypeString(typeString);
 
             // We now construct the types entirely from the allowed list, using the 
             // type layout to direct how we combine types in the allowed list.
@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// <summary>
         /// Some information about the layout of a type.
         /// </summary>
-        internal sealed class TypeId
+        internal sealed class ParsedTypeString
         {
             /// <summary>
             /// The name of the type (without array marker or argument list).
@@ -197,7 +197,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             /// <summary>
             /// Gets the type arguments.
             /// </summary>
-            public TypeId[] Arguments { get; }
+            public ParsedTypeString[] Arguments { get; }
 
             /// <summary>
             /// Gets the layout of the array. For example,
@@ -207,14 +207,14 @@ namespace Microsoft.ML.Probabilistic.Serialization
             public int[] ArrayLayout { get; }
 
             /// <summary>
-            /// Initializes an instance of <see cref="TypeId"/>.
+            /// Initializes an instance of <see cref="ParsedTypeString"/>.
             /// </summary>
             /// <param name="name">The name of the type (without array marker or argument list).</param>
             /// <param name="arguments">Gets the type arguments.</param>
             /// <param name="arrayLayout">Gets tha array layout.</param>
-            public TypeId(
+            public ParsedTypeString(
                 string name,
-                TypeId[] arguments,
+                ParsedTypeString[] arguments,
                 int[] arrayLayout)
             {
                 Name  = name;
@@ -363,7 +363,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// isArray:
         /// The TypeId of the read type.
         /// </returns>
-        private static (int cursor, TypeId typeId) ReadTypeName(string typeString, int cursor)
+        private static (int cursor, ParsedTypeString typeId) ReadTypeName(string typeString, int cursor)
         {
             // The format of a type name is
             // Name[PossibleArgumentList][PossibleArrayMarker][PossibleExtension]
@@ -393,14 +393,14 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
             var name = typeString.Substring(startOfTypeName, cursor - startOfTypeName);
 
-            TypeId[] list;
+            ParsedTypeString[] list;
             (cursor, list) = ReadTypeList(typeString, cursor);
 
             int[] arrayLayout;
             (cursor, arrayLayout) = ReadArrayMarker(typeString, cursor);
 
             cursor = ReadTypeNameExtension(typeString, cursor);
-            return (cursor, new TypeId(name, list, arrayLayout));
+            return (cursor, new ParsedTypeString(name, list, arrayLayout));
         }
 
         /// <summary>
@@ -416,34 +416,34 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// types:
         /// The TypeIds of the read types in the list.
         /// </returns>
-        private static (int cursor, TypeId[] types) ReadTypeList(string typeString, int cursor)
+        private static (int cursor, ParsedTypeString[] types) ReadTypeList(string typeString, int cursor)
         {
             // Type lists are delimited with square brackets, as is each type in the list, and they are separated by commas.
             // For example, X`4[[A],[B],[C],[D]]
-            var list = new List<TypeId>();
+            var list = new List<ParsedTypeString>();
 
             if (typeString.Length == cursor)
             {
-                return (cursor, new TypeId[0]);
+                return (cursor, new ParsedTypeString[0]);
             }
 
             // We check for the marker that is used for type lists and arrays.
             if (typeString[cursor] != '[')
             {
-                return (cursor, new TypeId[0]); 
+                return (cursor, new ParsedTypeString[0]); 
             }
 
             // We verify that this is not a marker of a single dimensional array.
             if (typeString[cursor + 1] == ']')
             {
-                return (cursor, new TypeId[0]);
+                return (cursor, new ParsedTypeString[0]);
             }
 
             // We verify that this is not a marker of a multi-dimensional array.
             // (After this, it must be a type list marker.)
             if (typeString[cursor + 1] == ',')
             {
-                return (cursor, new TypeId[0]);
+                return (cursor, new ParsedTypeString[0]);
             }
 
             cursor++;
@@ -456,7 +456,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 }
                 cursor++;
 
-                TypeId item;
+                ParsedTypeString item;
                 (cursor, item) = ReadTypeName(typeString, cursor);
                 list.Add(item);
 
@@ -504,7 +504,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// <returns>
         /// Basic information about how the type is constructed from other types.
         /// </returns>
-        internal static TypeId GetTypeLayout(string typeString)
+        internal static ParsedTypeString ParseTypeString(string typeString)
         {
             var (endOfString, typeId) = ReadTypeName(typeString, cursor: 0);
             if (endOfString != typeString.Length)
@@ -521,7 +521,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             $" on the serializer you are using; or by declaring it using" +
             $" {nameof(KnownTypeAttribute)} on the ultimate target type you are deserializing into.";
 
-        internal static Type ConstructTypeFromAllowedlist(TypeId type)
+        internal static Type ConstructTypeFromAllowedlist(ParsedTypeString type)
         {
             // To avoid any possibility that an unexpected type is extracted from the string
             // this method creates the type entirely from the allowedTypes list. That way even
@@ -529,7 +529,7 @@ namespace Microsoft.ML.Probabilistic.Serialization
             // in the allowed list to be created.
             if (type.ArrayLayout.Length != 0)
             {
-                var itemType = new TypeId(type.Name, type.Arguments, arrayLayout: new int[0]);
+                var itemType = new ParsedTypeString(type.Name, type.Arguments, arrayLayout: new int[0]);
                 var resolvedItemType = ConstructTypeFromAllowedlist(itemType);
 
                 for (int i = 0; i < type.ArrayLayout.Length; i++)

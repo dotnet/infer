@@ -118,13 +118,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                     return;
                 }
 
-                var mentionedTypes = InferDataContractResolver.GetTypeLayout(type.FullName);
+                var mentionedTypes = InferDataContractResolver.ParseTypeString(type.FullName);
 
-                var typeTree = AddMentionedTypes(type);
+                var typeTree = GetParsedTypeString(type);
 
                 AssertAreEqual(mentionedTypes, typeTree);
 
-                void AssertAreEqual(InferDataContractResolver.TypeId x, InferDataContractResolver.TypeId y)
+                void AssertAreEqual(InferDataContractResolver.ParsedTypeString x, InferDataContractResolver.ParsedTypeString y)
                 {
                     if (x.Name != y.Name)
                     {
@@ -155,17 +155,17 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
 
-                InferDataContractResolver.TypeId AddMentionedTypes(Type mentionedType)
+                InferDataContractResolver.ParsedTypeString GetParsedTypeString(Type mentionedType)
                 {
                     if (mentionedType.IsConstructedGenericType)
                     {
                         var genericType = mentionedType.GetGenericTypeDefinition();
                         var typeArguments = mentionedType
                             .GenericTypeArguments
-                            .Select(AddMentionedTypes)
+                            .Select(GetParsedTypeString)
                             .ToArray();
 
-                        return new InferDataContractResolver.TypeId(genericType.FullName, typeArguments, arrayLayout: new int[0]);
+                        return new InferDataContractResolver.ParsedTypeString(genericType.FullName, typeArguments, arrayLayout: new int[0]);
                     }
 
                     if (mentionedType.IsArray)
@@ -176,11 +176,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                             arrayLayout.Add(mentionedType.GetArrayRank());
                             mentionedType = mentionedType.GetElementType();
                         }
-                        var elementType = AddMentionedTypes(mentionedType);
-                        return new InferDataContractResolver.TypeId(elementType.Name, elementType.Arguments, arrayLayout: arrayLayout.ToArray());
+                        var elementType = GetParsedTypeString(mentionedType);
+                        return new InferDataContractResolver.ParsedTypeString(elementType.Name, elementType.Arguments, arrayLayout: arrayLayout.ToArray());
                     }
 
-                    return new InferDataContractResolver.TypeId(mentionedType.FullName, new InferDataContractResolver.TypeId[0], arrayLayout: new int[0]);
+                    return new InferDataContractResolver.ParsedTypeString(mentionedType.FullName, new InferDataContractResolver.ParsedTypeString[0], arrayLayout: new int[0]);
                 }
             }
         }
