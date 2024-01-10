@@ -10,7 +10,6 @@ using System.IO;
 using System.Reflection;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
@@ -158,8 +157,6 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         }
 
 
-        private Font normalFont = new Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point);
-        private Font boldFont = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point);
         private Regex reg = new Regex(@"[\w]+");
 
         /// <summary>
@@ -181,10 +178,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             if (s.Contains("//highlight"))
             {
                 s = s.Replace("//highlight", "");
-                //                targetTextBox.SelectionFont = boldFont;
                 targetTextBox.SelectionBackColor = Color.Yellow;
             }
-            //            else targetTextBox.SelectionFont = normalFont;
             MatchCollection mc = reg.Matches(s);
             int ind = 0;
             foreach (Match m in mc)
@@ -378,6 +373,33 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             object[] arr = exampleClass.GetCustomAttributes(typeof(ExampleAttribute), true);
             if ((arr != null) && (arr.Length > 0)) return ((ExampleAttribute)arr[0]);
             return null;
+        }
+
+        /// <summary>
+        ///  Disposes of the resources (other than memory) used by the <see cref="ContainerControl"/>.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            this.splitContainer1.Dispose();
+            this.tutorialsTree.Dispose();
+            this.splitContainer2.Dispose();
+            this.sourceTextBox.Dispose();
+            this.exampleSummaryBox.Dispose();
+            this.outputTextBox.Dispose();
+            this.tableLayoutPanel1.Dispose();
+            this.progressCheckBox.Dispose();
+            this.factorGraphCheckBox.Dispose();
+            this.browserCheckBox.Dispose();
+            this.label1.Dispose();
+            this.timingsCheckBox.Dispose();
+            this.mslCheckBox.Dispose();
+            this.scheduleCheckBox.Dispose();
+            this.panel3.Dispose();
+            this.label2.Dispose();
+            this.algorithmComboBox.Dispose();
+            this.panel2.Dispose();
+            this.button1.Dispose();
         }
 
         private void InitializeComponent()
@@ -736,14 +758,17 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         public void AppendOutputText(string s)
         {
             outputTextBox.AppendText(s);
-            SendMessage(Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
+            NativeMethods.SendMessage(Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
             //outputTextBox.sc
             //outputTextBox.Select(outputTextBox.TextLength, 0);
             //outputTextBox.ScrollToCaret();
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+        private class NativeMethods
+        {
+            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+        }
 
         private const int WM_SCROLL = 276; // Horizontal scroll
         private const int WM_VSCROLL = 277; // Vertical scroll
