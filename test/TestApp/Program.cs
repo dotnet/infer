@@ -84,12 +84,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            //new ProductGaussianOpTests().ProductOpTest();
-            //InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
-            //new TutorialTests().MatchboxRecommender();
-            //InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = true;
-            //new TutorialTests().MatchboxRecommender();
-
             bool runAllTests = false;
             if (runAllTests)
             {
