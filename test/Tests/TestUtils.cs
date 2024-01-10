@@ -43,6 +43,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             //SchedulingTransform.UseScheduling2 = false;
             //Scheduler.verbose = true;
             //Scheduler.showGraphs = true;
+            //Scheduler.NoInitEdgesAreInfinite = true;
             //Scheduler.showOffsetEdges = true;
             //DependencyGraph.debug = true;
             //SchedulingTransform.debug = true;

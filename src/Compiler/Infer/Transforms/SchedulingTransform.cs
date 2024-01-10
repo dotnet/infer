@@ -446,7 +446,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 List<int> schedule = scheduler.IterationSchedule(g, groupOf: groupOf2, forceInitializedNodes: this.ForceInitializedNodes);
                 initSchedule = scheduler.InitSchedule(schedule, false);
-                bool showScheduleInfo = false;
+                bool showScheduleInfo = debug;
                 if (showScheduleInfo)
                 {
                     int maxBack = scheduler.MaxBackEdgeCount(schedule, out double maxBackOverLength);

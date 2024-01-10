@@ -452,7 +452,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_NoDivide"]/message_doc[@name="UsesAverageConditional{T}(IList{T}, T, int, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [SkipIfAllUniform]
-        public static T UsesAverageConditional<T>([AllExceptIndex] IReadOnlyList<T> Uses, T Def, int resultIndex, T result)
+        public static T UsesAverageConditional<T>([AllExceptIndex, NoInit] IReadOnlyList<T> Uses, T Def, int resultIndex, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
@@ -465,7 +465,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ReplicateOp_NoDivide"]/message_doc[@name="UsesAverageConditional{T}(T[], T, int, T)"]/*'/>
         /// <typeparam name="T">The type of the messages.</typeparam>
         [SkipIfAllUniform]
-        public static T UsesAverageConditional<T>([AllExceptIndex] T[] Uses, T Def, int resultIndex, T result)
+        public static T UsesAverageConditional<T>([AllExceptIndex, NoInit] T[] Uses, T Def, int resultIndex, T result)
             where T : SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Length)

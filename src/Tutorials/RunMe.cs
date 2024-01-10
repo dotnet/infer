@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         {
             // When compiled with .NET 4.6.2 or higher, this will pop up a window for running examples, then exit.  
             // Otherwise it does nothing.
-            ExamplesBrowser.RunBrowser();
+            //ExamplesBrowser.RunBrowser();
 
             //Choose one of the algorithms
             InferenceEngine.DefaultEngine.Algorithm = new ExpectationPropagation();
@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             //Uncomment one of these lines to run a particular tutorial in console application
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-            new FirstExample().Run();
+            //new FirstExample().Run();
             //new TruncatedGaussian().Run();
             //new TruncatedGaussianEfficient().Run();
             //new LearningAGaussian().Run();
@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             //new DifficultyAbility().Run();
             //new GaussianProcessClassifier().Run();
             //new MultinomialRegression().Run();
-            //new RecommenderSystem().Run();
+            new RecommenderSystem().Run();
             //new StudentSkills().Run();
             //new WetGrassSprinklerRain().Run();
         }

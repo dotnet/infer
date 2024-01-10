@@ -17,6 +17,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
     [Example("Applications", "A general-purpose recommender system")]
     public class RecommenderSystem
     {
+        public bool largeData;
+
         public void Run()
         {
             // This example requires EP
@@ -28,11 +30,14 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             }
 
             // Define counts
-            int numUsers = 50;
-            int numItems = 10;
+            int numUsers = largeData ? 200 : 50;
+            int numItems = largeData ? 200 : 10;
+            Variable<int> numObservations = Variable.Observed(largeData ? numUsers * numItems/2 : 100).Named("numObservations");
             int numTraits = 2;
-            Variable<int> numObservations = Variable.Observed(100).Named("numObservations");
             int numLevels = 2;
+
+            var evidence = Variable.Bernoulli(0.5).Named("evidence");
+            var block = Variable.If(evidence);
 
             // Define ranges
             Range user = new Range(numUsers).Named("user");
@@ -109,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             }
 
             // Observe training data
-            GenerateData(
+            var expected = GenerateData(
                 numUsers,
                 numItems,
                 numTraits,
@@ -129,7 +134,12 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             // Allow EP to process the product factor as if running VMP
             // as in Stern, Herbrich, Graepel paper.
             engine.Compiler.GivePriorityTo(typeof(GaussianProductOp_SHG09));
-            engine.Compiler.ShowWarnings = true;
+            engine.ShowProgress = largeData;
+            engine.Compiler.UseParallelForLoops = true;
+
+            block.CloseBlock();
+            var ev = engine.Infer<Bernoulli>(evidence).LogOdds / numObservations.ObservedValue;
+            Console.WriteLine("evidence per observation = {0}", ev);
 
             // Run inference
             var userTraitsPosterior = engine.Infer<Gaussian[][]>(userTraits);
@@ -137,6 +147,24 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             var userBiasPosterior = engine.Infer<Gaussian[]>(userBias);
             var itemBiasPosterior = engine.Infer<Gaussian[]>(itemBias);
             var userThresholdsPosterior = engine.Infer<Gaussian[][]>(userThresholds);
+
+            Console.WriteLine("| learned parameters     |");
+            Console.WriteLine("| ---------------------- |");
+            for (int i = 0; i < System.Math.Min(5, numItems); i++)
+            {
+                Console.WriteLine("| {0,5}    {1,5} | {2,5} |", itemTraitsPosterior[i][0].GetMean().ToString("F"), itemTraitsPosterior[i][1].GetMean().ToString("F"), itemBiasPosterior[i].GetMean().ToString("F"));
+                //Console.WriteLine("| {0,5}    {1,5} | {2,5} |", itemTraitsPosterior[i][0], itemTraitsPosterior[i][1], itemBiasPosterior[i]);
+                if (largeData)
+                {
+                    for (int t = 0; t < numTraits; t++)
+                    {
+                        if (MMath.AbsDiff(itemTraitsPosterior[i][t].GetMean(), expected.itemTraits[i][t]) > 0.3)
+                        {
+                            throw new Exception("bad itemTraits");
+                        }
+                    }
+                }
+            }
 
             // Feed in the inferred posteriors as the new priors
             userTraitsPrior.ObservedValue = userTraitsPosterior;
@@ -160,7 +188,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         }
 
         // Generates data from the model
-        void GenerateData(
+        (double[][] userTraits, double[][] itemTraits, double[] userBias, double[] itemBias, double[][] userThresholds) GenerateData(
             int numUsers,
             int numItems,
             int numTraits,
@@ -177,6 +205,11 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             double affinityNoiseVariance,
             double thresholdsNoiseVariance)
         {
+            if (numObservations > numUsers * numItems)
+            {
+                throw new ArgumentException("numObservations must be less than or equal to numUsers * numItems");
+            }
+
             int[] generatedUserData = new int[numObservations];
             int[] generatedItemData = new int[numObservations];
             bool[][] generatedRatingData = new bool[numObservations][];
@@ -188,6 +221,13 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             double[] userBias = Util.ArrayInit(numUsers, u => userBiasPrior[u].Sample());
             double[] itemBias = Util.ArrayInit(numItems, i => itemBiasPrior[i].Sample());
             double[][] userThresholds = Util.ArrayInit(numUsers, u => Util.ArrayInit(numLevels, l => userThresholdsPrior[u][l].Sample()));
+
+            Console.WriteLine("| true parameters        |");
+            Console.WriteLine("| ---------------------- |");
+            for (int i = 0; i < System.Math.Min(5, numItems); i++)
+            {
+                Console.WriteLine("| {0,5}    {1,5} | {2,5} |", itemTraits[i][0].ToString("F"), itemTraits[i][1].ToString("F"), itemBias[i].ToString("F"));
+            }
 
             // Repeat the model with fixed parameters
             HashSet<int> visited = new HashSet<int>();
@@ -219,6 +259,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             userData.ObservedValue = generatedUserData;
             itemData.ObservedValue = generatedItemData;
             ratingData.ObservedValue = generatedRatingData;
+            return (userTraits, itemTraits, userBias, itemBias, userThresholds);
         }
     }
 }

@@ -34,7 +34,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         internal static bool useFakeGraph;
         internal static bool initsCanBeStale = false;
         internal static bool UseOffsetEdgesDuringInit = true;
-        internal static bool NoInitEdgesAreInfinite = true;
+        /// <summary>
+        /// Toggle this to debug scheduling problems.  Setting it to true breaks TutorialTests.MatchboxRecommender.
+        /// </summary>
+        /// <remarks>
+        /// To isolate the source of the scheduling problem, set SchedulingTransform.debug = true to find the cycle with the most back edges.
+        /// Check each back edge on this cycle.  The debug output explains why the edge is backward, including the edge costs.
+        /// To get a more detailed look at edge costs, set verbose = true or showGraphs = true.
+        /// </remarks>
+        internal static bool NoInitEdgesAreInfinite = false;
         /// <summary>
         /// Ignore requirements due to non-sequential offset edges. Only meaningful if UseOffsetEdgesDuringInit = true
         /// </summary>
@@ -182,7 +190,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             if (debug && verbose)
             {
                 if (g.Nodes.Count < 300 && showGraphs)
-                    DrawLabeledGraph("initial edge costs", true, edgeCost, showNoInit: true);
+                    DrawLabeledGraph("initial edge costs", false, edgeCost, showNoInit: true);
                 else
                     WriteEdgeCosts(edgeCost);
             }
@@ -275,7 +283,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 WriteSchedule(schedule);
                 if (count > 1 && count < 300 && showGraphs)
                 {
-                    DrawLabeledGraph("iteration schedule", true);
+                    DrawLabeledGraph("iteration schedule", inThread: false);
                 }
             }
             if (doRepair)
@@ -2389,7 +2397,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             if (groupGraph != null)
             {
-                ComputeDistancesWithGroups2();
+                ComputeDistancesWithGroups3();
                 return;
             }
             distance = new int[g.Nodes.Count][];
@@ -2469,6 +2477,51 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 bfs.Clear();
                 bfs.SearchFrom(source);
                 Assert.IsTrue(distanceFromSource[source] == 0);
+                //Trace.WriteLine(source.ToString() + ": " + StringUtil.CollectionToString(distanceFromSource, " "));
+            }
+        }
+
+        private void ComputeDistancesWithGroups3()
+        {
+            distance = new int[groupGraph.lastGroup][];
+            int[] distanceFromSource = null;
+            for (NodeIndex source = 0; source < groupGraph.lastGroup; source++)
+            {
+                distanceFromSource = Util.ArrayInit(groupGraph.lastGroup, i => infiniteDistance);
+                distanceFromSource[source] = 0;
+                distance[source] = distanceFromSource;
+                var isVisited = groupGraph.CreateNodeData<bool>(false);
+                while (true)
+                {
+                    // Find the unvisited node with the smallest distance from source
+                    int minDist = infiniteDistance;
+                    NodeIndex minNode = -1;
+                    for (NodeIndex node = 0; node < groupGraph.lastGroup; node++)
+                    {
+                        if (!isVisited[node] && distanceFromSource[node] < minDist)
+                        {
+                            minDist = distanceFromSource[node];
+                            minNode = node;
+                        }
+                    }
+                    if (minNode == -1)
+                        break;
+                    isVisited[minNode] = true;
+                    NodeIndex group = groupGraph.groupOf[minNode];
+                    foreach (var edge in groupGraph.EdgesOutOf(minNode))
+                    {
+                        NodeIndex target = groupGraph.TargetOf(edge);
+                        if (isVisited[target])
+                            continue;
+                        target = groupGraph.GetLargestGroupInsideGroup(target, group);
+                        if (target == -1)
+                            continue;
+                        int dist = minDist + GetEdgeLength(edge);
+                        if (dist < distanceFromSource[target])
+                            distanceFromSource[target] = dist;
+                    }
+                }
+                //Trace.WriteLine(source.ToString() + ": " + StringUtil.CollectionToString(distanceFromSource, " "));
             }
         }
 
@@ -2650,7 +2703,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 if (reachable)
                 {
-                    if (debug && edgeCost[edge] > 10f && groupGraph != null)
+                    if (debug && groupGraph != null)
                     {
                         NodeIndex targetGroup = groupGraph.GetLargestGroupExcluding(target, groups);
                         var path = GetAnyPath(targetGroup, groups);
@@ -4012,12 +4065,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         internal int MaxBackEdgeCount(IList<NodeIndex> schedule, out double maxBackOverLength)
         {
-            Console.WriteLine();
+            Trace.WriteLine("");
             if (cycles == null)
                 cycles = FindCycles(g);
             int maxBack = 0;
             maxBackOverLength = 0;
-            int numCycles = cycles.Count;
             foreach (Cycle c in cycles)
             {
                 if (c.Count == 1)
@@ -4026,9 +4078,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (count > maxBack)
                 {
                     maxBack = count;
+                    Trace.Write($"{count} ");
+                    WriteCycle(c);
                 }
-                Console.Write("{0} ", count);
-                WriteCycle(c);
                 double ratio = (double)count / c.Count;
                 if (ratio > maxBackOverLength)
                     maxBackOverLength = ratio;
@@ -4884,14 +4936,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         private void WriteCycle(Cycle c, IndexedGraph g)
         {
-            Console.Write("cycle:");
+            Trace.Write("cycle:");
             foreach (EdgeIndex edge in c)
             {
                 NodeIndex source = g.SourceOf(edge);
-                Console.Write(" ");
-                Console.Write(source);
+                Trace.Write(" ");
+                Trace.Write(source);
             }
-            Console.WriteLine();
+            Trace.WriteLine("");
         }
 
         private Cycle GetCycle(IList<NodeIndex> nodes)
