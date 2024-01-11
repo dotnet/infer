@@ -2468,9 +2468,9 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 					this.vdouble113_B[observation] = DoublePlusOp.BAverageConditional(this.vdouble114_B[observation], this.vdouble112_F[observation]);
 					this.vdouble__51_B[observation] = FastSumOp.ArrayAverageConditional<DistributionStructArray<Gaussian,double>>(this.vdouble113_B[observation], this.vdouble113_F[observation], this.vdouble__51_F[observation], this.vdouble__51_B[observation]);
 					for(int trait = 0; trait<this.TraitCount; trait++) {
+						this.itemTrait_B[observation][trait] = GaussianProductOp_SHG09.BAverageConditional(this.vdouble__51_B[observation][trait], this.UserTraits_itemUserIds_observation__F[observation][trait], this.userTrait_B[observation][trait]);
 						this.userTrait_B_new[observation][trait] = GaussianProductOp_SHG09.AAverageConditional(this.vdouble__51_B[observation][trait], this.ItemTraits_itemItemIds_observation__F[observation][trait], this.itemTrait_B[observation][trait]);
 						this.userTrait_B[observation][trait] = ArrayHelper.SetTo<Gaussian>(this.userTrait_B[observation][trait], this.userTrait_B_new[observation][trait]);
-						this.itemTrait_B[observation][trait] = GaussianProductOp_SHG09.BAverageConditional(this.vdouble__51_B[observation][trait], this.UserTraits_itemUserIds_observation__F[observation][trait], this.userTrait_B[observation][trait]);
 					}
 					this.ItemTraits_depth0_uses_F_1__marginal = GetItemsOp<double[]>.MarginalIncrement<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,DistributionStructArray<Gaussian,double>>(this.ItemTraits_depth0_uses_F_1__marginal, this.ItemTraits_itemItemIds_observation__F[observation], this.itemTrait_B[observation], this.ItemIds, observation);
 					this.vdouble112_B[observation] = DoublePlusOp.AAverageConditional(this.vdouble114_B[observation], this.vdouble113_F[observation]);

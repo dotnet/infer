@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void MatchboxRecommender()
         {
-            RunWithAlgorithms(new Tutorials.RecommenderSystem(), ep);
+            RunWithAlgorithms(new Tutorials.RecommenderSystem() { largeData = true }, ep);
         }
 
         // TODO: Does not work with broad prior on discrimination

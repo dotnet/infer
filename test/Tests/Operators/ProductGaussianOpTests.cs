@@ -34,6 +34,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void ProductOpTest()
         {
+            GaussianProductOp.ProductAverageConditional(Gaussian.FromNatural(-1765.4546871987516, 1338.3779930136373), Gaussian.FromNatural(47353.238656616719, 51908.220427509987), Gaussian.FromNatural(-110433.17966670298, 385287.49472649547));
+            GaussianProductOp_Slow.AAverageConditional(Gaussian.FromNatural(1.2464052053935622E-100, 8.057496451574595E-100), Gaussian.FromNatural(367.30950323702245, 328.35007985731033), Gaussian.FromNatural(951.91707682214258, 6998.5956711899107));
+            GaussianProductOp_Slow.AAverageConditional(Gaussian.FromNatural(-32.320457480359039, 43.195460703170248), Gaussian.FromNatural(-41.083697150214341, 22.757594736100287), Gaussian.FromNatural(31.117245365484337, 27.164520772286647));
             Assert.True(GaussianProductOp_Slow.ProductAverageConditional(
                 Gaussian.FromNatural(0.0019528178431691338, 3.25704676859826E-06),
                 Gaussian.FromNatural(-1.4311468676808659E-17, 5.4527745979495584E-21),

@@ -407,14 +407,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void SemanticWebTest4()
         {
-            var prop0 = Variable.Random(NamePrior());
+            var name = Variable.Random(NamePrior());
+            name.Name = nameof(name);
 
             var dateStrings = Variable.Observed(new[] { "6 May 1953", "May 6, 1953" });
+            dateStrings.Name = nameof(dateStrings);
             var dateFormat = Variable.DiscreteUniform(dateStrings.Range);
-            var prop1 = ArrayIndex(dateStrings, dateFormat);
+            dateFormat.Name = nameof(dateFormat);
+            var dob = ArrayIndex(dateStrings, dateFormat);
+            dob.Name = nameof(dob);
 
             var template = Variable.Random(StringDistribution.String("{0}") + WordStrings.WordMiddle() + StringDistribution.String("{1}"));
-            var text = Variable.StringFormat(template, prop0, prop1);
+            template.Name = nameof(template);
+            var text = Variable.StringFormat(template, name, dob);
+            text.Name = nameof(text);
 
             var template2 = Variable.Random(StringDistribution.Any());
             var fulltext = Variable.StringFormat(template2, text);
@@ -423,16 +429,16 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var engine = new InferenceEngine();
             engine.Compiler.RecommendedQuality = QualityBand.Experimental;
-            engine.NumberOfIterations = 1;
+            engine.NumberOfIterations = 2;
 
-            var prop0Dist = engine.Infer<StringDistribution>(prop0);
-            var prop1Dist = engine.Infer<StringDistribution>(prop1);
+            var nameDist = engine.Infer<StringDistribution>(name);
+            var dobDist = engine.Infer<StringDistribution>(dob);
             var templateDist = engine.Infer<StringDistribution>(template);
             var textDist = engine.Infer<StringDistribution>(text);
             var dateFormatDist = engine.Infer<Discrete>(dateFormat);
 
-            StringInferenceTestUtilities.TestProbability(prop0Dist, 0.5, "Mr Tony", "Tony Blair");
-            StringInferenceTestUtilities.TestProbability(prop1Dist, 1.0, "May 6, 1953");
+            StringInferenceTestUtilities.TestProbability(nameDist, 0.5, "Mr Tony", "Tony Blair");
+            StringInferenceTestUtilities.TestProbability(dobDist, 1.0, "May 6, 1953");
             StringInferenceTestUtilities.TestProbability(templateDist, 0.5, "{0} was born on {1}", "{0} Blair was born on {1}");
             StringInferenceTestUtilities.TestProbability(
                 textDist,
@@ -440,7 +446,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 "Tony Blair was born on May 6, 1953",
                 "Mr Tony Blair was born on May 6, 1953");
 
-            //Assert.AreEqual(1.0, dateFormatDist[1]); // TODO: fix me
+            Assert.Equal(1.0, dateFormatDist[1]);
         }
 
         #region Helpers

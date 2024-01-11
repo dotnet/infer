@@ -1372,14 +1372,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
             engine.ShowProgress = true;
             engine.ShowTimings = true;
-            //engine.ShowFactorGraph = true;
-            //engine.BrowserMode = BrowserMode.Always;
-            bool debug = false;
-            if (debug)
-            {
-                engine.Compiler.WriteSourceFiles = true;
-                engine.ModelName = "BayesianPartialVectorPCA";
-            }
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.NumberOfIterations = 4;
             if (!engine.Compiler.OptimiseInferenceCode)
                 engine.NumberOfIterations++;

@@ -1547,17 +1547,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                     bool foundZero = false;
                     foreach (double inflection in inflectionPoints)
                     {
-                        // check that the inflection point is valid
+                        // Search from each valid inflection point in the interval
                         double derivStart = Math.Abs(deriv(inflection));
-                        bool valid = (derivStart >= Math.Abs(deriv(lowerBound)) && derivStart >= Math.Abs(deriv(upperBound)));
-                        double x;
-                        if (valid && FindZeroNewton(func, deriv, inflection, lowerBound, upperBound, out x))
+                        bool valid = (double.IsInfinity(lowerBound) || derivStart >= Math.Abs(deriv(lowerBound))) && 
+                            (double.IsInfinity(upperBound) || derivStart >= Math.Abs(deriv(upperBound)));
+                        if (valid && FindZeroNewton(func, deriv, inflection, lowerBound, upperBound, out double x))
                         {
                             foundZero = true;
                             zeroes.Add(x);
                             break;
                         }
                     }
+                    // There are no inflection points in the interval.
                     if (!foundZero)
                     {
                         // try again starting from the edge
@@ -1746,19 +1747,25 @@ namespace Microsoft.ML.Probabilistic.Factors
                 rootsImag = new double[0];
                 return;
             }
+            double firstNonZeroCoeff = coeffs[firstNonZero];
             Matrix m = new Matrix(n, n);
             for (int i = 0; i < n - 1; i++)
             {
-                m[i + 1, i] = 1;
+                m[i + 1, i] = firstNonZeroCoeff;
             }
             for (int i = 0; i < n; i++)
             {
-                m[0, i] = -coeffs[i + 1 + firstNonZero] / coeffs[firstNonZero];
+                m[0, i] = -coeffs[i + 1 + firstNonZero];
             }
             rootsReal = new double[n];
             rootsImag = new double[n];
             // Note m is already in Hessenberg form, so there is some potential savings here.
             m.EigenvaluesInPlace(rootsReal, rootsImag);
+            for (int i = 0; i < n; i++)
+            {
+                rootsReal[i] /= firstNonZeroCoeff;
+                rootsImag[i] /= firstNonZeroCoeff;
+            }
         }
 
         /// <summary>

@@ -14,36 +14,32 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		#region Fields
 		/// <summary>True if Changed_FeatureCount_FeatureValues_InstanceCount has executed. Set this to false to force re-execution of Changed_FeatureCount_FeatureValues_InstanceCount</summary>
 		public bool Changed_FeatureCount_FeatureValues_InstanceCount_isDone;
-		/// <summary>True if Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12 has executed. Set this to false to force re-execution of Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12</summary>
-		public bool Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone;
-		/// <summary>True if Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8 has executed. Set this to false to force re-execution of Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8</summary>
-		public bool Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone;
-		/// <summary>True if Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8 has performed initialisation. Set this to false to force re-execution of Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8</summary>
-		public bool Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isInitialised;
+		/// <summary>True if Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11 has executed. Set this to false to force re-execution of Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11</summary>
+		public bool Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone;
 		/// <summary>True if Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints has executed. Set this to false to force re-execution of Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints</summary>
 		public bool Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints_isDone;
 		/// <summary>True if Changed_FeatureCount_InstanceCount has executed. Set this to false to force re-execution of Changed_FeatureCount_InstanceCount</summary>
 		public bool Changed_FeatureCount_InstanceCount_isDone;
-		/// <summary>True if Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10 has executed. Set this to false to force re-execution of Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10</summary>
-		public bool Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone;
-		/// <summary>True if Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10 has performed initialisation. Set this to false to force re-execution of Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10</summary>
-		public bool Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised;
+		/// <summary>True if Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9 has executed. Set this to false to force re-execution of Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9</summary>
+		public bool Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isDone;
+		/// <summary>True if Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9 has performed initialisation. Set this to false to force re-execution of Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9</summary>
+		public bool Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised;
 		/// <summary>True if Changed_FeatureCount has executed. Set this to false to force re-execution of Changed_FeatureCount</summary>
 		public bool Changed_FeatureCount_isDone;
-		/// <summary>True if Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3 has executed. Set this to false to force re-execution of Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3</summary>
-		public bool Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone;
-		/// <summary>True if Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3 has performed initialisation. Set this to false to force re-execution of Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3</summary>
-		public bool Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised;
+		/// <summary>True if Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2 has executed. Set this to false to force re-execution of Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2</summary>
+		public bool Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isDone;
+		/// <summary>True if Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2 has performed initialisation. Set this to false to force re-execution of Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2</summary>
+		public bool Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised;
 		/// <summary>True if Changed_FeatureCount_WeightConstraints has executed. Set this to false to force re-execution of Changed_FeatureCount_WeightConstraints</summary>
 		public bool Changed_FeatureCount_WeightConstraints_isDone;
 		/// <summary>True if Changed_FeatureCount_WeightPrecisionRateConstraints has executed. Set this to false to force re-execution of Changed_FeatureCount_WeightPrecisionRateConstraints</summary>
 		public bool Changed_FeatureCount_WeightPrecisionRateConstraints_isDone;
 		/// <summary>True if Changed_InstanceCount has executed. Set this to false to force re-execution of Changed_InstanceCount</summary>
 		public bool Changed_InstanceCount_isDone;
-		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9 has executed. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9</summary>
-		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isDone;
-		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9</summary>
-		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised;
+		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7 has executed. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7</summary>
+		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isDone;
+		/// <summary>True if Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7 has performed initialisation. Set this to false to force re-execution of Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7</summary>
+		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised;
 		public Gamma CommonWeightPrecision_F;
 		public Gamma[] CommonWeightPrecision_rep_B;
 		/// <summary>Buffer for ReplicateOp_Divide.Marginal&lt;Gamma&gt;</summary>
@@ -160,17 +156,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				if (this.FeatureCount_field!=value) {
 					this.FeatureCount_field = value;
 					this.numberOfIterationsDone = 0;
-					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = false;
 					this.Changed_FeatureCount_isDone = false;
+					this.Changed_FeatureCount_WeightConstraints_isDone = false;
 					this.Changed_FeatureCount_WeightPrecisionRateConstraints_isDone = false;
 					this.Changed_FeatureCount_InstanceCount_isDone = false;
-					this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone = false;
+					this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isDone = false;
 					this.Changed_FeatureCount_FeatureValues_InstanceCount_isDone = false;
 					this.Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints_isDone = false;
-					this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone = false;
-					this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone = false;
-					this.Changed_FeatureCount_WeightConstraints_isDone = false;
-					this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+					this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isDone = false;
+					this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 				}
 			}
 		}
@@ -187,13 +182,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.FeatureValues_field = value;
 				this.numberOfIterationsDone = 0;
-				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
-				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = false;
+				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised = false;
 				this.Changed_FeatureCount_FeatureValues_InstanceCount_isDone = false;
 				this.Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints_isDone = false;
-				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised = false;
+				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 			}
 		}
 
@@ -208,14 +202,13 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.InstanceCount_field = value;
 					this.numberOfIterationsDone = 0;
 					this.Changed_InstanceCount_isDone = false;
-					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
+					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = false;
 					this.Changed_FeatureCount_InstanceCount_isDone = false;
-					this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone = false;
+					this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isDone = false;
 					this.Changed_FeatureCount_FeatureValues_InstanceCount_isDone = false;
 					this.Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints_isDone = false;
-					this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = false;
-					this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone = false;
-					this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+					this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised = false;
+					this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 				}
 			}
 		}
@@ -232,11 +225,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.Labels_field = value;
 				this.numberOfIterationsDone = 0;
-				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
-				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
-				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isInitialised = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = false;
+				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised = false;
+				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised = false;
+				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 			}
 		}
 
@@ -257,12 +249,11 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			set {
 				this.WeightConstraints_field = value;
 				this.numberOfIterationsDone = 0;
-				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
-				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
-				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = false;
 				this.Changed_FeatureCount_WeightConstraints_isDone = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised = false;
+				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised = false;
+				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 			}
 		}
 
@@ -275,13 +266,12 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			set {
 				this.WeightPrecisionRateConstraints_field = value;
 				this.numberOfIterationsDone = 0;
-				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = false;
+				this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = false;
 				this.Changed_FeatureCount_WeightPrecisionRateConstraints_isDone = false;
-				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = false;
+				this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised = false;
 				this.Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints_isDone = false;
-				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone = false;
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+				this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised = false;
+				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 			}
 		}
 
@@ -295,30 +285,27 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			this.ModelSelector_selector_cases_0_rep2_uses_B = new Bernoulli[this.FeatureCount][];
-			this.WeightPrecisionRates_depth0_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
 			this.WeightPrecisionRates_marginal_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
-			this.SharedWeightPrecisionRates_uses_F = new Gamma[this.FeatureCount][];
+			this.WeightPrecisionRates_depth0_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.ModelSelector_selector_cases_0_rep5_uses_B = new Bernoulli[this.FeatureCount][];
+			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new Gamma[this.FeatureCount];
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-				this.SharedWeightPrecisionRates_uses_F[FeatureRange] = new Gamma[2];
+				this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = default(Gamma);
 			}
+			this.SharedWeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
 			this.WeightPrecisionRateRates_F_reduced = default(Gamma);
 			if (this.FeatureCount>0) {
 				this.WeightPrecisionRateRates_F_reduced = GammaFromShapeAndRateOpBase.SampleAverageConditional(1.0, 1.0);
 			}
-			this.Weights_uses_F = new Gaussian[this.FeatureCount][];
+			this.SharedWeightPrecisionRates_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-				this.Weights_uses_F[FeatureRange] = new Gaussian[2];
-				this.Weights_uses_F[FeatureRange][1] = Gaussian.Uniform();
+				this.SharedWeightPrecisionRates_F[FeatureRange] = Gamma.Uniform();
 			}
-			this.Weights_uses_B = new Gaussian[this.FeatureCount][];
+			this.SharedWeightPrecisionRates_uses_F = new Gamma[this.FeatureCount][];
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-				this.Weights_uses_B[FeatureRange] = new Gaussian[2];
-				this.Weights_uses_B[FeatureRange][0] = Gaussian.Uniform();
-				this.Weights_uses_B[FeatureRange][1] = Gaussian.Uniform();
+				this.SharedWeightPrecisionRates_uses_F[FeatureRange] = new Gamma[2];
+				this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = Gamma.Uniform();
 			}
-			this.Weights_F = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
-			this.WeightPrecisions_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
-			this.WeightPrecisions_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
 			this.SharedWeightPrecisionRates_uses_B = new Gamma[this.FeatureCount][];
 			this.WeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
 			this.WeightPrecisionRates_uses_B = new Gamma[this.FeatureCount][];
@@ -339,19 +326,36 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][1] = Gamma.Uniform();
 				this.SharedWeightPrecisionRates_uses_B[FeatureRange][0] = Gamma.Uniform();
 			}
-			this.SharedWeightPrecisionRates_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
-			this.SharedWeightPrecisionRates_B_FeatureRange__Q = new Gamma[this.FeatureCount];
-			this.SharedWeightPrecisionRates_use_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.WeightPrecisions_F = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.WeightPrecisions_F[FeatureRange] = Gamma.Uniform();
+			}
 			this.CommonWeightPrecision_rep_F = new Gamma[this.FeatureCount];
 			this.CommonWeightPrecision_rep_B = new Gamma[this.FeatureCount];
+			this.WeightPrecisions_B = new DistributionStructArray<Gamma,double>(this.FeatureCount);
+			this.Weights_F = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.Weights_F[FeatureRange] = Gaussian.Uniform();
+			}
 			this.Weights_use_B = new DistributionStructArray<Gaussian,double>(this.FeatureCount);
+			this.Weights_uses_F = new Gaussian[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.Weights_uses_F[FeatureRange] = new Gaussian[2];
+				this.Weights_uses_F[FeatureRange][1] = Gaussian.Uniform();
+				this.Weights_uses_F[FeatureRange][0] = Gaussian.Uniform();
+			}
+			this.Weights_uses_B = new Gaussian[this.FeatureCount][];
+			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+				this.Weights_uses_B[FeatureRange] = new Gaussian[2];
+				this.Weights_uses_B[FeatureRange][0] = Gaussian.Uniform();
+				this.Weights_uses_B[FeatureRange][1] = Gaussian.Uniform();
+			}
 			this.Weights_rep_F_marginal = new Gaussian[this.FeatureCount];
 			this.Weights_rep_B_toDef = new Gaussian[this.FeatureCount];
 			this.Weights_rep_F = new Gaussian[this.FeatureCount][];
 			this.Weights_rep_B = new Gaussian[this.FeatureCount][];
 			this.WeightPrecisions_B_FeatureRange__Q = new Gamma[this.FeatureCount];
 			this.ModelSelector_selector_cases_0_rep2_B = new Bernoulli[this.FeatureCount];
-			this.ModelSelector_selector_cases_0_rep5_uses_B = new Bernoulli[this.FeatureCount][];
 			this.ModelSelector_selector_cases_0_rep5_B = new Bernoulli[this.FeatureCount];
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange] = new Bernoulli[3];
@@ -380,7 +384,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][0] = Bernoulli.Uniform();
-				this.Weights_uses_F[FeatureRange][0] = Gaussian.Uniform();
 				this.ModelSelector_selector_cases_0_rep4_uses_B[FeatureRange][2] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep4_B[FeatureRange] = Bernoulli.Uniform();
 				this.Weights_depth0_F[FeatureRange] = Gaussian.Uniform();
@@ -433,13 +436,18 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
 		/// <summary>Computations that depend on the observed value of FeatureCount and FeatureValues and InstanceCount and Labels and numberOfIterations and WeightConstraints and WeightPrecisionRateConstraints</summary>
 		/// <param name="numberOfIterations">The number of times to iterate each loop</param>
-		private void Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12(int numberOfIterations)
+		private void Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11(int numberOfIterations)
 		{
-			if (this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone) {
+			if (this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone) {
 				return ;
 			}
 			for(int iteration = this.numberOfIterationsDone; iteration<numberOfIterations; iteration++) {
 				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
+					this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = GammaFromShapeAndRateOp_Laplace.Q(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced);
+					this.SharedWeightPrecisionRates_F[FeatureRange] = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced, this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange]);
+					this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], 0, this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
+					this.WeightPrecisions_F[FeatureRange] = GammaRatioOp_Laplace.RatioAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
+					this.Weights_F[FeatureRange] = GaussianOp.SampleAverageConditional(this.Weights_use_B[FeatureRange], 0.0, this.WeightPrecisions_F[FeatureRange], this.WeightPrecisions_B[FeatureRange]);
 					this.Weights_uses_F[FeatureRange][1] = ReplicateOp_NoDivide.UsesAverageConditional<Gaussian>(this.Weights_uses_B[FeatureRange], this.Weights_F[FeatureRange], 1, this.Weights_uses_F[FeatureRange][1]);
 					this.Weights_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.Marginal<Gaussian>(this.Weights_rep_B_toDef[FeatureRange], this.Weights_uses_F[FeatureRange][1], this.Weights_rep_F_marginal[FeatureRange]);
 				}
@@ -459,13 +467,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					}
 				}
 				for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-					this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = GammaFromShapeAndRateOp_Laplace.Q(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced);
 					this.Weights_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDef<Gaussian>(this.Weights_rep_B[FeatureRange], this.Weights_rep_B_toDef[FeatureRange]);
 					this.Weights_uses_B[FeatureRange][1] = ArrayHelper.SetTo<Gaussian>(this.Weights_uses_B[FeatureRange][1], this.Weights_rep_B_toDef[FeatureRange]);
 					this.Weights_use_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Gaussian>(this.Weights_uses_B[FeatureRange], this.Weights_use_B[FeatureRange]);
 					this.WeightPrecisions_B[FeatureRange] = GaussianOp.PrecisionAverageConditional(this.Weights_use_B[FeatureRange], Gaussian.PointMass(0.0), this.WeightPrecisions_F[FeatureRange]);
-					this.SharedWeightPrecisionRates_F[FeatureRange] = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced, this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange]);
-					this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], 0, this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = GammaRatioOp_Laplace.Q(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.CommonWeightPrecision_rep_B[FeatureRange] = GammaRatioOp_Laplace.AAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0], this.WeightPrecisions_B_FeatureRange__Q[FeatureRange]);
 				}
@@ -476,8 +481,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = GammaRatioOp_Laplace.Q(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
 					this.SharedWeightPrecisionRates_uses_B[FeatureRange][0] = GammaRatioOp_Laplace.BAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0], this.WeightPrecisions_B_FeatureRange__Q[FeatureRange]);
 					this.SharedWeightPrecisionRates_use_B[FeatureRange] = ReplicateOp_NoDivide.DefAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_use_B[FeatureRange]);
-					this.WeightPrecisions_F[FeatureRange] = GammaRatioOp_Laplace.RatioAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
-					this.Weights_F[FeatureRange] = GaussianOp.SampleAverageConditional(this.Weights_use_B[FeatureRange], 0.0, this.WeightPrecisions_F[FeatureRange], this.WeightPrecisions_B[FeatureRange]);
 				}
 				this.OnProgressChanged(new ProgressChangedEventArgs(iteration));
 			}
@@ -543,23 +546,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
 				this.Weights_marginal_F[FeatureRange] = VariableOp.MarginalAverageConditional<Gaussian>(this.Weights_use_B[FeatureRange], this.Weights_F[FeatureRange], this.Weights_marginal_F[FeatureRange]);
 			}
-			this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = true;
-		}
-
-		/// <summary>Computations that depend on the observed value of FeatureCount and FeatureValues and InstanceCount and numberOfIterationsDecreased and WeightPrecisionRateConstraints and must reset on changes to Labels and WeightConstraints</summary>
-		/// <param name="initialise">If true, reset messages that initialise loops</param>
-		private void Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8(bool initialise)
-		{
-			if (this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone&&((!initialise)||this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isInitialised)) {
-				return ;
-			}
-			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-				this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = ReplicateOp_NoDivide.UsesAverageConditional<Gamma>(this.SharedWeightPrecisionRates_uses_B[FeatureRange], this.SharedWeightPrecisionRates_F[FeatureRange], 0, this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
-				this.WeightPrecisions_F[FeatureRange] = GammaRatioOp_Laplace.RatioAverageConditional(this.WeightPrecisions_B[FeatureRange], this.CommonWeightPrecision_rep_F[FeatureRange], this.SharedWeightPrecisionRates_uses_F[FeatureRange][0]);
-				this.Weights_F[FeatureRange] = GaussianOp.SampleAverageConditional(this.Weights_use_B[FeatureRange], 0.0, this.WeightPrecisions_F[FeatureRange], this.WeightPrecisions_B[FeatureRange]);
-			}
-			this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone = true;
-			this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isInitialised = true;
+			this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = true;
 		}
 
 		/// <summary>Computations that depend on the observed value of FeatureCount and FeatureValues and InstanceCount and WeightPrecisionRateConstraints</summary>
@@ -627,9 +614,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
 		/// <summary>Computations that depend on the observed value of FeatureCount and InstanceCount and numberOfIterationsDecreased and must reset on changes to FeatureValues and Labels and WeightConstraints and WeightPrecisionRateConstraints</summary>
 		/// <param name="initialise">If true, reset messages that initialise loops</param>
-		private void Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10(bool initialise)
+		private void Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9(bool initialise)
 		{
-			if (this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone&&((!initialise)||this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised)) {
+			if (this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isDone&&((!initialise)||this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised)) {
 				return ;
 			}
 			for(int InstanceRange = 0; InstanceRange<this.InstanceCount; InstanceRange++) {
@@ -637,37 +624,30 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Weights_rep_B[FeatureRange][InstanceRange] = Gaussian.Uniform();
 				}
 			}
-			this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone = true;
-			this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isInitialised = true;
+			this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isDone = true;
+			this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isInitialised = true;
 		}
 
 		/// <summary>Computations that depend on the observed value of FeatureCount and numberOfIterationsDecreased and must reset on changes to FeatureValues and InstanceCount and Labels and WeightConstraints and WeightPrecisionRateConstraints</summary>
 		/// <param name="initialise">If true, reset messages that initialise loops</param>
-		private void Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3(bool initialise)
+		private void Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2(bool initialise)
 		{
-			if (this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone&&((!initialise)||this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised)) {
+			if (this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isDone&&((!initialise)||this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised)) {
 				return ;
 			}
 			for(int FeatureRange = 0; FeatureRange<this.FeatureCount; FeatureRange++) {
-				this.Weights_F[FeatureRange] = Gaussian.Uniform();
-				this.WeightPrecisions_B[FeatureRange] = Gamma.Uniform();
-				this.WeightPrecisions_F[FeatureRange] = Gamma.Uniform();
-				this.SharedWeightPrecisionRates_uses_F[FeatureRange][0] = Gamma.Uniform();
-				this.SharedWeightPrecisionRates_F[FeatureRange] = Gamma.Uniform();
-				this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = default(Gamma);
 				this.SharedWeightPrecisionRates_use_B[FeatureRange] = Gamma.Uniform();
-				this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange] = GammaFromShapeAndRateOp_Laplace.Q(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced);
-				this.SharedWeightPrecisionRates_F[FeatureRange] = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(this.SharedWeightPrecisionRates_use_B[FeatureRange], 1.0, this.WeightPrecisionRateRates_F_reduced, this.SharedWeightPrecisionRates_B_FeatureRange__Q[FeatureRange]);
 				this.CommonWeightPrecision_rep_F[FeatureRange] = Gamma.Uniform();
 				this.CommonWeightPrecision_rep_B[FeatureRange] = Gamma.Uniform();
 				this.CommonWeightPrecision_rep_F[FeatureRange] = ReplicateOp_Divide.UsesAverageConditional<Gamma>(this.CommonWeightPrecision_rep_B[FeatureRange], this.CommonWeightPrecision_rep_F_marginal, FeatureRange, this.CommonWeightPrecision_rep_F[FeatureRange]);
+				this.WeightPrecisions_B[FeatureRange] = Gamma.Uniform();
 				this.Weights_use_B[FeatureRange] = Gaussian.Uniform();
 				this.Weights_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalInit<Gaussian>(this.Weights_uses_F[FeatureRange][1]);
 				this.Weights_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDefInit<Gaussian>(this.Weights_uses_F[FeatureRange][1]);
 				this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = default(Gamma);
 			}
-			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone = true;
-			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = true;
+			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isDone = true;
+			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isInitialised = true;
 		}
 
 		/// <summary>Computations that depend on the observed value of FeatureCount and WeightConstraints</summary>
@@ -732,16 +712,16 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
 		/// <summary>Computations that depend on the observed value of numberOfIterationsDecreased and must reset on changes to FeatureCount and FeatureValues and InstanceCount and Labels and WeightConstraints and WeightPrecisionRateConstraints</summary>
 		/// <param name="initialise">If true, reset messages that initialise loops</param>
-		private void Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9(bool initialise)
+		private void Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7(bool initialise)
 		{
-			if (this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isDone&&((!initialise)||this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised)) {
+			if (this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isDone&&((!initialise)||this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised)) {
 				return ;
 			}
 			this.CommonWeightPrecision_rep_F_marginal = ReplicateOp_Divide.MarginalInit<Gamma>(this.CommonWeightPrecision_F);
 			this.CommonWeightPrecision_rep_B_toDef = ReplicateOp_Divide.ToDefInit<Gamma>(this.CommonWeightPrecision_F);
 			this.CommonWeightPrecision_rep_F_marginal = ReplicateOp_Divide.Marginal<Gamma>(this.CommonWeightPrecision_rep_B_toDef, this.CommonWeightPrecision_F, this.CommonWeightPrecision_rep_F_marginal);
-			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isDone = true;
-			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = true;
+			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isDone = true;
+			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isInitialised = true;
 		}
 
 		/// <summary>Computations that do not depend on observed values</summary>
@@ -814,26 +794,24 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			if (numberOfIterations!=this.numberOfIterationsDone) {
 				if (numberOfIterations<this.numberOfIterationsDone) {
 					this.numberOfIterationsDone = 0;
-					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isDone = false;
-					this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10_isDone = false;
-					this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone = false;
-					this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8_isDone = false;
+					this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7_isDone = false;
+					this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9_isDone = false;
+					this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2_isDone = false;
 				}
-				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12_isDone = false;
+				this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11_isDone = false;
 			}
 			this.Constant();
 			this.Changed_InstanceCount();
-			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9(initialise);
+			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst7(initialise);
 			this.Changed_FeatureCount();
+			this.Changed_FeatureCount_WeightConstraints();
 			this.Changed_FeatureCount_WeightPrecisionRateConstraints();
 			this.Changed_FeatureCount_InstanceCount();
-			this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst10(initialise);
+			this.Changed_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_WeightConst9(initialise);
 			this.Changed_FeatureCount_FeatureValues_InstanceCount();
 			this.Changed_FeatureCount_FeatureValues_InstanceCount_WeightPrecisionRateConstraints();
-			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3(initialise);
-			this.Changed_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightPrecisionRateCons8(initialise);
-			this.Changed_FeatureCount_WeightConstraints();
-			this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP12(numberOfIterations);
+			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst2(initialise);
+			this.Changed_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstraints_WeightP11(numberOfIterations);
 			this.numberOfIterationsDone = numberOfIterations;
 		}
 
