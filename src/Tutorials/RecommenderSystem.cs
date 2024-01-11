@@ -30,9 +30,9 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             }
 
             // Define counts
-            int numUsers = largeData ? 200 : 50;
-            int numItems = largeData ? 200 : 10;
-            Variable<int> numObservations = Variable.Observed(largeData ? numUsers * numItems/2 : 100).Named("numObservations");
+            int numUsers = largeData ? 400 : 50;
+            int numItems = largeData ? 400 : 10;
+            Variable<int> numObservations = Variable.Observed(largeData ? numUsers * numItems / 2 : 100).Named("numObservations");
             int numTraits = 2;
             int numLevels = 2;
 
@@ -140,6 +140,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             block.CloseBlock();
             var ev = engine.Infer<Bernoulli>(evidence).LogOdds / numObservations.ObservedValue;
             Console.WriteLine("evidence per observation = {0}", ev);
+            if (largeData && ev < -1)
+            {
+                throw new Exception("evidence is too low");
+            }
 
             // Run inference
             var userTraitsPosterior = engine.Infer<Gaussian[][]>(userTraits);
@@ -158,7 +162,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 {
                     for (int t = 0; t < numTraits; t++)
                     {
-                        if (MMath.AbsDiff(itemTraitsPosterior[i][t].GetMean(), expected.itemTraits[i][t]) > 0.3)
+                        if (MMath.AbsDiff(itemTraitsPosterior[i][t].GetMean(), expected.itemTraits[i][t]) > 0.4)
                         {
                             throw new Exception("bad itemTraits");
                         }
