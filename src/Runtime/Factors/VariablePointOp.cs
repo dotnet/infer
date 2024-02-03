@@ -345,7 +345,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                         //   (x + s*g)'g0 = (x0 + x)'g0/2
                         double xg0 = prevDeriv.Inner(prevPoint);
                         double xg = prevDeriv.Inner(currPoint);
-                        stepsize = (xg0 - xg) / 2 / gg;
+                        //stepsize = (xg0 - xg) / 2 / gg;
+                        stepsize /= 2;
                     }
                     else
                     {
