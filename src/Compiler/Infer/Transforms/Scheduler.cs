@@ -260,10 +260,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 // corner2corner grid
                 //schedule = new List<NodeIndex>() { 12, 15, 0, 1, 2, 13, 16, 3, 4, 5, 14, 17, 23, 20, 11, 10, 9, 22, 19, 8, 7, 6, 21, 18 };
                 // write cycle lengths and number of back edges
-                int[] counts = GetBackEdgeCounts(schedule);
+                //int[] counts = GetBackEdgeCounts(schedule);
                 using (MatlabWriter writer = new MatlabWriter("grid.mat"))
                 {
-                    writer.Write("counts", Array.ConvertAll(counts, i => (double)i));
+                    //writer.Write("counts", Array.ConvertAll(counts, i => (double)i));
                     writer.Write("lengths", Array.ConvertAll(cycles.ToArray(), c => (double)c.Count));
                     writer.Write("schedule", Array.ConvertAll(schedule.ToArray(), i => (double)i));
                     object[,] cyclesMatrix = new object[cycles.Count, 1];
@@ -4050,36 +4050,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return clone;
         }
 
-        private int[] GetBackEdgeCounts(IList<NodeIndex> schedule)
-        {
-            if (cycles == null)
-                cycles = FindCycles(g);
-            int[] counts = new int[cycles.Count];
-            int i = 0;
-            foreach (Cycle c in cycles)
-            {
-                counts[i++] = CountBackEdges(NodesOfCycle(c, g), schedule);
-            }
-            return counts;
-        }
-
         internal int MaxBackEdgeCount(IList<NodeIndex> schedule, out double maxBackOverLength)
         {
             Trace.WriteLine("");
             if (cycles == null)
                 cycles = FindCycles(g);
+            Dictionary<NodeIndex, int> indexOfNodeInSchedule = new Dictionary<NodeIndex, NodeIndex>();
+            for (int i = 0; i < schedule.Count; i++)
+            {
+                indexOfNodeInSchedule[schedule[i]] = i;
+            }
             int maxBack = 0;
             maxBackOverLength = 0;
             foreach (Cycle c in cycles)
             {
                 if (c.Count == 1)
                     continue;
-                int count = CountBackEdges(NodesOfCycle(c, g), schedule);
+                int count = CountBackEdges(NodesOfCycle(c, g).ToList(), indexOfNodeInSchedule);
                 if (count > maxBack)
                 {
                     maxBack = count;
                     Trace.Write($"{count} ");
-                    WriteCycle(c);
+                    WriteCycle(c, indexOfNodeInSchedule);
                 }
                 double ratio = (double)count / c.Count;
                 if (ratio > maxBackOverLength)
@@ -4102,65 +4094,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        private static int CountBackEdges(IEnumerable<NodeIndex> c, IList<NodeIndex> nodes)
+        private static int CountBackEdges(IReadOnlyList<NodeIndex> c, Dictionary<NodeIndex, int> indexOfNodeInSchedule)
         {
-            int minCount = int.MaxValue;
+            int count = 0;
+            int previousIndex = indexOfNodeInSchedule[c[c.Count - 1]];
             foreach (NodeIndex node in c)
             {
-                //NodeIndex orig = useOriginalNodes ? originalNode[node] : node;
-                for (int i = 0; i < nodes.Count; i++)
-                {
-                    if (node == nodes[i])
-                    {
-                        int count = CountBackEdges(c, nodes, i);
-                        if (count < minCount)
-                        {
-                            minCount = count;
-                            if (minCount == 1)
-                                return minCount;
-                        }
-                    }
-                }
-                break;
-            }
-            return minCount;
-        }
-
-        private static int CountBackEdges(IEnumerable<NodeIndex> c, IList<NodeIndex> nodes, int i)
-        {
-            int firstMatchPos = -1;
-            int count = 1;
-            foreach (NodeIndex node in c)
-            {
-                //NodeIndex orig = useOriginalNodes ? originalNode[node] : node;
-                if (firstMatchPos == -1)
-                {
-                    for (; i < nodes.Count; i++)
-                    {
-                        if (node == nodes[i])
-                        {
-                            firstMatchPos = i;
-                            break;
-                        }
-                    }
-                    if (firstMatchPos == -1)
-                        return -1;
-                }
-                else
-                {
-                    int start = i;
-                    while (true)
-                    {
-                        i++;
-                        i = i % nodes.Count;
-                        if (i == firstMatchPos)
-                            count++;
-                        if (node == nodes[i])
-                            break;
-                        if (i == start)
-                            return -1;
-                    }
-                }
+                int index = indexOfNodeInSchedule[node];
+                if (index < previousIndex)
+                    count++;
+                previousIndex = index;
             }
             return count;
         }
@@ -4929,21 +4872,23 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        private void WriteCycle(Cycle c)
+        private void WriteCycle(Cycle c, Dictionary<NodeIndex, int> indexOfNodeInSchedule)
         {
-            WriteCycle(c, g);
+            WriteCycle(c, g, indexOfNodeInSchedule);
         }
 
-        private void WriteCycle(Cycle c, IndexedGraph g)
+        private void WriteCycle(Cycle c, IndexedGraph g, Dictionary<NodeIndex, int> indexOfNodeInSchedule)
         {
-            Trace.Write("cycle:");
+            Trace.WriteLine("cycle:");
+            int previousIndex = indexOfNodeInSchedule[c[c.Count - 1]];
             foreach (EdgeIndex edge in c)
             {
                 NodeIndex source = g.SourceOf(edge);
-                Trace.Write(" ");
-                Trace.Write(source);
+                int index = indexOfNodeInSchedule[source];
+                bool isBack = index < previousIndex;
+                previousIndex = index;
+                Trace.WriteLine(NodeToString(source) + (isBack ? "*" : ""));
             }
-            Trace.WriteLine("");
         }
 
         private Cycle GetCycle(IList<NodeIndex> nodes)

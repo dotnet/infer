@@ -39,6 +39,44 @@ namespace Microsoft.ML.Probabilistic.Tests
             return Util.ArrayInit(count, i => (min + i * inc));
         }
 
+        // Tests that EP on a gate model is equivalent to EP on the max factor.
+        [Fact]
+        public void MaxGateTest()
+        {
+            var expected = MaxGateModel(false);
+            var actual = MaxGateModel(true);
+            Assert.True(expected.MaxDiff(actual) < 1e-5);
+        }
+
+        protected Gaussian MaxGateModel(bool useGate)
+        {
+            var realCount = Variable.GaussianFromMeanAndVariance(38.92, 148.4);
+            var max = Variable.New<double>();
+            if (useGate)
+            {
+                var isPositive = (realCount > 0.0);
+                isPositive.Name = nameof(isPositive);
+                using (Variable.If(isPositive))
+                {
+                    max.SetTo(Variable.Copy(realCount));
+                }
+                using (Variable.IfNot(isPositive))
+                {
+                    // Avoid point masses because they can cause AllZeroException during inference.
+                    max.SetTo(Variable.GaussianFromMeanAndVariance(0, 1e-20));
+                }
+            }
+            else
+            {
+                max.SetTo(Variable.Max(0.0, realCount));
+            }
+            max.Name = nameof(max);
+
+            InferenceEngine engine = new InferenceEngine();
+            max.ObservedValue = 0.0;
+            return engine.Infer<Gaussian>(realCount);
+        }
+
         [Fact]
         public void CutForwardWhenTest()
         {
