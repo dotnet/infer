@@ -152,7 +152,7 @@ jobs:
     displayName: Get dotnet 6.x
     inputs:
       packageType: 'sdk'
-      version: '6.x'
+      version: '8.x'
 
   - task: DotNetCoreCLI@2
     displayName: Restore Infer.sln to enable packaging.
