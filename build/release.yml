@@ -133,9 +133,9 @@ jobs:
       sourceFolder: $(Build.SourcesDirectory)/bin/obj/packages/VersionedAssemblies
       targetFolder: $(Build.SourcesDirectory)/bin/obj/packages  
 
-  # Install MicroBuild.Core
+  # Install Microsoft.VisualStudioEng.MicroBuild.Core
   - task: NuGetCommand@2
-    displayName: Install MicroBuild.Core
+    displayName: Install Microsoft.VisualStudioEng.MicroBuild.Core
     inputs:
       command: custom 
       arguments: 'install Microsoft.VisualStudioEng.MicroBuild.Core'
