@@ -138,7 +138,7 @@ jobs:
     displayName: Install MicroBuild.Core
     inputs:
       command: custom 
-      arguments: 'install MicroBuild.Core'
+      arguments: 'install Microsoft.VisualStudioEng.MicroBuild.Core'
 
   - task: MSBuild@1
     displayName: Sign Windows Binaries
