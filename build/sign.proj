@@ -12,8 +12,8 @@
     <Message Text="Attempting to sign %(FilesToSign.Identity) with authenticode='%(FilesToSign.Authenticode)'" />
   </Target>
 
-  <Import Project="$(MicroBuildToolsPath)MicroBuild.Core.props" />
-  <Import Project="$(MicroBuildToolsPath)MicroBuild.Core.targets" />
+  <Import Project="$(MicroBuildToolsPath)Microsoft.VisualStudioEng.MicroBuild.Core.props" />
+  <Import Project="$(MicroBuildToolsPath)Microsoft.VisualStudioEng.MicroBuild.Core.targets" />
 
   <Target Name="SetSigningProperties">
     <PropertyGroup>
