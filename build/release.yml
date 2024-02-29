@@ -59,7 +59,7 @@ jobs:
 
   - task: NuGetToolInstaller@1
     inputs:
-      versionSpec: '>=5.5.1'
+      versionSpec: '>=6.9'
 
   - task: NuGetCommand@2
     displayName: 'Restoring NuGet packages'
@@ -107,6 +107,10 @@ jobs:
     name: VSEngSS-MicroBuild2022-1ES # For real signing
 
   steps:
+  - task: NuGetToolInstaller@1
+    inputs:
+      versionSpec: '>=6.9'
+
   # Install MicroBuild plugin
   - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@1
     displayName: Install MicroBuild Signing Plugin
@@ -133,12 +137,12 @@ jobs:
       sourceFolder: $(Build.SourcesDirectory)/bin/obj/packages/VersionedAssemblies
       targetFolder: $(Build.SourcesDirectory)/bin/obj/packages  
 
-  # Install MicroBuild.Core
+  # Install Microsoft.VisualStudioEng.MicroBuild.Core
   - task: NuGetCommand@2
-    displayName: Install MicroBuild.Core
+    displayName: Install Microsoft.VisualStudioEng.MicroBuild.Core
     inputs:
       command: custom 
-      arguments: 'install MicroBuild.Core'
+      arguments: 'install Microsoft.VisualStudioEng.MicroBuild.Core'
 
   - task: MSBuild@1
     displayName: Sign Windows Binaries
@@ -152,7 +156,7 @@ jobs:
     displayName: Get dotnet 6.x
     inputs:
       packageType: 'sdk'
-      version: '6.x'
+      version: '8.x'
 
   - task: DotNetCoreCLI@2
     displayName: Restore Infer.sln to enable packaging.

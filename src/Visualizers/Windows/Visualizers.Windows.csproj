@@ -73,7 +73,7 @@
     resolves property values during packing; or to map these platforms to the target-framework paths used
     by the NuGet package format; so we list them explicitly here.
     -->
-    <None Include="bin\Any CPU\$(Configuration)\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
-    <None Include="bin\Any CPU\$(Configuration)\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />
+    <None Include="$(BaseOutputPath)\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
+    <None Include="$(BaseOutputPath)\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
     <PackageAssetsPath>$(RepoRoot)bin/obj/packages/</PackageAssetsPath>
     <PackageOutputPath>$(RepoRoot)bin/packages/</PackageOutputPath>
     <IntermediateOutputRootPath>$(RepoRoot)bin/obj/Release/</IntermediateOutputRootPath>
-    <MicroBuildToolsPath>$(RepoRoot)MicroBuild.Core.0.3.1\build\</MicroBuildToolsPath>
+    <MicroBuildToolsPath>$(RepoRoot)Microsoft.VisualStudioEng.MicroBuild.Core.1.0.0\build\</MicroBuildToolsPath>
   </PropertyGroup>
 
   <!-- This will be overridden if we're building with MicroBuild. -->
@@ -12,8 +12,8 @@
     <Message Text="Attempting to sign %(FilesToSign.Identity) with authenticode='%(FilesToSign.Authenticode)'" />
   </Target>
 
-  <Import Project="$(MicroBuildToolsPath)MicroBuild.Core.props" />
-  <Import Project="$(MicroBuildToolsPath)MicroBuild.Core.targets" />
+  <Import Project="$(MicroBuildToolsPath)Microsoft.VisualStudioEng.MicroBuild.Core.props" />
+  <Import Project="$(MicroBuildToolsPath)Microsoft.VisualStudioEng.MicroBuild.Core.targets" />
 
   <Target Name="SetSigningProperties">
     <PropertyGroup>
