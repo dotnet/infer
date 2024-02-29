@@ -75,7 +75,7 @@
     -->
     <!--<None Include="bin\Any CPU\$(Configuration)\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
     <None Include="bin\Any CPU\$(Configuration)\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />-->
-    <None Include="$(OutDir)..\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
-    <None Include="$(OutDir)..\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />
+    <None Include="$(BaseOutputPath)\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
+    <None Include="$(BaseOutputPath)\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />
   </ItemGroup>
 </Project>
