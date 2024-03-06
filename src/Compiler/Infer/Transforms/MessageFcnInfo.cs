@@ -150,7 +150,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 parameterIndex++;
             }
-            AllTriggers = Method.IsDefined(typeof(AllTriggersAttribute), false);
             IsMultiplyAll = Method.IsDefined(typeof(MultiplyAllAttribute), false);
             IsStochastic = Method.IsDefined(typeof(Stochastic), false);
             object[] attrs = Method.GetCustomAttributes(typeof(NotSupportedAttribute), false);
