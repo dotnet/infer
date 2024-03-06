@@ -4148,8 +4148,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        // TODO: throw if InitialisationAffectsSchedule is not true
+        /// <summary>
+        /// Tests a case where Rprop converges slowly.
+        /// </summary>
         [Fact]
+        [Trait("Category", "OpenBug")]
         public void PointEstimateTest()
         {
             Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");
@@ -4169,7 +4172,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             engine.ShowProgress = false;
-            engine.Compiler.UseExistingSourceFiles = true;
+            //engine.Compiler.UseExistingSourceFiles = true;
+            // TODO: throw if InitialisationAffectsSchedule is not true
             engine.Compiler.InitialisationAffectsSchedule = true;
             engine.Compiler.GivePriorityTo(typeof(GaussianFromMeanAndVarianceOp_PointVariance));
             double xPrevious = double.NaN, yPrevious = double.NaN;
@@ -4179,7 +4183,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 engine.NumberOfIterations = iter;
                 double xActual = engine.Infer<Gaussian>(x).Point;
                 double yActual = engine.Infer<Gaussian>(y).Point;
-                Trace.WriteLine($"{iter} {xActual} {yActual}");
+                //Trace.WriteLine($"{iter} {xActual} {yActual}");
                 string line = $"{xActual}, {yActual}";
                 lines.Add(line);
                 if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
@@ -4189,8 +4193,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
                 xPrevious = xActual;
                 yPrevious = yActual;
+                if (iter == 10000) throw new Exception("Did not converge fast enough");
             }
-            System.IO.File.WriteAllLines("points.csv", lines);
+            //System.IO.File.WriteAllLines("points.csv", lines);
         }
 
         [Fact]

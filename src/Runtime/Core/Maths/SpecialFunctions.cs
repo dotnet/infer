@@ -1337,7 +1337,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 throw new ArgumentException($"x ({x}) < 0");
             if (!regularized)
             {
-                if (a < 1 && x >= 1) return GammaUpperConFrac2(a, x, regularized);
+                if (a < 1 && x >= 0.1) return GammaUpperConFrac2(a, x, regularized);
                 else if (a <= GammaSmallX)
                 {
                     if (x < 1)

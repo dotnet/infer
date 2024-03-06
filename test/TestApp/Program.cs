@@ -84,8 +84,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new OperatorTests().GammaUpper_IsDecreasingInX();
-
             bool runAllTests = false;
             if (runAllTests)
             {
