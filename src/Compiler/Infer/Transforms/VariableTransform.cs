@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 context.AddStatementsBeforeAncestorIndex(ancIndex, stmts);
             }
             bool hasPointEstimate = context.InputAttributes.Has<PointEstimate>(ivd);
-            if (hasPointEstimate)
+            if (hasPointEstimate && firstTime)
             {
                 if (!context.InputAttributes.Has<InitialiseTo>(ivd))
                 {

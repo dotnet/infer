@@ -422,16 +422,25 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
             performancePrecision.AddAttribute(new PointEstimate());
+            performancePrecision.InitialiseTo(Gamma.PointMass(1));
             skillChangeWithMatchPrecision.AddAttribute(new PointEstimate());
+            skillChangeWithMatchPrecision.InitialiseTo(Gamma.PointMass(1));
             pKillW.AddAttribute(new PointEstimate());
+            pKillW.InitialiseTo(Gaussian.PointMass(0));
             oKillW.AddAttribute(new PointEstimate());
+            oKillW.InitialiseTo(Gaussian.PointMass(0));
             killV.AddAttribute(new PointEstimate());
+            killV.InitialiseTo(Gamma.PointMass(1));
             pDeathW.AddAttribute(new PointEstimate());
+            pDeathW.InitialiseTo(Gaussian.PointMass(0));
             oDeathW.AddAttribute(new PointEstimate());
+            oDeathW.InitialiseTo(Gaussian.PointMass(0));
             deathV.AddAttribute(new PointEstimate());
-            game.AddAttribute(new Models.Attributes.Sequential());   // helps inference converge faster
+            deathV.InitialiseTo(Gamma.PointMass(1));
+            game.AddAttribute(new Sequential());   // helps inference converge faster
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.Infer(performancePrecision);
         }
 

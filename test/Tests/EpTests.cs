@@ -522,6 +522,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<Vector> a = Variable.Random(aPrior).Named("a");
             Variable<double> b = Variable.Random(bPrior).Named("b");
             b.AddAttribute(new PointEstimate());
+            b.InitialiseTo(Gaussian.PointMass(bMean));
             Variable<Vector> x = Variable.VectorTimesScalar(a, b).Named("x");
             Vector xMean = Vector.FromArray(7.7, 8.8);
             PositiveDefiniteMatrix xVariance = new PositiveDefiniteMatrix(new double[,] { { 9, 1 }, { 1, 9 } });
@@ -529,6 +530,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable.ConstrainEqualRandom(x, xLike);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             var bActual = engine.Infer<Gaussian>(b).Point;
 
             // compute expected value
@@ -4078,6 +4080,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Variable<double> precisionT = Variable.Random(new TruncatedGamma(1, 1, 0, double.PositiveInfinity)).Named("precision");
                 precisionT.AddAttribute(new PointEstimate());
+                precisionT.InitialiseTo(Gamma.PointMass(1.0));
                 precision = Variable.Copy(precisionT);
                 precision.AddAttribute(new MarginalPrototype(new Gamma()));
             }
@@ -4085,6 +4088,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 precision = Variable.GammaFromShapeAndScale(1, 1).Named("precision");
                 precision.AddAttribute(new PointEstimate());
+                precision.InitialiseTo(Gamma.PointMass(1.0));
             }
             Variable<int> xCount = Variable.New<int>().Named("xCount");
             Range item = new Range(xCount).Named("item");
@@ -4097,6 +4101,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.ShowProgress = false;
             //engine.Compiler.GivePriorityTo(typeof(PointEstimatorForwardOp_Mean<>));
             //SecantBufferData<Gamma>.debug = true;
@@ -4116,6 +4121,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (meanIsPointEstimate)
             {
                 mean.AddAttribute(new PointEstimate());
+                mean.InitialiseTo(Gaussian.PointMass(0));
                 // Gamma(6, 0.1761)[mean=1.057][mode=0.8805]
                 precisionExpectedMode = new double[] { 0.8591349795002973, 0.880501882579348 };
                 precisionExpectedMean = new double[] { 1.030961977426691, 1.056602354669931 };

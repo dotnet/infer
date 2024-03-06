@@ -349,12 +349,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Variable<double> x = Variable.Beta(1, 2).Named("x");
             x.AddAttribute(new PointEstimate());
+            x.InitialiseTo(Beta.PointMass(0.33));
             var c = 0.5;
             Variable<bool> xGreaterThanConstant = Variable<bool>.Factor(Factor.IsGreaterThan, x, c);
             xGreaterThanConstant.Name = nameof(xGreaterThanConstant);
             Variable.ConstrainTrue(xGreaterThanConstant);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             var xActual = engine.Infer<Beta>(x);
             var xExpected = Beta.PointMass(c);
             Assert.Equal(xExpected, xActual);
@@ -365,12 +367,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Variable<double> x = Variable.Beta(2, 1).Named("x");
             x.AddAttribute(new PointEstimate());
+            x.InitialiseTo(Beta.PointMass(0.33));
             var c = 0.5;
             Variable<bool> xGreaterThanConstant = Variable<bool>.Factor(Factor.IsGreaterThan, c, x);
             xGreaterThanConstant.Name = nameof(xGreaterThanConstant);
             Variable.ConstrainTrue(xGreaterThanConstant);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             var xActual = engine.Infer<Beta>(x);
             var xExpected = Beta.PointMass(c);
             Assert.Equal(xExpected, xActual);
@@ -381,12 +385,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Variable<double> x = Variable.GammaFromShapeAndRate(4, 1).Named("x");
             x.AddAttribute(new PointEstimate());
+            x.InitialiseTo(Gamma.PointMass(4));
             var c = 50.0;
             Variable<bool> xGreaterThanConstant = Variable<bool>.Factor(Factor.IsGreaterThan, x, c);
             xGreaterThanConstant.Name = nameof(xGreaterThanConstant);
             Variable.ConstrainTrue(xGreaterThanConstant);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             var xActual = engine.Infer<Gamma>(x);
             var xExpected = Gamma.PointMass(c);
             Assert.Equal(xExpected, xActual);
@@ -397,12 +403,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Variable<double> x = Variable.GammaFromShapeAndRate(4, 1).Named("x");
             x.AddAttribute(new PointEstimate());
+            x.InitialiseTo(Gamma.PointMass(4));
             var c = 0.5;
             Variable<bool> xGreaterThanConstant = Variable<bool>.Factor(Factor.IsGreaterThan, c, x);
             xGreaterThanConstant.Name = nameof(xGreaterThanConstant);
             Variable.ConstrainTrue(xGreaterThanConstant);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             var xActual = engine.Infer<Gamma>(x);
             var xExpected = Gamma.PointMass(c);
             Assert.Equal(xExpected, xActual);
