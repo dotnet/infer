@@ -200,16 +200,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian B = new Gaussian(3, 4);
             Gaussian pointMass = Gaussian.PointMass(4);
             Gaussian to_pointMass = GaussianProductOp.ProductAverageConditional(pointMass, A, B);
-            Console.WriteLine(to_pointMass);
+            //Console.WriteLine(to_pointMass);
             double prevDiff = double.PositiveInfinity;
             for (int i = 0; i < 100; i++)
             {
                 Gaussian Product = Gaussian.FromMeanAndVariance(pointMass.Point, System.Math.Pow(10, -i));
                 Gaussian to_product = GaussianProductOp.ProductAverageConditional(Product, A, B);
                 //Gaussian to_product2 = GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
-                double evidence = GaussianProductOp.LogEvidenceRatio(Product, A, B, to_product);
+                //double evidence = GaussianProductOp.LogEvidenceRatio(Product, A, B, to_product);
                 double diff = to_product.MaxDiff(to_pointMass);
-                Console.WriteLine($"{Product} {to_product} {evidence} {diff}");
+                //Console.WriteLine($"{Product} {to_product} {evidence} {diff}");
                 Assert.True(diff <= prevDiff || diff < 1e-6);
                 prevDiff = diff;
             }
