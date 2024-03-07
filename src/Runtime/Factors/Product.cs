@@ -226,7 +226,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return ProductAverageConditional(A.Point, B);
             if (B.IsPointMass)
                 return ProductAverageConditional(A, B.Point);
-            if (Product.IsPointMass)
+            if (Product.IsPointMass || Product.Precision > 10)
                 return GaussianProductOp_Slow.ProductAverageConditional(Product, A, B);
             if (Product.Precision < 1e-100)
                 return GaussianProductVmpOp.ProductAverageLogarithm(A, B);

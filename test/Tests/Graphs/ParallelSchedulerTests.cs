@@ -138,6 +138,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var indices = Variable.Observed(variablesUsedByNode.ToArray(), node, parent).Named("indices");
             var shift = Variable.GaussianFromMeanAndPrecision(0, 1).Named("shift");
             shift.AddAttribute(new PointEstimate());
+            shift.InitialiseTo(Gaussian.PointMass(0));
             using (Variable.ForEach(node))
             {
                 var subArray = Variable.Subarray(x, indices[node]).Named("subArray");
@@ -153,6 +154,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.NumberOfIterations = 2;
             engine.OptimiseForVariables = new IVariable[] { x, shift };
             var xExpected = engine.Infer(x);
@@ -276,6 +278,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             indices.SetValueRange(item);
             var shift = Variable.GaussianFromMeanAndPrecision(0, 1).Named("shift");
             shift.AddAttribute(new PointEstimate());
+            shift.InitialiseTo(Gaussian.PointMass(0));
             using (Variable.ForEach(node))
             {
                 var subArray = Variable.Subarray(x, indices[node]).Named("subArray");
@@ -356,7 +359,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             arrayIndicesToReceiveVar.ObservedValue = distributedCommunicationInfo.arrayIndicesToReceive;
 
             InferenceEngine engine = new InferenceEngine();
-            //engine.Compiler.UseExistingSourceFiles = true;
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.ModelName = "DistributedScheduleTest" + comm.Rank;
             engine.ShowProgress = false;
             engine.NumberOfIterations = 2;

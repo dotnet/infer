@@ -296,10 +296,13 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var initialStateMean = Variable.GaussianFromMeanAndPrecision(0, 1e-4).Named("initialStateMean");
             initialStateMean.AddAttribute(new PointEstimate());
+            initialStateMean.InitialiseTo(Gaussian.PointMass(0));
             var initialStatePrecision = Variable.GammaFromShapeAndRate(1, 1).Named("initialStatePrecision");
             initialStatePrecision.AddAttribute(new PointEstimate());
+            initialStatePrecision.InitialiseTo(Gamma.PointMass(1));
             var stateNoisePrecision = Variable.GammaFromShapeAndRate(1, 1).Named("stateNoisePrecision");
             stateNoisePrecision.AddAttribute(new PointEstimate());
+            stateNoisePrecision.InitialiseTo(Gamma.PointMass(1));
 
             var state = Variable.Array<double>(sessionOfPlayer).Named("state");
             using (var sessionBlock = Variable.ForEach(sessionOfPlayer))
@@ -317,6 +320,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             int previousIteration = 0;
             engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs args)
             {

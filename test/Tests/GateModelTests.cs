@@ -650,6 +650,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double Avariance = 3;
             Variable<double> B = Variable.GaussianFromMeanAndVariance(0, 1000);
             B.AddAttribute(new PointEstimate());
+            B.InitialiseTo(Gaussian.PointMass(0));
             if (useSwitch)
             {
                 double[] nodes = new double[5];
@@ -672,6 +673,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable.ConstrainEqualRandom(product, productLike);
             }
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             return engine.Infer<Gaussian>(B).Point;
         }
 
@@ -691,6 +693,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double Avariance = 3;
             Variable<double> B = Variable.GammaFromShapeAndRate(1, 1);
             B.AddAttribute(new PointEstimate());
+            B.InitialiseTo(Gamma.PointMass(1));
             if (useSwitch)
             {
                 double[] nodes = new double[5];
@@ -713,6 +716,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable.ConstrainEqualRandom(product, productLike);
             }
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             return engine.Infer<Gamma>(B).Point;
         }
 
@@ -733,14 +737,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> offset = Variable.GaussianFromMeanAndVariance(0, 1000);
             offset.Name = nameof(offset);
             offset.AddAttribute(new PointEstimate());
+            offset.InitialiseTo(Gaussian.PointMass(0));
             //offset.ObservedValue = 0;
             Variable<double> multiplier = Variable.GaussianFromMeanAndVariance(1, 1);
             multiplier.Name = nameof(multiplier);
             multiplier.AddAttribute(new PointEstimate());
+            multiplier.InitialiseTo(Gaussian.PointMass(1));
             //multiplier.ObservedValue = 0.5;
             Variable<double> precision = Variable.GammaFromShapeAndRate(1, 1);
             precision.Name = nameof(precision);
             precision.AddAttribute(new PointEstimate());
+            precision.InitialiseTo(Gamma.PointMass(1));
             Range item = new Range(2);
             VariableArray<double> performance = Variable.Array<double>(item);
             performance.Name = nameof(performance);
@@ -778,6 +785,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             data.ObservedValue = Util.ArrayInit(item.SizeAsInt, i => (double)i/item.SizeAsInt);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.Compiler.GivePriorityTo(typeof(GaussianProductOp_PointB));
             engine.Compiler.GivePriorityTo(typeof(GaussianOp_PointPrecision));
             engine.ShowProgress = false;

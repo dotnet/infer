@@ -32,24 +32,26 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// All variables that have been assigned to so far
         /// </summary>
-        private Set<IVariableDeclaration> variablesAssigned = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly Set<IVariableDeclaration> variablesAssigned = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
-        private Set<IVariableDeclaration> variablesLackingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
+        private readonly Set<IVariableDeclaration> variablesLackingVariableFactor = new Set<IVariableDeclaration>(ReferenceEqualityComparer<IVariableDeclaration>.Instance);
 
         private Set<IExpression> targetsOfCurrentAssignment;
 
-        private Dictionary<object, IVariableDeclaration> useOfVariable =
+        private readonly Dictionary<object, IVariableDeclaration> useOfVariable =
             new Dictionary<object, IVariableDeclaration>(ReferenceEqualityComparer<object>.Instance);
 
-        private Dictionary<object, IVariableDeclaration> marginalOfVariable =
+        private readonly Dictionary<object, IVariableDeclaration> marginalOfVariable =
             new Dictionary<object, IVariableDeclaration>(ReferenceEqualityComparer<object>.Instance);
 
-        private IAlgorithm algorithmDefault;
+        private readonly ModelCompiler compiler;
+        private readonly IAlgorithm algorithmDefault;
         private VariableAnalysisTransform analysis;
 
-        public VariableTransform(IAlgorithm algorithm)
+        public VariableTransform(ModelCompiler compiler)
         {
-            this.algorithmDefault = algorithm;
+            this.compiler = compiler;
+            this.algorithmDefault = compiler.Algorithm;
         }
 
         public override ITypeDeclaration Transform(ITypeDeclaration itd)
@@ -145,7 +147,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 stmts = Containers.WrapWithContainers(stmts, missing.outputs);
                 context.AddStatementsBeforeAncestorIndex(ancIndex, stmts);
             }
-            bool isPointEstimate = context.InputAttributes.Has<PointEstimate>(ivd);
+            bool hasPointEstimate = context.InputAttributes.Has<PointEstimate>(ivd);
+            if (hasPointEstimate && firstTime)
+            {
+                if (!context.InputAttributes.Has<InitialiseTo>(ivd))
+                {
+                    Error($"{ivd.Name} has {nameof(PointEstimate)} but is not initialised");
+                }
+                if (!compiler.InitialisationAffectsSchedule)
+                {
+                    Error($"{ivd.Name} has {nameof(PointEstimate)} but {nameof(ModelCompiler.InitialisationAffectsSchedule)} is false");
+                }
+            }
             if (this.analysis.variablesExcludingVariableFactor.Contains(ivd))
             {
                 this.variablesLackingVariableFactor.Add(ivd);
@@ -153,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 useOfVariable[ivd] = ivd;
                 return;
             }
-            if (isDerived && !isInferred && !isPointEstimate)
+            if (isDerived && !isInferred && !hasPointEstimate)
                 return;
 
             IExpression useExpr2 = null;
@@ -238,8 +251,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             else
             {
                 Delegate d = algorithm.GetVariableFactor(isDerived, it != null);
-                if (isPointEstimate)
+                if (hasPointEstimate)
+                {
                     d = new Models.FuncOut<PlaceHolder, PlaceHolder, PlaceHolder>(Clone.VariablePoint);
+                }
                 if (it == null)
                 {
                     variableFactorExpr = Builder.StaticGenericMethod(d, genArgs, defExpr, marginalExpr);
@@ -254,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             context.InputAttributes.CopyObjectAttributesTo<Algorithm>(ivd, context.OutputAttributes, variableFactorExpr);
             if (isStochastic)
                 context.OutputAttributes.Set(variableFactorExpr, new IsVariableFactor());
-            var assignStmt = Builder.AssignStmt(useExpr2 == null ? useExpr : useExpr2, variableFactorExpr);
+            var assignStmt = Builder.AssignStmt(useExpr2 ?? useExpr, variableFactorExpr);
             context.AddStatementAfterCurrent(assignStmt);
         }
 

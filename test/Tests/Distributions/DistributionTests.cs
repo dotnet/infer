@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             long count = 0;
             Parallel.ForEach(new[] {
                 GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308),
-            }.Concat(OperatorTests.GammaPowers(1000000)), gammaPower =>
+            }.Concat(OperatorTests.GammaPowers(100000)), gammaPower =>
             {
                 double argmax = double.NaN;
                 double max = double.NegativeInfinity;

@@ -522,6 +522,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<Vector> a = Variable.Random(aPrior).Named("a");
             Variable<double> b = Variable.Random(bPrior).Named("b");
             b.AddAttribute(new PointEstimate());
+            b.InitialiseTo(Gaussian.PointMass(bMean));
             Variable<Vector> x = Variable.VectorTimesScalar(a, b).Named("x");
             Vector xMean = Vector.FromArray(7.7, 8.8);
             PositiveDefiniteMatrix xVariance = new PositiveDefiniteMatrix(new double[,] { { 9, 1 }, { 1, 9 } });
@@ -529,6 +530,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable.ConstrainEqualRandom(x, xLike);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             var bActual = engine.Infer<Gaussian>(b).Point;
 
             // compute expected value
@@ -4078,6 +4080,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Variable<double> precisionT = Variable.Random(new TruncatedGamma(1, 1, 0, double.PositiveInfinity)).Named("precision");
                 precisionT.AddAttribute(new PointEstimate());
+                precisionT.InitialiseTo(Gamma.PointMass(1.0));
                 precision = Variable.Copy(precisionT);
                 precision.AddAttribute(new MarginalPrototype(new Gamma()));
             }
@@ -4085,6 +4088,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 precision = Variable.GammaFromShapeAndScale(1, 1).Named("precision");
                 precision.AddAttribute(new PointEstimate());
+                precision.InitialiseTo(Gamma.PointMass(1.0));
             }
             Variable<int> xCount = Variable.New<int>().Named("xCount");
             Range item = new Range(xCount).Named("item");
@@ -4097,6 +4101,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.ShowProgress = false;
             //engine.Compiler.GivePriorityTo(typeof(PointEstimatorForwardOp_Mean<>));
             //SecantBufferData<Gamma>.debug = true;
@@ -4116,6 +4121,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             if (meanIsPointEstimate)
             {
                 mean.AddAttribute(new PointEstimate());
+                mean.InitialiseTo(Gaussian.PointMass(0));
                 // Gamma(6, 0.1761)[mean=1.057][mode=0.8805]
                 precisionExpectedMode = new double[] { 0.8591349795002973, 0.880501882579348 };
                 precisionExpectedMean = new double[] { 1.030961977426691, 1.056602354669931 };
@@ -4148,6 +4154,55 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        /// <summary>
+        /// Tests a case where Rprop converges slowly.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "OpenBug")]
+        public void PointEstimateTest()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");
+            Variable<double> y = Variable.GaussianFromMeanAndVariance(0, 1).Named("y");
+            Variable.ConstrainEqualRandom(x, new Gaussian(-0.03945, 0.03732));
+            Variable.ConstrainEqualRandom(y, new Gaussian(-0.08798, 0.07365));
+            var xNoisy = Variable.GaussianFromMeanAndVariance(x, 1e-8);
+            xNoisy.Name = nameof(xNoisy);
+            Variable.ConstrainTrue(xNoisy < y);
+            //Variable.ConstrainTrue(xNoisy > 0);
+            //x.InitialiseTo(Gaussian.PointMass(1));
+            //y.InitialiseTo(Gaussian.PointMass(10));
+            x.InitialiseTo(Gaussian.PointMass(-0.0588738));
+            y.InitialiseTo(Gaussian.PointMass(-0.0584));
+            x.AddAttribute(new PointEstimate());
+            y.AddAttribute(new PointEstimate());
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+            //engine.Compiler.UseExistingSourceFiles = true;
+            // TODO: throw if InitialisationAffectsSchedule is not true
+            engine.Compiler.InitialisationAffectsSchedule = true;
+            engine.Compiler.GivePriorityTo(typeof(GaussianFromMeanAndVarianceOp_PointVariance));
+            double xPrevious = double.NaN, yPrevious = double.NaN;
+            List<string> lines = new List<string>();
+            for (int iter = 1; iter <= 20000; iter++)
+            {
+                engine.NumberOfIterations = iter;
+                double xActual = engine.Infer<Gaussian>(x).Point;
+                double yActual = engine.Infer<Gaussian>(y).Point;
+                //Trace.WriteLine($"{iter} {xActual} {yActual}");
+                string line = $"{xActual}, {yActual}";
+                lines.Add(line);
+                if (MMath.AbsDiff(xActual, xPrevious) < 1e-8 && MMath.AbsDiff(yActual, yPrevious) < 1e-8)
+                {
+                    Trace.WriteLine($"Converged after {iter} iterations");
+                    break;
+                }
+                xPrevious = xActual;
+                yPrevious = yActual;
+                if (iter == 10000) throw new Exception("Did not converge fast enough");
+            }
+            //System.IO.File.WriteAllLines("points.csv", lines);
+        }
 
         [Fact]
         public void VectorGaussianEvidenceTest()

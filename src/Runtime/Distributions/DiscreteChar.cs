@@ -104,6 +104,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Constructors
 
+        [Construction("WrappedDistribution")]
         public DiscreteChar(ImmutableDiscreteChar wrappedDistribution)
         {
             WrappedDistribution = wrappedDistribution;

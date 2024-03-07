@@ -1342,6 +1342,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 {
                     if (x < 1)
                     {
+                        // This case is needed by TruncatedGamma_GetMeanPower_WithinBounds
                         double logx = Math.Log(x);
                         return GammaUpperSeries1(a, x, logx, regularized) + GammaUpperConFrac2(a, 1, regularized);
                     }
@@ -1622,7 +1623,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 double term;
                 if (a + i == 0)
                 {
-                    term = -Math.Log(x);
+                    term = -logx;
                 }
                 else
                 {

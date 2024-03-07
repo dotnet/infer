@@ -2796,6 +2796,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Range rows = new Range(length).Named("i");
             VariableArray<double> states = Variable.Array<double>(rows).Named("states");
             states.AddAttribute(new PointEstimate());
+            states[rows].InitialiseTo(Gaussian.PointMass(1));
             VariableArray<Gaussian> observation = Variable.Array<Gaussian>(rows).Named("observations");
 
             using (ForEachBlock rowBlock = Variable.ForEach(rows))
@@ -2822,6 +2823,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             };
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.NumberOfIterations = 150;
             if (false)
             {
@@ -2975,6 +2977,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<double> observation = Variable.Array<double>(rows).Named("observations");
             Variable<double> shift = Variable.GaussianFromMeanAndVariance(0, 1).Named("shift");
             shift.AddAttribute(new PointEstimate());
+            shift.InitialiseTo(Gaussian.PointMass(0));
 
             using (ForEachBlock rowBlock = Variable.ForEach(rows))
             {
@@ -2995,6 +2998,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             observation.ObservedValue = Util.ArrayInit(length, i => (double)i);
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             //engine.Algorithm = new VariationalMessagePassing();
             engine.Compiler.FreeMemory = false;
             //engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Secant));
@@ -3082,7 +3086,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             //shift.AddAttribute(new DivideMessages(false));
             //shift2.AddAttribute(new DivideMessages(false));
             shift.AddAttribute(new PointEstimate());
+            shift.InitialiseTo(Gaussian.PointMass(0));
             shift2.AddAttribute(new PointEstimate());
+            shift2.InitialiseTo(Gaussian.PointMass(0));
 
             double[] observationValues = new double[length];
             for (int i = 0; i < length; i++)
@@ -3092,6 +3098,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             observation.ObservedValue = observationValues;
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             engine.ShowProgress = false;
             //engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Secant));
             engine.OptimiseForVariables = new List<IVariable>() { states, shift, shift2 };
@@ -3165,7 +3172,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             //Variable<double> shiftPoint = Variable<double>.Factor(PointEstimator.Forward<double>, shift).Named("shiftPoint");
             //Variable<double> shiftPoint = Variable<double>.Factor(PointEstimator.Forward2<double>, shift, (double)length).Named("shiftPoint");
             // when using PointEstimator.Forward with Secant, should always initialize
-            //shiftPoint.InitialiseTo(Gaussian.PointMass(0));
+            shift.InitialiseTo(Gaussian.PointMass(0));
             shift.AddAttribute(new PointEstimate());
             var precisionRate = Variable.GammaFromShapeAndRate(1, 1);
             Variable<double> precision = Variable.GammaFromShapeAndRate(1, precisionRate).Named("precision");
@@ -3201,6 +3208,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             observation.ObservedValue = observationValues;
 
             InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.InitialisationAffectsSchedule = true;
             //engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Mean<>));
             engine.Compiler.GivePriorityTo(typeof(VariablePointOp_Rprop));
             //engine.OptimiseForVariables = new List<IVariable>() { states, shift, precision };
