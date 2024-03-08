@@ -102,7 +102,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             using (Variable.ForEach(observation))
             {
                 VariableArray<double> products = Variable.Array<double>(trait).Named("products");
-                products[trait] = userTraits[userData[observation]][trait] * itemTraits[itemData[observation]][trait];
+                var rawProduct = userTraits[userData[observation]][trait] * itemTraits[itemData[observation]][trait];
+                products[trait] = Variable<double>.Factor(Damp.Backward<double>, rawProduct, numTraits > 2 ? 0.5 : 1.0);
 
                 Variable<double> bias = (userBias[userData[observation]] + itemBias[itemData[observation]]).Named("bias");
                 Variable<double> affinity = (bias + Variable.Sum(products).Named("productSum")).Named("affinity");
