@@ -156,6 +156,13 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// </remarks>
         public CompilerChoice CompilerChoice { get; set; } = CompilerChoice.Auto;
 
+#if ROSLYN
+        /// <summary>
+        /// Resolves reference to assembly for Roslyn. 
+        /// </summary>
+        public Func<Assembly, byte[]> ReferenceResolver;
+#endif
+
         private bool useParallelForLoops = false;
 
         /// <summary>
@@ -822,7 +829,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 includeDebugInformation = IncludeDebugInformation,
                 optimizeCode = !IncludeDebugInformation, // tie these together for now
                 showProgress = ShowProgress,
-                compilerChoice = CompilerChoice
+                compilerChoice = CompilerChoice,
+                ReferenceResolver = ReferenceResolver,
             };
             CompilerResults cr = cc.WriteAndCompile(itds);
             // Examine the compilation results and stop if errors
