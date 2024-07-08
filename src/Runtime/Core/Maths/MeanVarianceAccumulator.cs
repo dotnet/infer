@@ -11,7 +11,7 @@ namespace Microsoft.ML.Probabilistic.Math
     /// Class for accumulating weighted noisy scalar observations,
     /// and computing sample count, mean, and variance
     /// </summary>
-    public class MeanVarianceAccumulator : Accumulator<double>, SettableTo<MeanVarianceAccumulator>, ICloneable
+    public class MeanVarianceAccumulator : Accumulator<double>, Accumulator<MeanVarianceAccumulator>, SettableTo<MeanVarianceAccumulator>, ICloneable
     {
         /// <summary>
         /// The sample mean
@@ -84,6 +84,15 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         /// <summary>
+        /// Adds all items in another accumulator to this accumulator.
+        /// </summary>
+        /// <param name="that">Another estimator</param>
+        public void Add(MeanVarianceAccumulator that)
+        {
+            Add(that.Mean, that.Variance, that.Count);
+        }
+
+        /// <summary>
         /// Clears the accumulator
         /// </summary>
         public void Clear()
@@ -124,7 +133,7 @@ namespace Microsoft.ML.Probabilistic.Math
     /// <summary>
     /// Decorator of MeanVarianceAccumulator that does not add if any input is NaN.
     /// </summary>
-    public class MeanVarianceAccumulatorSkipNaNs : Accumulator<double>, SettableTo<MeanVarianceAccumulatorSkipNaNs>, ICloneable
+    public class MeanVarianceAccumulatorSkipNaNs : Accumulator<double>, Accumulator<MeanVarianceAccumulatorSkipNaNs>, SettableTo<MeanVarianceAccumulatorSkipNaNs>, ICloneable
     {
         private MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
 
@@ -142,6 +151,15 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Sample count
         /// </summary>
         public double Count { get { return mva.Count; } }
+
+        /// <summary>
+        /// Adds all items in another accumulator to this accumulator.
+        /// </summary>
+        /// <param name="that">Another estimator</param>
+        public void Add(MeanVarianceAccumulatorSkipNaNs that)
+        {
+            mva.Add(that.mva);
+        }
 
         /// <summary>
         /// Adds an observation

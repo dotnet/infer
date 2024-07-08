@@ -94,4 +94,80 @@ namespace Microsoft.ML.Probabilistic.Math
             return $"MeanAccumulator(Mean={Mean}, Count={Count})";
         }
     }
+
+    /// <summary>
+    /// Decorator of MeanVarianceAccumulator that does not add if any input is NaN.
+    /// </summary>
+    public class MeanAccumulatorSkipNaNs : Accumulator<double>, Accumulator<MeanAccumulatorSkipNaNs>, SettableTo<MeanAccumulatorSkipNaNs>, ICloneable
+    {
+        private MeanAccumulator mva = new MeanAccumulator();
+
+        /// <summary>
+        /// The sample mean
+        /// </summary>
+        public double Mean { get { return mva.Mean; } }
+
+        /// <summary>
+        /// Sample count
+        /// </summary>
+        public double Count { get { return mva.Count; } }
+
+        /// <summary>
+        /// Adds all items in another accumulator to this accumulator.
+        /// </summary>
+        /// <param name="that">Another estimator</param>
+        public void Add(MeanAccumulatorSkipNaNs that)
+        {
+            mva.Add(that.mva);
+        }
+
+        /// <summary>
+        /// Adds an observation
+        /// </summary>
+        /// <param name="x"></param>
+        public void Add(double x)
+        {
+            if (!double.IsNaN(x))
+                mva.Add(x);
+        }
+
+        /// <summary>
+        /// Adds a weighted observation.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="weight"></param>
+        public void Add(double x, double weight)
+        {
+            if (!double.IsNaN(x) && !double.IsNaN(weight))
+                mva.Add(x, weight);
+        }
+
+        /// <summary>
+        /// Clears the accumulator
+        /// </summary>
+        public void Clear()
+        {
+            mva.Clear();
+        }
+
+        /// <summary>
+        /// Sets the state of this estimator from the specified estimator.
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetTo(MeanAccumulatorSkipNaNs value)
+        {
+            this.mva.SetTo(value.mva);
+        }
+
+        /// <summary>
+        /// Returns a clone of this estimator.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            MeanAccumulatorSkipNaNs result = new MeanAccumulatorSkipNaNs();
+            result.SetTo(this);
+            return result;
+        }
+    }
 }

@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// <summary>
     /// Estimates a Bernoulli distribution from samples.
     /// </summary>
-    public class BernoulliEstimator : Estimator<Bernoulli>, Accumulator<Bernoulli>, Accumulator<bool>, SettableTo<BernoulliEstimator>, ICloneable
+    public class BernoulliEstimator : Estimator<Bernoulli>, Accumulator<BernoulliEstimator>, Accumulator<Bernoulli>, Accumulator<bool>, SettableTo<BernoulliEstimator>, ICloneable
     {
         /// <summary>
         /// Number of samples
@@ -33,6 +33,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (N == 0) return Bernoulli.Uniform();
             result.SetProbTrue(NProbTrue/N);
             return result;
+        }
+
+        /// <summary>
+        /// Adds all items in another estimator to this estimator.
+        /// </summary>
+        /// <param name="that">Another estimator</param>
+        public void Add(BernoulliEstimator that)
+        {
+            NProbTrue += that.NProbTrue;
+            N += that.N;
         }
 
         /// <summary>
