@@ -100,17 +100,17 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </summary>
     public class MeanAccumulatorSkipNaNs : Accumulator<double>, Accumulator<MeanAccumulatorSkipNaNs>, SettableTo<MeanAccumulatorSkipNaNs>, ICloneable
     {
-        private MeanAccumulator mva = new MeanAccumulator();
+        public MeanAccumulator meanAccumulator = new MeanAccumulator();
 
         /// <summary>
         /// The sample mean
         /// </summary>
-        public double Mean { get { return mva.Mean; } }
+        public double Mean { get { return meanAccumulator.Mean; } }
 
         /// <summary>
         /// Sample count
         /// </summary>
-        public double Count { get { return mva.Count; } }
+        public double Count { get { return meanAccumulator.Count; } }
 
         /// <summary>
         /// Adds all items in another accumulator to this accumulator.
@@ -118,7 +118,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="that">Another estimator</param>
         public void Add(MeanAccumulatorSkipNaNs that)
         {
-            mva.Add(that.mva);
+            meanAccumulator.Add(that.meanAccumulator);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Microsoft.ML.Probabilistic.Math
         public void Add(double x)
         {
             if (!double.IsNaN(x))
-                mva.Add(x);
+                meanAccumulator.Add(x);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Microsoft.ML.Probabilistic.Math
         public void Add(double x, double weight)
         {
             if (!double.IsNaN(x) && !double.IsNaN(weight))
-                mva.Add(x, weight);
+                meanAccumulator.Add(x, weight);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </summary>
         public void Clear()
         {
-            mva.Clear();
+            meanAccumulator.Clear();
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="value"></param>
         public void SetTo(MeanAccumulatorSkipNaNs value)
         {
-            this.mva.SetTo(value.mva);
+            this.meanAccumulator.SetTo(value.meanAccumulator);
         }
 
         /// <summary>
