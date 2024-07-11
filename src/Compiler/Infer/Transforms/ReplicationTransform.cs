@@ -343,7 +343,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 if (embeddedLoopIndices.Contains(currentLoop))
                 {
-                    string warningText = "This model will consume excess memory due to the indexing expression {0} inside of a loop over {1}. Try simplifying this expression in your model, perhaps by creating auxiliary index arrays.";
+                    string warningText = "This model will consume excess memory due to the indexing expression {0} inside of a loop over {1}. Try simplifying this expression in your model, perhaps by creating auxiliary index arrays.  If the index is a function of {1}, try creating an array over {1} holding the index.";
                     Warning(string.Format(warningText, originalExpr, loopVar.Name));
                 }
                 // split expr into a target and extra indices, where target will be replicated and extra indices will be added later
