@@ -3,24 +3,31 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+
 using Microsoft.ML.Probabilistic.Distributions;
 
 namespace Microsoft.ML.Probabilistic.Math
 {
     /// <summary>
-    /// Class for accumulating weighted scalar observations and computing sample count and mean
+    /// Class for accumulating weighted scalar observations and computing sample count and mean.
+    /// Unlike <see cref="MeanAccumulator"/>, this class is associative but susceptible to overflow.
     /// </summary>
-    public class MeanAccumulator : Accumulator<double>, Accumulator<MeanAccumulator>, SettableTo<MeanAccumulator>, ICloneable
+    public class MeanAccumulatorAssociative : Accumulator<double>, Accumulator<MeanAccumulatorAssociative>, SettableTo<MeanAccumulatorAssociative>, ICloneable
     {
         /// <summary>
-        /// The sample mean
+        /// The sample sum
         /// </summary>
-        public double Mean;
+        public double Sum;
 
         /// <summary>
         /// Sample count
         /// </summary>
         public double Count;
+
+        /// <summary>
+        /// The sample sum
+        /// </summary>
+        public double Mean => Sum / Count;
 
         /// <summary>
         /// Adds an observation
@@ -38,15 +45,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="weight"></param>
         public void Add(double x, double weight)
         {
-            if (Count == 0)
-            {
-                Mean = x;
-            }
-            else
-            {
-                // This function ensures that the mean is within the bounds of the data and is monotonic in any single x.
-                Mean = MMath.WeightedAverage(Count, Mean, weight, x);
-            }
+            Sum += x;
             Count += weight;
         }
 
@@ -54,9 +53,9 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Adds all observations added to another accumulator.
         /// </summary>
         /// <param name="meanAccumulator"></param>
-        public void Add(MeanAccumulator meanAccumulator)
+        public void Add(MeanAccumulatorAssociative meanAccumulator)
         {
-            Add(meanAccumulator.Mean, meanAccumulator.Count);
+            Add(meanAccumulator.Sum, meanAccumulator.Count);
         }
 
         /// <summary>
@@ -65,16 +64,16 @@ namespace Microsoft.ML.Probabilistic.Math
         public void Clear()
         {
             Count = 0;
-            Mean = 0;
+            Sum = 0;
         }
 
         /// <summary>
         /// Sets the state of this estimator from the specified estimator.
         /// </summary>
         /// <param name="value"></param>
-        public void SetTo(MeanAccumulator value)
+        public void SetTo(MeanAccumulatorAssociative value)
         {
-            Mean = value.Mean;
+            Sum = value.Sum;
             Count = value.Count;
         }
 
@@ -84,23 +83,23 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public object Clone()
         {
-            MeanAccumulator result = new MeanAccumulator();
+            MeanAccumulatorAssociative result = new MeanAccumulatorAssociative();
             result.SetTo(this);
             return result;
         }
 
         public override string ToString()
         {
-            return $"MeanAccumulator(Mean={Mean}, Count={Count})";
+            return $"MeanAccumulatorAssociative(Mean={Mean}, Count={Count})";
         }
     }
 
     /// <summary>
     /// Decorator of MeanVarianceAccumulator that does not add if any input is NaN.
     /// </summary>
-    public class MeanAccumulatorSkipNaNs : Accumulator<double>, Accumulator<MeanAccumulatorSkipNaNs>, SettableTo<MeanAccumulatorSkipNaNs>, ICloneable
+    public class MeanAccumulatorAssociativeSkipNaNs : Accumulator<double>, Accumulator<MeanAccumulatorAssociativeSkipNaNs>, SettableTo<MeanAccumulatorAssociativeSkipNaNs>, ICloneable
     {
-        public MeanAccumulator meanAccumulator = new MeanAccumulator();
+        public MeanAccumulatorAssociative meanAccumulator = new MeanAccumulatorAssociative();
 
         /// <summary>
         /// The sample mean
@@ -116,7 +115,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Adds all items in another accumulator to this accumulator.
         /// </summary>
         /// <param name="that">Another estimator</param>
-        public void Add(MeanAccumulatorSkipNaNs that)
+        public void Add(MeanAccumulatorAssociativeSkipNaNs that)
         {
             meanAccumulator.Add(that.meanAccumulator);
         }
@@ -154,7 +153,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Sets the state of this estimator from the specified estimator.
         /// </summary>
         /// <param name="value"></param>
-        public void SetTo(MeanAccumulatorSkipNaNs value)
+        public void SetTo(MeanAccumulatorAssociativeSkipNaNs value)
         {
             this.meanAccumulator.SetTo(value.meanAccumulator);
         }
@@ -165,7 +164,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public object Clone()
         {
-            MeanAccumulatorSkipNaNs result = new MeanAccumulatorSkipNaNs();
+            MeanAccumulatorAssociativeSkipNaNs result = new MeanAccumulatorAssociativeSkipNaNs();
             result.SetTo(this);
             return result;
         }
