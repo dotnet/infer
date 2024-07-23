@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.1">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{44d352de-299b-4409-9371-949ac48b4225}</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>InferNetExamples.py</StartupFile>
+    <SearchPath>..\..\Compiler</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <InterpreterId>IronPython|2.7-32</InterpreterId>
+    <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
+    <AssemblyName>InferNetExamples</AssemblyName>
+    <Name>InferNetExamples</Name>
+    <RootNamespace>InferNetExamples</RootNamespace>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <DebugStdLib>False</DebugStdLib>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="InferNetExamples.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BayesPointMachine.py" />
+    <Compile Include="ClinicalTrial.py" />
+    <Compile Include="GaussianMixture.py" />
+    <Compile Include="GaussianRanges.py" />
+    <Compile Include="InferNetWrapper.py" />
+    <Compile Include="TruncatedGaussian.py" />
+    <Compile Include="TwoCoins.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="IronPython|2.7-32" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
