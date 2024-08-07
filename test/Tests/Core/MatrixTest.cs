@@ -1831,6 +1831,45 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void SetToLeastSquaresTest()
         {
             Matrix X = Matrix.FromArray(new double[,] { { 1, -2 }, { 1, -1 } });
+            DenseVector Y = DenseVector.FromArray(3, 4);
+            DenseVector A = DenseVector.Zero(2);
+            A.SetToLeastSquares(Y, X);
+            // X[1] - X[0] = {0, 1} therefore A[1] = Y[1]-Y[0]
+            //A[1] = Y[1] - Y[0];
+            //A[0] = (Y[1] - X[1,1] * A[1])/X[1,0];
+            Assert.Equal(1.0, A[1]);
+            Assert.Equal((Y[1] - X[1,1] * A[1]) / X[1,0], A[0]);
+            DenseVector Y2 = DenseVector.Zero(2);
+            Y2.SetToProduct(X, A);
+            double maxdiff = Y.MaxDiff(Y2);
+            Assert.True(maxdiff < 1e-4);
+        }
+
+        [Fact]
+        public void SetToLeastSquaresTest2()
+        {
+            Matrix X = Matrix.FromArray(new double[,] { { 1 }, { 2 } });
+            DenseVector Y = DenseVector.FromArray(3, 2);
+            DenseVector A = DenseVector.Zero(1);
+            A.SetToLeastSquares(Y, X);
+            Assert.Equal(1.4, A[0]);
+        }
+
+        [Fact]
+        public void SetToMinNormSolutionTest()
+        {
+            Matrix X = Matrix.FromArray(new double[,] { { 1 , 2 } });
+            DenseVector Y = DenseVector.FromArray(3);
+            DenseVector A = DenseVector.Zero(2);
+            A.SetToMinNormSolution(Y, X);
+            Assert.Equal(0.6, A[0]);
+            Assert.Equal(1.2, A[1]);
+        }
+
+        [Fact]
+        public void SetToLeastSquares_AvoidsOverflow()
+        {
+            Matrix X = Matrix.FromArray(new double[,] { { 1, -2 }, { 1, -1 } });
             DenseVector Y = DenseVector.FromArray(double.MinValue, -31);
             DenseVector Yorig = (DenseVector)Y.Clone();
             DenseVector A = DenseVector.Zero(2);

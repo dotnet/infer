@@ -2410,6 +2410,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>The smallest squared singular value of X.  This is useful for detecting an ill-conditioned problem.</returns>
         public double SetToLeastSquares(DenseVector Y, Matrix X)
         {
+            if (X.Rows < X.Cols) return SetToMinNormSolution(Y, X);
             DenseVector result = this;
             // for best numerical accuracy, we use the SVD of X: USV' = X
             // A = inv(X'X)*X'Y
@@ -2479,6 +2480,55 @@ namespace Microsoft.ML.Probabilistic.Math
                 residual.SetToDifference(Y, residual);
                 yUS.SetToProduct(residual, US);
                 result.SetToSum(result, V * yUS);
+            }
+            return minSingularValueSqr;
+        }
+
+        /// <summary>
+        /// Solve Y = X*A
+        /// </summary>
+        /// <param name="Y">Vector of target values</param>
+        /// <param name="X">Landscape matrix</param>
+        /// <returns>The smallest squared singular value of X.  This is useful for detecting an ill-conditioned problem.</returns>
+        public double SetToMinNormSolution(DenseVector Y, Matrix X)
+        {
+            DenseVector result = this;
+            // for best numerical accuracy, we use the SVD of X': VSU' = X'
+            // A = X'*inv(XX')*Y
+            //   = VSU'*inv(USV'VSU')*Y
+            //   = VSU'U*inv(S^2)*U'Y
+            //   = VS*inv(S^2)*U'Y
+            Matrix U = new Matrix(X.Rows, X.Rows);
+            Matrix VS = X.Transpose();
+            U.SetToRightSingularVectors(VS);
+            double minSingularValueSqr = double.PositiveInfinity;
+            for (int k = 0; k < VS.Cols; k++)
+            {
+                double singularValueSqr = 0;
+                for (int j = 0; j < VS.Rows; j++)
+                {
+                    singularValueSqr += VS[j, k] * VS[j, k];
+                }
+                //Debug.WriteLine("singularValueSqr[{0}] = {1}", k, singularValueSqr);
+                minSingularValueSqr = System.Math.Min(minSingularValueSqr, singularValueSqr);
+                if (singularValueSqr > 0)
+                {
+                    for (int j = 0; j < VS.Rows; j++)
+                    {
+                        VS[j, k] /= singularValueSqr;
+                    }
+                }
+            }
+            DenseVector yU = DenseVector.Zero(VS.Cols);
+            yU.SetToProduct(Y, U);
+            result.SetToProduct(VS, yU);
+            if (!result.Any(x => double.IsNaN(x) || double.IsInfinity(x)))
+            {
+                // iterate again on the residual for higher accuracy
+                var residual = X * result;
+                residual.SetToDifference(Y, residual);
+                yU.SetToProduct(residual, U);
+                result.SetToSum(result, VS * yU);
             }
             return minSingularValueSqr;
         }
