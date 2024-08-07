@@ -16,9 +16,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             public int Value, Index;
 
-            public int CompareTo(Test that)
+            public int CompareTo(Test other)
             {
-                return Value.CompareTo(that.Value);
+                return Value.CompareTo(other.Value);
             }
 
             public Test(int value)

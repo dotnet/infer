@@ -2362,12 +2362,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LinearRegressionTest()
         {
             Vector[] data = new Vector[]
-                {
-                    Vector.FromArray(1.0, -3), Vector.FromArray(1.0, -2.1),
-                    Vector.FromArray(1.0, -1.3), Vector.FromArray(1.0, 0.5),
-                    Vector.FromArray(1.0, 1.2), Vector.FromArray(1.0, 3.3),
-                    Vector.FromArray(1.0, 4.4), Vector.FromArray(1.0, 5.5)
-                };
+            {
+                Vector.FromArray(1.0, -3), Vector.FromArray(1.0, -2.1),
+                Vector.FromArray(1.0, -1.3), Vector.FromArray(1.0, 0.5),
+                Vector.FromArray(1.0, 1.2), Vector.FromArray(1.0, 3.3),
+                Vector.FromArray(1.0, 4.4), Vector.FromArray(1.0, 5.5)
+            };
 
             Range rows = new Range(data.Length);
 
@@ -2375,13 +2375,25 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             Variable<Vector> w = Variable.VectorGaussianFromMeanAndPrecision(
                 Vector.FromArray(new double[] {0, 0}),
-                PositiveDefiniteMatrix.Identity(2)).Named("w");
+                PositiveDefiniteMatrix.IdentityScaledBy(2, 1e-10)).Named("w");
             VariableArray<double> y = Variable.Array<double>(rows);
             y[rows] = Variable.GaussianFromMeanAndVariance(Variable.InnerProduct(x[rows], w), 1.0);
             y.ObservedValue = new double[] {30, 45, 40, 80, 70, 100, 130, 110};
             InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
             VectorGaussian postW = engine.Infer<VectorGaussian>(w);
             Console.WriteLine("Posterior over the weights: " + Environment.NewLine + postW);
+
+            Matrix X = new Matrix(data.Length, data[0].Count);
+            for (int i = 0; i < data.Length; i++)
+            {
+                X[i, 0] = data[i][0];
+                X[i, 1] = data[i][1];
+            }
+            DenseVector yVector = DenseVector.FromArray(y.ObservedValue);
+            DenseVector wVector = DenseVector.Zero(X.Cols);
+            wVector.SetToLeastSquares(yVector, X);
+            // This requires the prior to be weak.
+            Assert.True(postW.GetMean().MaxDiff(wVector) < 1e-6);
         }
 
 
