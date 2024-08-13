@@ -29,7 +29,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     using DirichletArray = DistributionRefArray<Dirichlet, Vector>;
     using Microsoft.ML.Probabilistic.Utilities;
     using Microsoft.ML.Probabilistic.Compiler.Transforms;
-    using System.IO;
     using Microsoft.ML.Probabilistic.Algorithms;
     using Microsoft.ML.Probabilistic.Models.Attributes;
     using Microsoft.ML.Probabilistic.Serialization;
@@ -2226,6 +2225,7 @@ new double[] {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 
                 x = Variable.Array(Variable.Array<double>(feature), item).Named("x");
                 w = Variable.Array<double>(feature).Named("w");
                 w[feature] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(feature);
+                //w.AddAttribute(new PointEstimate());
                 noise = Variable.New<double>().Named("noise");
                 offset = Variable.Observed(default(double[]), item).Named(nameof(offset));
                 var wSum = Variable.Sum(w).Named("wSum");
@@ -2246,6 +2246,7 @@ new double[] {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 
                 }
                 //w.AddAttribute(new DivideMessages(false));
                 engine.OptimiseForVariables = new IVariable[] { w };
+                engine.ShowProgress = false;
             }
             public void SetData(double[][] xdata, double[] ydata, double noiseVariance, double[] offsetData = null)
             {
@@ -2254,9 +2255,12 @@ new double[] {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 
                 this.y.ObservedValue = ydata;
                 if (offsetData != null) this.offset.ObservedValue = offsetData;
             }
+            public IReadOnlyList<Gaussian> GetW()
+            {
+                return engine.Infer<IReadOnlyList<Gaussian>>(w);
+            }
             public int GetNumberOfIterations(int maxIter)
             {
-                engine.ShowProgress = false;
                 List<Diffable> wResults = new List<Diffable>();
                 for (int iter = 1; iter <= maxIter; iter++)
                 {
@@ -2350,6 +2354,21 @@ new double[] {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 
                 }
                 Trace.WriteLine($"em={em} highest stable prec={highestStablePrecision}");
             }
+        }
+
+        /// <summary>
+        /// Use EP to solve SetToMinNormSolutionTest.
+        /// </summary>
+        [Fact]
+        public void FactorizedRegression3()
+        {
+            double[][] xData = new double[][] { new double[] { 1, 2 } };
+            double[] yData = new double[] { 3 };
+            var model = new FactorizedRegressionModel(1, 2);
+            model.SetData(xData, yData, 1e-10);
+            var w = model.GetW();
+            Assert.Equal(0.6, w[0].GetMean(), 4);
+            Assert.Equal(1.2, w[1].GetMean(), 4);
         }
 
         public static double[,] GetArray(double[][] array)
