@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
 using System.Threading.Tasks;
 using Microsoft.ML.Probabilistic.Compiler.Attributes;
@@ -25,6 +24,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             get { return "ParallelScheduleTransform"; }
         }
 
+        private IVariableDeclaration iterationVar;
+        private readonly bool catchExceptions;
+
+        public ParallelScheduleTransform(bool catchExceptions)
+        {
+            this.catchExceptions = catchExceptions;
+        }
+
         /// <summary>
         /// Converts 'for' loops with ParallelSchedule attributes into parallel for loops.
         /// </summary>
@@ -32,7 +39,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <returns>The converted statement</returns>
         protected override IStatement ConvertFor(IForStatement ifs)
         {
-            if (context.InputAttributes.Has<ConvergenceLoop>(ifs) || (ifs is IBrokenForStatement))
+            if (context.InputAttributes.Has<ConvergenceLoop>(ifs))
+            {
+                iterationVar = Recognizer.LoopVariable(ifs);
+                var fs = base.ConvertFor(ifs);
+                iterationVar = null;
+                return fs;
+            }
+            if (ifs is IBrokenForStatement)
                 return base.ConvertFor(ifs);
             IVariableDeclaration loopVar = Recognizer.LoopVariable(ifs);
             ParallelScheduleExpression pse = context.InputAttributes.Get<ParallelScheduleExpression>(loopVar);
@@ -68,8 +82,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Recognizer.ReverseLoopDirection(loopInBlock);
             var assignLoopVar = Builder.AssignStmt(Builder.VarDeclExpr(loopVar), Builder.ArrayIndex(itemsInBlock, Builder.VarRefExpr(loopVarInBlock)));
             loopInBlock.Body.Statements.Add(assignLoopVar);
-            ConvertStatements(loopInBlock.Body.Statements, ifs.Body.Statements);
-            //loopInBlock.Body.Statements.AddRange(ifs.Body.Statements);
+            if (catchExceptions)
+            {
+                var tryCatchStmt = Builder.TryCatchFinallyStmt();
+                var exceptionVar = Builder.VarDecl("ex", typeof(Exception));
+                var catchClause = Builder.CatchClause(exceptionVar);
+                tryCatchStmt.CatchClauses.Add(catchClause);
+                var iterationExpr = iterationVar == null ? (IExpression)Builder.DefaultExpr(typeof(int)) : Builder.VarRefExpr(iterationVar);
+                catchClause.Body.Statements.Add(Builder.ThrowStmt(Builder.NewObject(typeof(InferenceException),
+                    Builder.LiteralExpr(loopVar.Name), Builder.VarRefExpr(loopVar), iterationExpr, Builder.VarRefExpr(exceptionVar))));
+                ConvertStatements(tryCatchStmt.Try.Statements, ifs.Body.Statements);
+                loopInBlock.Body.Statements.Add(tryCatchStmt);
+            }
+            else
+            {
+                ConvertStatements(loopInBlock.Body.Statements, ifs.Body.Statements);
+            }
             IAnonymousMethodExpression bodyDelegate = Builder.AnonMethodExpr(typeof(Action<int>));
             bodyDelegate.Body = Builder.BlockStmt();
             bodyDelegate.Body.Statements.Add(loopInBlock);
