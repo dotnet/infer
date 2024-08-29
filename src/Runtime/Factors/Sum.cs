@@ -135,24 +135,47 @@ namespace Microsoft.ML.Probabilistic.Factors
             // get the mean and variance of sum of all the Gaussians;
             to_sum.GetMeanAndVarianceImproper(out double totalMean, out double totalVariance);
 
-            // subtract it off from the mean and variance of incoming Gaussian from Sum
-            double totalMsgMean = sumMean - totalMean;
-            double totalMsgVariance = sumVariance + totalVariance;
-
-            for (int i = 0; i < array.Count; i++)
+            double sumPrecTotalVariance = sum.Precision * totalVariance;
+            if (sum.Precision < 1 && sumPrecTotalVariance < 1)
             {
-                array[i].GetMeanAndVarianceImproper(out double meani, out double variancei);
-                double msgMean = totalMsgMean + meani;
-                double msgVariance = totalMsgVariance - variancei;
-                if (Math.Abs(msgVariance) < Math.Abs(totalMsgVariance) * 1e-10)
+                for (int i = 0; i < array.Count; i++)
                 {
-                    // Avoid loss of precision by recalculating the sum
-                    // This should happen for at most one i
-                    var (sumExceptMean, sumExceptVariance) = SumExcept(array, i);
-                    msgMean = sumMean - sumExceptMean;
-                    msgVariance = sumVariance + sumExceptVariance;
+                    array[i].GetMeanAndVarianceImproper(out double meani, out double variancei);
+                    double sumExceptVariance = totalVariance - variancei;
+                    double sumExceptMean = totalMean - meani;
+                    if (Math.Abs(sumExceptVariance) < Math.Abs(totalVariance) * 1e-10)
+                    {
+                        // Avoid loss of precision by recalculating the sum
+                        // This should happen for at most one i
+                        (sumExceptMean, sumExceptVariance) = SumExcept(array, i);
+                    }
+                    double denom = 1 + sum.Precision * sumExceptVariance;
+                    double msgMeanTimesPrecision = (sum.MeanTimesPrecision - sum.Precision * sumExceptMean) / denom;
+                    double msgPrecision = sum.Precision / denom;
+                    result[i] = Gaussian.FromNatural(msgMeanTimesPrecision, msgPrecision);
                 }
-                result[i] = new Gaussian(msgMean, msgVariance);
+            }
+            else
+            {
+                // subtract it off from the mean and variance of incoming Gaussian from Sum
+                double totalMsgMean = sumMean - totalMean;
+                double totalMsgVariance = sumVariance + totalVariance;
+
+                for (int i = 0; i < array.Count; i++)
+                {
+                    array[i].GetMeanAndVarianceImproper(out double meani, out double variancei);
+                    double msgMean = totalMsgMean + meani;
+                    double msgVariance = totalMsgVariance - variancei;
+                    if (Math.Abs(msgVariance) < Math.Abs(totalMsgVariance) * 1e-10)
+                    {
+                        // Avoid loss of precision by recalculating the sum
+                        // This should happen for at most one i
+                        var (sumExceptMean, sumExceptVariance) = SumExcept(array, i);
+                        msgMean = sumMean - sumExceptMean;
+                        msgVariance = sumVariance + sumExceptVariance;
+                    }
+                    result[i] = new Gaussian(msgMean, msgVariance);
+                }
             }
             return result;
         }

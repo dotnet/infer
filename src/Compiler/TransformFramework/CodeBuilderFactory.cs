@@ -562,6 +562,30 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
 
         /// <summary>
+        /// Default constructor for try-catch-finally statement
+        /// </summary>
+        /// <returns></returns>
+        public virtual ITryCatchFinallyStatement TryCatchFinallyStmt()
+        {
+            return new XTryCatchFinallyStatement()
+            {
+                Try = BlockStmt(),
+                Fault = BlockStmt(),
+                Finally = BlockStmt()
+            };
+        }
+
+        public virtual ICatchClause CatchClause(IVariableDeclaration ivd)
+        {
+            return new XCatchClause()
+            {
+                Body = BlockStmt(),
+                Condition = VarDeclExpr(ivd),
+                Variable = ivd
+            };
+        }
+
+        /// <summary>
         /// Default constructor for statement collection
         /// </summary>
         /// <returns>A new statement collection</returns>

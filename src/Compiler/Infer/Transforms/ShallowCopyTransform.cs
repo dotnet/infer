@@ -535,7 +535,33 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 return ConvertThrow(ites);
             }
+            else if (ist is ITryCatchFinallyStatement itcfs)
+            {
+                return ConvertTry(itcfs);
+            }
             else throw new Exception("Unhandled statement: " + ist.GetType());
+        }
+
+        protected virtual IStatement ConvertTry(ITryCatchFinallyStatement itcfs)
+        {
+            ITryCatchFinallyStatement tcfs = Builder.TryCatchFinallyStmt();
+            context.SetPrimaryOutput(tcfs);
+            tcfs.Try = ConvertBlock(itcfs.Try);
+            tcfs.Fault = ConvertBlock(itcfs.Fault);
+            tcfs.Finally = ConvertBlock(itcfs.Finally);
+            foreach (ICatchClause icc in itcfs.CatchClauses)
+            {
+                ICatchClause cc = ConvertCatchClause(icc);
+                tcfs.CatchClauses.Add(cc);
+            }
+            return tcfs;
+        }
+
+        protected virtual ICatchClause ConvertCatchClause(ICatchClause icc)
+        {
+            ICatchClause cc = Builder.CatchClause(ConvertVariableDecl(icc.Variable));
+            cc.Body = ConvertBlock(icc.Body);
+            return cc;
         }
 
         protected virtual IStatement ConvertThrow(IThrowExceptionStatement its)

@@ -979,7 +979,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             tc.AddTransform(new LocalTransform(this));
             if (OptimiseInferenceCode)
                 tc.AddTransform(new DeadCode2Transform(this));
-            tc.AddTransform(new ParallelScheduleTransform());
+            tc.AddTransform(new ParallelScheduleTransform(this.UseLocals));
             // All messages after each iteration will be logged to csv files in a folder named with the model name.
             // Use MatlabWriter.WriteFromCsvFolder to convert these to a mat file.
             if (TraceAllMessages && UseTracingTransform)

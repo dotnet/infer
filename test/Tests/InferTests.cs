@@ -5062,6 +5062,49 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void SumFactorTest_Overflow()
+        {
+            int nItems = 2;
+            Range item = new Range(nItems).Named("item");
+            VariableArray<double> a = Variable.Array<double>(item).Named("a");
+            VariableArray<double> aMeans = Variable.Constant<double>(new double[] { 1, 2 }, item);
+            VariableArray<double> aPrecisions = Variable.Constant<double>(new double[] { 3, 4 }, item);
+            a[item] = Variable.GaussianFromMeanAndPrecision(aMeans[item], aPrecisions[item]);
+            Variable<double> x = Variable.Sum(a).Named("x");
+            var xPrior = Variable.Observed(default(Gaussian));
+            Variable.ConstrainEqualRandom(x, xPrior);
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+            engine.Compiler.WriteSourceFiles = true;
+
+            double[] precisions = new[] { 5e-308, 6e-309, 5e-309 };
+            foreach (var xPriorPrecision in precisions)
+            {
+                double xPriorMeanTimesPrecision = 5;
+                xPrior.ObservedValue = Gaussian.FromNatural(xPriorMeanTimesPrecision, xPriorPrecision);
+
+                bool verbose = false;
+                Gaussian xExpected = xPrior.ObservedValue
+                                     * new Gaussian(aMeans.ObservedValue[0] + aMeans.ObservedValue[1], 1.0 / aPrecisions.ObservedValue[0] + 1.0 / aPrecisions.ObservedValue[1]);
+                Gaussian xActual = engine.Infer<Gaussian>(x);
+                if (verbose) Console.WriteLine("x = {0} (should be {1})", xActual, xExpected);
+                Assert.True(xActual.MaxDiff(xExpected) < 1e-7);
+                double denom = xPriorPrecision + aPrecisions.ObservedValue[1];
+                Gaussian a0Expected = new Gaussian(aMeans.ObservedValue[0], 1 / aPrecisions.ObservedValue[0])
+                                      * Gaussian.FromNatural((xPriorMeanTimesPrecision * aPrecisions.ObservedValue[1] - xPriorPrecision * aMeans.ObservedValue[1] * aPrecisions.ObservedValue[1]) / denom, xPriorPrecision * aPrecisions.ObservedValue[1] / denom);
+                Gaussian a0Actual = engine.Infer<DistributionArray<Gaussian>>(a)[0];
+                if (verbose) Console.WriteLine("a[0] = {0} (should be {1})", a0Actual, a0Expected);
+                Assert.True(a0Actual.MaxDiff(a0Expected) < 1e-7);
+                double denom2 = xPriorPrecision + aPrecisions.ObservedValue[0];
+                Gaussian a1Expected = new Gaussian(aMeans.ObservedValue[1], 1 / aPrecisions.ObservedValue[1])
+                                      * Gaussian.FromNatural((xPriorMeanTimesPrecision * aPrecisions.ObservedValue[0] - xPriorPrecision * aMeans.ObservedValue[0] * aPrecisions.ObservedValue[0]) / denom2, xPriorPrecision * aPrecisions.ObservedValue[0] / denom);
+                Gaussian a1Actual = engine.Infer<DistributionArray<Gaussian>>(a)[1];
+                if (verbose) Console.WriteLine("a[1] = {0} (should be {1})", a1Actual, a1Expected);
+                Assert.True(a1Actual.MaxDiff(a1Expected) < 1e-7);
+            }
+        }
+
+        [Fact]
         public void SumFactorTest3()
         {
             int nItems = 3;
