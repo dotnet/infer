@@ -122,6 +122,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
 
             foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
             {
+                // In .NET8.0 we now have certain compiler generated fields without a proper type.
+                if (field.FieldType.FullName == null)
+                {
+                    continue;
+                }
+
                 RecursivelyAddTypes(field.FieldType, types);
             }
 
