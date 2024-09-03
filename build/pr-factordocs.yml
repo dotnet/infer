@@ -14,7 +14,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk' 
-    version: '6.x'
+    version: '8.x'
 
 - script: |
     echo Checking $(Build.Repository.LocalPath)\src\Runtime\Factors\FactorDocs.xml...
