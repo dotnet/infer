@@ -40,6 +40,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
         }
 
+#if NET472
         /// <summary>
         /// Initializes a new instance of the <see cref="ExternalCommandExecutionException"/> class.
         /// </summary>
@@ -49,5 +50,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             : base(info, context)
         {
         }
+#endif
     }
 }
