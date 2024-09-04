@@ -1983,6 +1983,29 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("B is not a point mass");
             return GaussianProductOp.LogEvidenceRatio(Product, A, B.Point);
         }
+
+        public static Gaussian ProductAverageConditional([SkipIfUniform] Gaussian A, [SkipIfUniform] TruncatedGamma B)
+        {
+            if (B.IsPointMass)
+                return GaussianProductOp.ProductAverageConditional(A, B.Point);
+            else
+                throw new ArgumentException("B is not a point mass");
+        }
+
+        public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Product, [SkipIfUniform] TruncatedGamma B)
+        {
+            if (!B.IsPointMass)
+                throw new ArgumentException("B is not a point mass");
+            return GaussianProductOp.AAverageConditional(Product, B.Point);
+        }
+
+        public static TruncatedGamma BAverageConditional([SkipIfUniform] Gaussian Product, [SkipIfUniform] Gaussian A, [NoInit] TruncatedGamma B)
+        {
+            var gaussian = GaussianProductOp.BAverageConditional(Product, A, Gaussian.PointMass(B.Point));
+            gaussian.GetDerivatives(B.Point, out double dlogp, out double ddlogp);
+            Gamma gamma = Gamma.FromDerivatives(B.Point, dlogp, B.Point * dlogp, B.Point * B.Point * ddlogp, false);
+            return TruncatedGamma.FromGamma(gamma);
+        }
     }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductVmpOp"]/doc/*'/>
