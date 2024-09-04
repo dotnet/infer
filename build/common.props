@@ -8,7 +8,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\..\Infer.snk</AssemblyOriginatorKeyFile>
-    
+
     <!-- By default we do not want projects to be packaged using NuGet. -->
     <IsPackable>false</IsPackable>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>

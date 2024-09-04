@@ -19,12 +19,12 @@
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net6.0;net6.0-windows;net472</TargetFrameworks>
+        <TargetFrameworks>net8.0;net8.0-windows;net472</TargetFrameworks>
         <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
       </PropertyGroup>
     </Otherwise>
@@ -52,7 +52,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Choose>
-    <When Condition="$(TargetFramework) == 'net472' OR $(TargetFramework) == 'net6.0-windows'">
+    <When Condition="$(TargetFramework) == 'net472' OR $(TargetFramework) == 'net8.0-windows'">
       <ItemGroup>
         <ProjectReference Include="..\Visualizers\Windows\Visualizers.Windows.csproj" />
         <Compile Update="ExamplesViewer.cs">

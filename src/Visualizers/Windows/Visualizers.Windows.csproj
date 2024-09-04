@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains visualization tools for exploring and analyzing models on Windows platform.</Description>
-    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net6.0-windows;net472</TargetFrameworks>
     <AssemblyName>Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows</AssemblyName>
     <PackageId>Microsoft.ML.Probabilistic.Visualizers.Windows$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
@@ -74,6 +74,7 @@
     by the NuGet package format; so we list them explicitly here.
     -->
     <None Include="$(BaseOutputPath)\net6.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net6.0-windows7.0\" />
+    <None Include="$(BaseOutputPath)\net8.0-windows\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net8.0-windows7.0\" />
     <None Include="$(BaseOutputPath)\net472\$(AssemblyName).pdb" Pack="true" PackagePath="\lib\net472\" />
   </ItemGroup>
 </Project>
