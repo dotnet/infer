@@ -146,6 +146,12 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// </summary>
         public CompilerChoice compilerChoice = CompilerChoice.Auto;
 
+#if ROSLYN
+        /// <summary>
+        /// Resolves reference for Roslyn 
+        /// </summary>
+        public Func<Assembly, byte[]> ReferenceResolver;
+#endif
         public List<string> WriteSource(List<ITypeDeclaration> typeDeclarations, IList<string> filenames, out ICollection<Assembly> referencedAssemblies)
         {
             Stopwatch watch = null;
@@ -449,7 +455,24 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 try
                 {
-                    references.Add(MetadataReference.CreateFromFile(assembly.Location));
+                    MetadataReference metadataReference;
+                    if (assembly.Location == "" && ReferenceResolver != null)
+                    {
+                        var bytes = ReferenceResolver(assembly);
+                        if (bytes is null)
+                        {
+                            // do nothing - this assembly does not have a location e.g. it is in memory
+                            continue;
+                        }
+
+                        metadataReference = MetadataReference.CreateFromImage(bytes);
+                    }
+                    else
+                    {
+                        metadataReference = MetadataReference.CreateFromFile(assembly.Location);
+                    }
+
+                    references.Add(metadataReference);
                 }
                 catch (NotSupportedException)
                 {
