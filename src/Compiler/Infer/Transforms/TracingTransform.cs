@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         readonly Dictionary<Set<IVariableDeclaration>, TableInfo> tableOfIndexVars = new Dictionary<Set<IVariableDeclaration>, TableInfo>();
         MethodInfo writeMethod, writeBytesMethod, writeLineMethod, flushMethod, disposeMethodInfo;
         IMethodDeclaration traceWriterMethod, disposeMethod;
-        public static bool UseToString = true;
+        public static bool UseToString = false;
 
         public override string Name
         {
@@ -106,6 +106,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             ICollection<IStatement> output2;
             if (fs != null)
             {
+                PreventParallelisation(fs);
                 output.Add(fs);
                 output2 = innerForStatement.Body.Statements;
             }
@@ -165,6 +166,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             fd.Initializer = Builder.StaticMethod(traceWriterMethod, Builder.LiteralExpr(table.Name), Builder.LiteralExpr(header.ToString()));
             if (disposeMethod == null) MakeDisposeMethod();
             disposeMethod.Body.Statements.Add(GetDisposeStatement(writer));
+        }
+
+        void PreventParallelisation(IForStatement ifs)
+        {
+            context.OutputAttributes.Set(ifs, new HasOffsetIndices());
+            if (ifs.Body.Statements.Count > 0)
+            {
+                var st = ifs.Body.Statements[0];
+                if (st is IForStatement fs)
+                {
+                    PreventParallelisation(fs);
+                }
+            }
         }
 
         Dictionary<string, IExpression> GetProperties(IExpression expr)
