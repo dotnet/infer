@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Models
     /// For example, use <code>Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));</code>
     /// to get debug information for when compiled models and marginals are re-used.
     /// </remarks>
-    public class InferenceEngine : SettableTo<InferenceEngine>
+    public class InferenceEngine : SettableTo<InferenceEngine>, IDisposable
     {
         /// <summary>
         /// Bag of weak references to engine instances.  The weak references allow the instances
@@ -659,8 +659,20 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         internal void InvalidateCompiledAlgorithms()
         {
+            foreach (var compiledAlgorithm in compiledAlgorithms)
+            {
+                if (compiledAlgorithm.exec is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
             compiledAlgorithmForVariable.Clear();
             compiledAlgorithms.Clear();
+        }
+
+        public void Dispose()
+        {
+            InvalidateCompiledAlgorithms();
         }
 
         /// <summary>

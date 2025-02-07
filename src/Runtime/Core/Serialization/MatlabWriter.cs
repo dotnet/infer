@@ -20,6 +20,17 @@ namespace Microsoft.ML.Probabilistic.Serialization
     {
         private Stream writer;
 
+        public static void Save(string fileName, Dictionary<string, object> values)
+        {
+            using (MatlabWriter writer = new MatlabWriter(fileName))
+            {
+                foreach (var entry in values)
+                {
+                    writer.Write(entry.Key, entry.Value);
+                }
+            }
+        }
+
         /// <summary>
         /// Create a MatlabWriter to write to a given file name.
         /// </summary>
@@ -402,8 +413,18 @@ namespace Microsoft.ML.Probabilistic.Serialization
         /// <param name="path"></param>
         public void WriteFromCsv(string name, string path)
         {
-            Dictionary<string,List<string>> dict = MatlabReader.ReadCsv(path);
-            // try to convert strings into numbers
+            Dictionary<string, List<string>> dict = MatlabReader.ReadCsv(path);
+            Dictionary<string, object> dict2 = TryDoubleParse(dict);
+            Write(name, dict2);
+        }
+
+        /// <summary>
+        /// Try to convert strings into numbers
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> TryDoubleParse(Dictionary<string, List<string>> dict)
+        {
             Dictionary<string, object> dict2 = new Dictionary<string, object>();
             foreach (var entry in dict)
             {
@@ -427,7 +448,8 @@ namespace Microsoft.ML.Probabilistic.Serialization
                 if (isDouble) dict2.Add(entry.Key, doubles);
                 else dict2.Add(entry.Key, entry.Value);
             }
-            Write(name, dict2);
+
+            return dict2;
         }
 
         /// <summary>
