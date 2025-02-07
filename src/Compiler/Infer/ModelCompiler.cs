@@ -25,7 +25,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
     /// </summary>
     public class ModelCompiler
     {
-        internal static bool UseTracingTransform = false;
+        internal static bool UseTracingTransform = true;
         private readonly FactorManager factorManager = new FactorManager();
         private IAlgorithm algorithm;
 
