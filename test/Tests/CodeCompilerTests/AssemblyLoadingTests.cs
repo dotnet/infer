@@ -1,15 +1,11 @@
-﻿using Microsoft.ML.Probabilistic.Models;
-
+﻿#if NET
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.ML.Probabilistic.Compiler;
+using Microsoft.ML.Probabilistic.Models;
 using Xunit;
 
 namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
@@ -82,3 +78,4 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
         }
     }
 }
+#endif
