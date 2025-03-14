@@ -415,14 +415,14 @@ namespace Microsoft.ML.Probabilistic.Factors
     }
 
     [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
-    [Buffers("buffer0")]
+    [Buffers("bufferGamma")]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_RpropGamma : VariablePointOpBase
     {
         public static bool UseMean;
 
         [Skip]
-        public static RpropBufferData Buffer0Init()
+        public static RpropBufferData BufferGammaInit()
         {
             var result = new RpropBufferData();
             if (!UseMean)
@@ -433,16 +433,16 @@ namespace Microsoft.ML.Probabilistic.Factors
         // must compute new marginal here since Marginal method cannot modify buffer
         // Buffer must be called once per iter, so cannot be fresh or have triggers
         [SkipIfAllUniform]
-        public static RpropBufferData Buffer0([NoInit] Gamma use, Gamma def, Gamma to_marginal, RpropBufferData buffer0)
+        public static RpropBufferData BufferGamma([NoInit] Gamma use, Gamma def, Gamma to_marginal, RpropBufferData bufferGamma)
         {
             var currDist = use * def;
             if (currDist.IsPointMass)
             {
                 if (UseMean)
-                    buffer0.nextPoint = Math.Log(currDist.Point);
+                    bufferGamma.nextPoint = Math.Log(currDist.Point);
                 else
-                    buffer0.nextPoint = currDist.Point;
-                return buffer0;
+                    bufferGamma.nextPoint = currDist.Point;
+                return bufferGamma;
             }
             // cannot use buffer.nextPoint as currPoint since Marginal could be initialized by user
             double currPoint;
@@ -457,29 +457,101 @@ namespace Microsoft.ML.Probabilistic.Factors
             double currDeriv, currDeriv2;
             if (UseMean)
             {
+                // This is the derivative wrt log(x)
                 currDeriv = currDist.Shape - currDist.Rate * currPoint;
                 if (currPoint <= 0)
                     throw new ArgumentException($"currPoint ({currPoint}) <= 0");
-                buffer0.SetNextPoint(Math.Log(currPoint), currDeriv);
+                bufferGamma.SetNextPoint(Math.Log(currPoint), currDeriv);
             }
             else
             {
                 currDist.GetDerivatives(currPoint, out currDeriv, out currDeriv2);
-                buffer0.SetNextPoint(currPoint, currDeriv);
+                bufferGamma.SetNextPoint(currPoint, currDeriv);
             }
-            return buffer0;
+            return bufferGamma;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropGamma"]/message_doc[@name="MarginalAverageConditional(Gamma, Gamma, RpropBufferData, Gamma)"]/*'/>
-        public static Gamma MarginalAverageConditional([IgnoreDependency] Gamma use, [IgnoreDependency] Gamma def, [RequiredArgument] RpropBufferData buffer0, Gamma result)
+        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropGamma"]/message_doc[@name="MarginalAverageConditional(Gamma, Gamma, RpropBufferData, Gamma)"]/*'/>
+        public static Gamma MarginalAverageConditional([IgnoreDependency] Gamma use, [IgnoreDependency] Gamma def, [RequiredArgument] RpropBufferData bufferGamma, Gamma result)
         {
             if (UseMean)
             {
-                result.Point = Math.Exp(buffer0.nextPoint);
+                result.Point = Math.Exp(bufferGamma.nextPoint);
             }
             else
             {
-                result.Point = buffer0.nextPoint;
+                result.Point = bufferGamma.nextPoint;
+            }
+            return result;
+        }
+    }
+
+    [FactorMethod(typeof(Clone), "VariablePoint<>", Default = true)]
+    [Buffers("bufferGammaPower")]
+    [Quality(QualityBand.Preview)]
+    public class VariablePointOp_RpropGammaPower : VariablePointOpBase
+    {
+        public static bool UseMean;
+
+        [Skip]
+        public static RpropBufferData BufferGammaPowerInit()
+        {
+            var result = new RpropBufferData();
+            if (!UseMean)
+                result.lowerBound = 0;
+            return result;
+        }
+
+        // must compute new marginal here since Marginal method cannot modify buffer
+        // Buffer must be called once per iter, so cannot be fresh or have triggers
+        [SkipIfAllUniform]
+        public static RpropBufferData BufferGammaPower([NoInit] GammaPower use, GammaPower def, GammaPower to_marginal, RpropBufferData bufferGammaPower)
+        {
+            var currDist = use * def;
+            if (currDist.IsPointMass)
+            {
+                if (UseMean)
+                    bufferGammaPower.nextPoint = Math.Log(currDist.Point);
+                else
+                    bufferGammaPower.nextPoint = currDist.Point;
+                return bufferGammaPower;
+            }
+            // cannot use buffer.nextPoint as currPoint since Marginal could be initialized by user
+            double currPoint;
+            if (to_marginal.IsPointMass)
+            {
+                currPoint = to_marginal.Point;
+            }
+            else
+            {
+                currPoint = currDist.GetMean();
+            }
+            double currDeriv, currDeriv2;
+            if (UseMean)
+            {
+                currDeriv = currDist.Shape / currDist.Power - currDist.Rate / currDist.Power * Math.Pow(currPoint, 1 / currDist.Power);
+                if (currPoint <= 0)
+                    throw new ArgumentException($"currPoint ({currPoint}) <= 0");
+                bufferGammaPower.SetNextPoint(Math.Log(currPoint), currDeriv);
+            }
+            else
+            {
+                currDist.GetDerivatives(currPoint, out currDeriv, out currDeriv2);
+                bufferGammaPower.SetNextPoint(currPoint, currDeriv);
+            }
+            return bufferGammaPower;
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropGammaPower"]/message_doc[@name="MarginalAverageConditional(GammaPower, GammaPower, RpropBufferData, GammaPower)"]/*'/>
+        public static GammaPower MarginalAverageConditional([IgnoreDependency] GammaPower use, [IgnoreDependency] GammaPower def, [RequiredArgument] RpropBufferData bufferGammaPower, GammaPower result)
+        {
+            if (UseMean)
+            {
+                result.Point = Math.Exp(bufferGammaPower.nextPoint);
+            }
+            else
+            {
+                result.Point = bufferGammaPower.nextPoint;
             }
             return result;
         }

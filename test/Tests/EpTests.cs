@@ -3198,6 +3198,61 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaRatioPointEstimateTest()
+        {
+            Gamma aPrior = Gamma.FromShapeAndRate(100, 100);
+            Gamma bPrior = Gamma.FromShapeAndRate(1, 1);
+            Gamma like = Gamma.FromShapeAndRate(200, 100);
+            Gamma result0 = ProductModel();
+            Gamma result1 = PowerRatioModel();
+            Gamma result2 = GammaPowerRatioModel();
+
+            Gamma ProductModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var b = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("b");
+                var product = a * b;
+                product.Name = "product";
+                Variable.ConstrainEqualRandom(product, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma PowerRatioModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b = c ^ (-1);
+                //var b = Variable.Copy(c);
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma GammaPowerRatioModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var b = Variable.Random(GammaPower.FromGamma(bPrior, -1)).InitialiseTo(GammaPower.PointMass(1.0, -1)).Attrib(new PointEstimate()).Named("b");
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+        }
+
+        [Fact]
         public void ConstrainTrueReplicateTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");

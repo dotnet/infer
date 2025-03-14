@@ -5546,6 +5546,44 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GatedGammaRatioRRRTest()
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            double shape = 2.5;
+            double rate = 3;
+            Variable<double> y = Variable.GammaFromShapeAndRate(shape, rate).Named("y");
+            double shape2 = 4;
+            double rate2 = 5;
+            var denom = Variable.Random(GammaPower.FromShapeAndRate(shape2, rate2, -1)).Named("denom");
+#if true
+            Variable<double> x = (y / denom).Attrib(new MarginalPrototype(new GammaPower())).Named("x");
+            GammaPower xLike = GammaPower.Uniform(-1);
+#else
+            Variable<double> x = (y / denom).Attrib(new MarginalPrototype(new Gamma())).Named("x");
+            Gamma xLike = Gamma.Uniform(-1);
+#endif
+            Variable.ConstrainEqualRandom(x, xLike);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.GivePriorityTo(typeof(GammaRatioOp_PointA));
+            foreach (var alg in new IAlgorithm[] { new ExpectationPropagation(), new VariationalMessagePassing() })
+            {
+                engine.Algorithm = alg;
+                Gamma yActual = engine.Infer<Gamma>(y);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Gamma yExpected = Gamma.FromShapeAndRate(shape, rate);
+                double evExpected = 0;
+
+                Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
+                Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
+                Assert.True(yExpected.MaxDiff(yActual) < 1e-10);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-6);
+            }
+        }
+
+        [Fact]
         [Trait("Category", "CsoftModel")]
         public void GatedRatioCRCTest()
         {

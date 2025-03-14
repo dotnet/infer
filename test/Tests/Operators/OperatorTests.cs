@@ -2534,12 +2534,12 @@ weight * (tau + alphaX) + alphaX
         {
             using (TestUtils.TemporarilyUseMeanPointGamma)
             {
-                var buffer = VariablePointOp_RpropGamma.Buffer0Init();
+                var buffer = VariablePointOp_RpropGamma.BufferGammaInit();
                 Gamma g = Gamma.FromShapeAndRate(0.6, 1);
                 Gamma to_marginal = Gamma.PointMass(1);
                 for (int i = 0; i < 1000; i++)
                 {
-                    buffer = VariablePointOp_RpropGamma.Buffer0(g, g, to_marginal, buffer);
+                    buffer = VariablePointOp_RpropGamma.BufferGamma(g, g, to_marginal, buffer);
                     //Console.WriteLine(buffer.nextPoint);
                     to_marginal = Gamma.Uniform();
                 }
