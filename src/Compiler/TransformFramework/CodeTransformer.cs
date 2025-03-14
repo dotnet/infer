@@ -146,6 +146,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// </summary>
         public CompilerChoice compilerChoice = CompilerChoice.Auto;
 
+        /// <summary>
+        /// A custom assembly loader.  If null, uses Assembly.Load.
+        /// </summary>
+        public LoadAssemblyFromStreamDelegate AssemblyLoader;
+
         public List<string> WriteSource(List<ITypeDeclaration> typeDeclarations, IList<string> filenames, out ICollection<Assembly> referencedAssemblies)
         {
             Stopwatch watch = null;
@@ -366,28 +371,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             cp.GenerateInMemory = generateInMemory;
             if (!cp.GenerateInMemory)
             {
-                cp.OutputAssembly = Path.ChangeExtension(filenames[0], ".dll");
-                try
-                {
-                    if (File.Exists(cp.OutputAssembly)) File.Delete(cp.OutputAssembly);
-                }
-                catch
-                {
-                    for (int i = 0; ; i++)
-                    {
-                        cp.OutputAssembly = Path.ChangeExtension(Path.ChangeExtension(filenames[0], null) + DateTime.Now.Millisecond, ".dll");
-                        try
-                        {
-                            if (File.Exists(cp.OutputAssembly)) File.Delete(cp.OutputAssembly);
-                            break;
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
+                cp.OutputAssembly = GetAvailableAssemblyPath(filenames[0]);
             }
-            // TODO: allow compiled assemblies to be unloaded, by compiling them as Add-ins (see AddInAttribute)
             if (!writeSourceFiles)
             {
                 cr = provider.CompileAssemblyFromSource(cp, sources.ToArray());
@@ -480,26 +465,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             string targetAssemblyName;
             if (!generateInMemory)
             {
-                targetAssemblyPath = Path.ChangeExtension(filenames[0], ".dll");
-                try
-                {
-                    if (File.Exists(targetAssemblyPath)) File.Delete(targetAssemblyPath);
-                }
-                catch
-                {
-                    for (int i = 0; ; i++)
-                    {
-                        targetAssemblyPath = Path.ChangeExtension(Path.ChangeExtension(filenames[0], null) + DateTime.Now.Millisecond, ".dll");
-                        try
-                        {
-                            if (File.Exists(targetAssemblyPath)) File.Delete(targetAssemblyPath);
-                            break;
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
+                targetAssemblyPath = GetAvailableAssemblyPath(filenames[0]);
                 targetAssemblyName = Path.GetFileNameWithoutExtension(targetAssemblyPath);
                 pdbPath = Path.ChangeExtension(targetAssemblyPath, ".pdb");
                 emitOptions = emitOptions.WithPdbFilePath(pdbPath);
@@ -514,30 +480,25 @@ namespace Microsoft.ML.Probabilistic.Compiler
             EmitResult result;
             using (Stream assemblyStream = generateInMemory ? (Stream)new MemoryStream() : File.Create(targetAssemblyPath))
             {
-                using (Stream pdbStream = generateInMemory ? (Stream)new MemoryStream() : File.Create(pdbPath))
+                if (emitOptions.DebugInformationFormat == DebugInformationFormat.Embedded)
                 {
-                    if (emitOptions.DebugInformationFormat == DebugInformationFormat.Embedded)
-                    {
-                        result = compilation.Emit(assemblyStream, options: emitOptions);
-                    }
-                    else
-                    {
-                        result = compilation.Emit(assemblyStream, pdbStream, options: emitOptions);
-                    }
+                    result = compilation.Emit(assemblyStream, options: emitOptions);
                     if (result.Success)
                     {
-                        // TODO: allow compiled assemblies to be unloaded
                         assemblyStream.Seek(0, SeekOrigin.Begin);
-                        var asmBin = new BinaryReader(assemblyStream).ReadBytes((int)assemblyStream.Length);
-                        if (emitOptions.DebugInformationFormat == DebugInformationFormat.Embedded)
+                        resultAssembly = LoadFromStream(assemblyStream, null);
+                    }
+                }
+                else
+                {
+                    using (Stream pdbStream = generateInMemory ? (Stream)new MemoryStream() : File.Create(pdbPath))
+                    {
+                        result = compilation.Emit(assemblyStream, pdbStream, options: emitOptions);
+                        if (result.Success)
                         {
-                            resultAssembly = Assembly.Load(asmBin);
-                        }
-                        else
-                        {
+                            assemblyStream.Seek(0, SeekOrigin.Begin);
                             pdbStream.Seek(0, SeekOrigin.Begin);
-                            var pdbBin = new BinaryReader(pdbStream).ReadBytes((int)pdbStream.Length);
-                            resultAssembly = Assembly.Load(asmBin, pdbBin);
+                            resultAssembly = LoadFromStream(assemblyStream, pdbStream);
                         }
                     }
                 }
@@ -547,6 +508,50 @@ namespace Microsoft.ML.Probabilistic.Compiler
 #else
             throw new NotSupportedException("This assembly was compiled without Roslyn support.  To use Roslyn, recompile with the ROSLYN compiler flag.");
 #endif
+        }
+
+        private static string GetAvailableAssemblyPath(string filename)
+        {
+            string path = Path.ChangeExtension(filename, ".dll");
+            try
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+            catch
+            {
+                for (int i = 0; ; i++)
+                {
+                    path = Path.ChangeExtension(Path.ChangeExtension(filename, null) + DateTime.Now.Millisecond, ".dll");
+                    try
+                    {
+                        if (File.Exists(path)) File.Delete(path);
+                        break;
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            return path;
+        }
+
+        private Assembly LoadFromStream(Stream assemblyStream, Stream pdbStream)
+        {
+            if (AssemblyLoader != null)
+            {
+                return AssemblyLoader(assemblyStream, pdbStream);
+            }
+
+            var asmBin = new BinaryReader(assemblyStream).ReadBytes((int)assemblyStream.Length);
+            if (pdbStream == null)
+            {
+                return Assembly.Load(asmBin);
+            }
+            else
+            {
+                var pdbBin = new BinaryReader(pdbStream).ReadBytes((int)pdbStream.Length);
+                return Assembly.Load(asmBin, pdbBin);
+            }
         }
 
         public static string ExpressionToString(IExpression expr)
@@ -573,6 +578,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
         }
     }
+
+    public delegate Assembly LoadAssemblyFromStreamDelegate(Stream assembly, Stream assemblySymbols);
 
     public class CompilerResults
     {

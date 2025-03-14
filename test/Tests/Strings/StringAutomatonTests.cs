@@ -268,7 +268,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// <returns>The computed hash code.</returns>
             public int GetHashCode(T obj)
             {
-                throw new InvalidOperationException("This method should not be called.");
+                return 0;
             }
         }
 

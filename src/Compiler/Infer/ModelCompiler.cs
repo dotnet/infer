@@ -156,6 +156,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// </remarks>
         public CompilerChoice CompilerChoice { get; set; } = CompilerChoice.Auto;
 
+        /// <summary>
+        /// A custom assembly loader.  If null, use Assembly.Load.
+        /// </summary>
+        public LoadAssemblyFromStreamDelegate AssemblyLoader { get; set; }
+
         private bool useParallelForLoops = false;
 
         /// <summary>
@@ -822,7 +827,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 includeDebugInformation = IncludeDebugInformation,
                 optimizeCode = !IncludeDebugInformation, // tie these together for now
                 showProgress = ShowProgress,
-                compilerChoice = CompilerChoice
+                compilerChoice = CompilerChoice,
+                AssemblyLoader = AssemblyLoader,
             };
             CompilerResults cr = cc.WriteAndCompile(itds);
             // Examine the compilation results and stop if errors
@@ -1002,6 +1008,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <param name="compiler">The compiler to copy settings from</param>
         public void SetTo(ModelCompiler compiler)
         {
+            AssemblyLoader = compiler.AssemblyLoader;
             CompilerChoice = compiler.CompilerChoice;
             ShowSchedule = compiler.ShowSchedule;
             BrowserMode = compiler.BrowserMode;
