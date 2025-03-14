@@ -41,7 +41,7 @@ module bayes =
         len.ObservedValue <- dataLen
 
         // Inferring the weights
-        let ie = InferenceEngine()
+        let ie = new InferenceEngine()
         let wPosterior = ie.Infer<VectorGaussian>(w)
         printfn "Dist over w =\n%A" wPosterior
 

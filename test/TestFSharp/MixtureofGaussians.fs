@@ -71,7 +71,7 @@ module mixture =
         data.ObservedValue <- GenerateData(n.SizeAsInt)
 
         // The inference
-        let ie = InferenceEngine(Algorithms.VariationalMessagePassing())
+        let ie = new InferenceEngine(Algorithms.VariationalMessagePassing())
 
         let wPost = ie.Infer<Dirichlet>(weights) 
         printfn "Estimated means for pi = (%A)" (wPost.GetMean())
