@@ -38,6 +38,6 @@ module ranges =
         x.ObservedValue <- data
 
         // The inference
-        let ie = InferenceEngine(Algorithms.VariationalMessagePassing())
+        let ie = new InferenceEngine(Algorithms.VariationalMessagePassing())
         printfn "mean = %A" (ie.Infer<Gaussian>(mean))
         printfn "prec = %A" (ie.Infer<Gamma>(precision))
