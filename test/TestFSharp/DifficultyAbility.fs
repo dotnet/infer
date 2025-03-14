@@ -67,7 +67,7 @@ module DifficultyAbility =
           )
         )
 
-        let engine = InferenceEngine()
+        let engine = new InferenceEngine()
         engine.NumberOfIterations <- 5
         subject.AddAttribute(Models.Attributes.Sequential())
         question.AddAttribute(Models.Attributes.Sequential())

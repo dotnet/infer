@@ -24,7 +24,7 @@ module truncated =
         do Variable.ConstrainTrue(x >> threshold)
 
         // The inference, looping over different thresholds
-        let ie = InferenceEngine()
+        let ie = new InferenceEngine()
         ie.ShowProgress <- false
         threshold.ObservedValue <- -0.1
 

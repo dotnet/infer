@@ -55,7 +55,7 @@ module clinical =
             Console.WriteLine("\n====================Running Clinical Trial Tutorial==========================\n");
             
             // The inference
-            let ie = InferenceEngine()
+            let ie = new InferenceEngine()
             printfn "Probability treatment has an effect = %A" (ie.Infer<Bernoulli>(isEffective))
             let probIfTreatedPost = ie.Infer<Beta>(!probIfTreated)
             let probIfControlPost = ie.Infer<Beta>(!probIfControl)

@@ -23,7 +23,7 @@ module coins =
         let bothHeads = firstCoin &&& secondCoin
 
         // The inference
-        let engine = InferenceEngine()
+        let engine = new InferenceEngine()
 
         let bothHeadsPost = engine.Infer<Bernoulli>(bothHeads)
         printfn "Both heads posterior = %A" bothHeadsPost
