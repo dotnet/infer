@@ -307,7 +307,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gamma.FromShapeAndRate(ratio.Shape, ratio.Rate / B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="AAverageConditional(Gamma, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="AAverageConditional(GammaPower, double)"]/*'/>
         public static GammaPower AAverageConditional([SkipIfUniform] GammaPower ratio, double B)
         {
             if (B == 0)
@@ -342,7 +342,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GammaProductOp.ProductAverageConditional(A, GammaPower.FromShapeAndRate(B.Shape, B.Rate, -B.Power));
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="RatioAverageConditional(double, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="RatioAverageConditional(Gamma, double, GammaPower)"]/*'/>
         public static Gamma RatioAverageConditional(Gamma ratio, double A, GammaPower B)
         {
             if (B.Power == -1)
@@ -359,7 +359,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GammaPower.FromShapeAndRate(ratio.Shape - 2, ratio.Rate * A, -1);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="BAverageConditional(Gamma, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="BAverageConditional(GammaPower, double)"]/*'/>
         public static GammaPower BAverageConditional([SkipIfUniform] GammaPower ratio, double A)
         {
             if (ratio.IsPointMass)
@@ -462,7 +462,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogEvidenceRatio(ratio, a, GammaPower.FromGamma(b, 1));
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, double, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="LogEvidenceRatio(Gamma, double, GammaPower)"]/*'/>
         public static double LogEvidenceRatio(Gamma ratio, double a, GammaPower b)
         {
             return LogEvidenceRatio(GammaPower.FromGamma(ratio, 1), a, b);
@@ -481,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Ratio", typeof(double), typeof(double))]
     [Quality(QualityBand.Preview)]
     public static class GammaRatioOp_PointA
@@ -504,7 +504,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("A is not a point mass");
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="RatioAverageConditional(Gamma, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="RatioAverageConditional(Gamma, Gamma, GammaPower)"]/*'/>
         public static Gamma RatioAverageConditional(Gamma ratio, Gamma A, GammaPower B)
         {
             if (A.IsPointMass)
@@ -548,8 +548,23 @@ namespace Microsoft.ML.Probabilistic.Factors
             else
                 throw new ArgumentException("A is not a point mass");
         }
+    }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="BAverageConditional(Gamma, GammaPower)"]/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/doc/*'/>
+    [FactorMethod(typeof(Factor), "Ratio", typeof(double), typeof(double))]
+    [Quality(QualityBand.Preview)]
+    public static class GammaRatioOp_PointB
+    {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="RatioAverageConditional(Gamma, TruncatedGamma)"]/*'/>
+        public static Gamma RatioAverageConditional(Gamma A, TruncatedGamma B)
+        {
+            if (B.IsPointMass)
+                return GammaRatioOp.RatioAverageConditional(A, B.Point);
+            else
+                throw new ArgumentException("B is not a point mass");
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(Gamma, GammaPower)"]/*'/>
         public static Gamma AAverageConditional([SkipIfUniform] Gamma ratio, GammaPower B)
         {
             if (B.IsPointMass)
@@ -558,7 +573,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("B is not a point mass");
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="BAverageConditional(Gamma, GammaPower)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(GammaPower, GammaPower)"]/*'/>
         public static Gamma AAverageConditional([SkipIfUniform] GammaPower ratio, GammaPower B)
         {
             if (B.IsPointMass && ratio.Power == 1)
@@ -676,7 +691,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(ratio.Shape, shape);
             double logf = shape * Math.Log(x) - shape2 * Math.Log(x * A.Rate + ratio.Rate) +
               MMath.GammaLn(shape2) - A.GetLogNormalizer() - ratio.GetLogNormalizer();
-            double logz = logf + B.GetLogProb(x) - q.GetLogProb(x);
+            double logz = logf + (B.GetLogProb(x) - q.GetLogProb(x)); // TODO: diff
+            Console.WriteLine($"logz={logz} logf={logf} B={B.GetLogProb(x)} q={q.GetLogProb(x)}");
             return logz;
         }
 
@@ -709,7 +725,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             double[] derivs = dlogfs(x, ratio, A);
             if (B.IsPointMass)
             {
-                return Gamma.FromDerivatives(x, derivs[0], x * derivs[0], x * derivs[1] * x, GammaProductOp_Laplace.ForceProper);
+                double dlogf = derivs[0];
+                double ddlogf = derivs[1];
+                return Gamma.FromDerivatives(x, dlogf, dlogf * x, ddlogf * x * x, GammaProductOp_Laplace.ForceProper);
             }
             GaussianOp_Laplace.LaplaceMoments(q, g, derivs, out double bMean, out double bVariance);
             Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);

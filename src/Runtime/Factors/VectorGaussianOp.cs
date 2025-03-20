@@ -757,7 +757,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             mm = null;
             m.SetToDifference(sample, m);
             double result = -dim * MMath.LnSqrt2PI + 0.5 * iv.LogDeterminant() - 0.5 * iv.QuadraticForm(m);
-            result += precision.GetLogProb(r) - rPost.GetLogProb(r);
+            result += precision.GetLogProb(r) - rPost.GetLogProb(r); // TODO: diff
             return result;
         }
 

@@ -195,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // normalizer is -MMath.GammaLn(Shape) + Shape * Math.Log(Rate) - Math.Log(Math.Abs(Power))
                 }
             }
-            double logz = logf + Gamma.FromShapeAndRate(B.Shape, B.Rate).GetLogProb(qPoint) - q.GetLogProb(qPoint);
+            double logz = logf + Gamma.FromShapeAndRate(B.Shape, B.Rate).GetLogProb(qPoint) - q.GetLogProb(qPoint); // TODO: diff
             return logz;
         }
 

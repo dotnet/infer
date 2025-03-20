@@ -5567,7 +5567,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             block.CloseBlock();
 
             InferenceEngine engine = new InferenceEngine();
-            engine.Compiler.GivePriorityTo(typeof(GammaRatioOp_PointA));
             foreach (var alg in new IAlgorithm[] { new ExpectationPropagation(), new VariationalMessagePassing() })
             {
                 engine.Algorithm = alg;

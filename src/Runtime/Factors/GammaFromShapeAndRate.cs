@@ -1157,7 +1157,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(sample.Shape, shape);
             double logf = shape * Math.Log(x) - shape2 * Math.Log(x + sample.Rate) +
               MMath.GammaLn(shape2) - MMath.GammaLn(shape) - sample.GetLogNormalizer();
-            double logz = logf + rate.GetLogProb(x) - q.GetLogProb(x);
+            double logz = logf + rate.GetLogProb(x) - q.GetLogProb(x); // TODO: diff
             return logz;
         }
 

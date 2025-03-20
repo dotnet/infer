@@ -85,7 +85,8 @@ namespace TestApp
             watch.Start();
 
             //new GatedFactorTests().GatedGammaRatioRRRTest();
-            new EpTests().GammaRatioPointEstimateTest();
+            //new EpTests().GammaRatioPointEstimateTest();
+            new EpTests().GammaRatioRRRPointMassTest();
 
             bool runAllTests = false;
             if (runAllTests)
