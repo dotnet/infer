@@ -3227,7 +3227,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double yDiffPrev = double.PositiveInfinity;
             double rateDiffPrev = double.PositiveInfinity;
             double evDiffPrev = double.PositiveInfinity;
-            for (int i = 5; i < 20; i++)
+            for (int i = 1; i < 20; i++)
             {
                 double scale = System.Math.Pow(10, i);
                 ratePrior.ObservedValue = Gamma.FromShapeAndRate(1 * scale, 4 * scale);
@@ -3242,11 +3242,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 //Console.WriteLine($"x = {xActual} should be {xExpected}, error = {xDiff}");
                 //Console.WriteLine($"y = {yActual} should be {yExpected}, error = {yDiff}");
                 //Console.WriteLine($"rate = {rateActual} should be {rateExpected}, error = {rateDiff}");
-                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
                 Assert.True(xDiff < xDiffPrev || xDiff < 1e-15);
                 Assert.True(yDiff < yDiffPrev || yDiff < 1e-15);
                 Assert.True(rateDiff < rateDiffPrev || rateDiff < 1e-15);
-                //Assert.True(evDiff < evDiffPrev || evDiff < 1e-6);
+                Assert.True(evDiff < evDiffPrev || evDiff < 2e-15);
                 xDiffPrev = xDiff;
                 yDiffPrev = yDiff;
                 rateDiffPrev = rateDiff;
