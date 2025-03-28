@@ -691,35 +691,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(ratio.Shape, shape);
             double logf = shape * Math.Log(x) - shape2 * Math.Log(x * A.Rate + ratio.Rate) +
               MMath.GammaLn(shape2) - A.GetLogNormalizer() - ratio.GetLogNormalizer();
-            return logf + GammaLogProbDiff(B, q, x);
-        }
-
-        public static double GammaLogProbDiff(Gamma A, Gamma B, double x)
-        {
-            if (A.IsProper() && !A.IsPointMass && B.IsProper() && !B.IsPointMass)
-            {
-                // We want to compute:
-                // (A.Shape - B.Shape) * Math.Log(x) - (A.Rate - B.Rate) * x +
-                // (A.Shape * Math.Log(A.Rate) - B.Shape * Math.Log(B.Rate)) -
-                // (MMath.GammaLn(A.Shape) - MMath.GammaLn(B.Shape))
-                // Replace the second line with:
-                // A.Shape * Math.Log(B.Rate + dr) - (A.Shape - ds) * Math.Log(B.Rate)
-                // = A.Shape * Math.Log(1 + dr / B.Rate) + ds * Math.Log(B.Rate)
-                // Replace the third line with:
-                // MMath.GammaLn(B.Shape + ds) - MMath.GammaLn(B.Shape)
-                // = ds * MMath.RisingFactorialLnOverN(B.Shape, ds)
-                double ds = A.Shape - B.Shape;
-                double dr = A.Rate - B.Rate;
-                double drB = dr / B.Rate;
-                return ds * (Math.Log(x) + Math.Log(B.Rate / B.Shape))
-                    - dr * (x - A.Shape / B.Rate)
-                    + A.Shape * (MMath.Log1Plus(drB) - drB)
-                    - ds * (MMath.RisingFactorialLnOverN(B.Shape, ds) - Math.Log(B.Shape));
-            }
-            else
-            {
-                return A.GetLogProb(x) - B.GetLogProb(x);
-            }
+            return logf + GammaFromShapeAndRateOp_Laplace.GammaLogProbDiff(B, q, x);
         }
 
         private static double LogAverageFactor_slow(Gamma ratio, Gamma A, [Proper] Gamma B)

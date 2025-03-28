@@ -86,7 +86,7 @@ namespace TestApp
 
             //new GatedFactorTests().GatedGammaRatioRRRTest();
             //new EpTests().GammaRatioPointEstimateTest();
-            new EpTests().GammaRatioRRRPointMassTest();
+            new EpTests().GammaRCRPointMassTest();
 
             bool runAllTests = false;
             if (runAllTests)

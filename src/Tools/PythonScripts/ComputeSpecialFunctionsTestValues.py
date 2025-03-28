@@ -293,6 +293,22 @@ def beta_cdf(x, a, b):
         return 1
     return betainc(a, b, 0, x, regularized=True)
 
+def gamma_logProb(x, s, r):
+    if x == inf:
+        if r > 0:
+            return mpf('0')
+        elif r == 0:
+            if s > 1:
+                return mpf('inf')
+            elif s == 1:
+                return mpf('0')
+            else: # s < 1
+                return mpf('-inf')
+        else: # r < 0
+            return mpf('inf')
+    slogx = (s-1)*log(x) if s != 1 else mpf('0')
+    return slogx - r*x - loggamma(s) + s*log(r)
+
 pair_info = {
     'BesselI.csv': besseli,
     'BetaCdf.csv': beta_cdf,
@@ -307,6 +323,7 @@ pair_info = {
     'GammaUpper.csv': lambda s, x: gammainc(s, x, inf),
     'GammaUpperRegularized.csv': lambda s, x: gammainc(s, x, inf, regularized=True) if s != inf else mpf(1),
     'GammaUpperScale.csv' : lambda s, x: x ** s * exp(-x) / gamma(s),
+    'GammaLogProb.csv' : gamma_logProb,
     'Log1MinusExp.csv': lambda x: log(1 - exp(x)),
     'Log1Plus.csv': log1p,
     'LogExpMinus1.csv': lambda x: log(exp(x) - 1),

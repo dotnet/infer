@@ -11956,6 +11956,46 @@
       <exception cref="ImproperMessageException">
         <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
+    <message_doc name="ProductAverageConditional(Gaussian, TruncatedGamma)">
+      <summary>EP message to <c>product</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>product</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>product</c> as the random arguments are varied. The formula is <c>proj[p(product) sum_(a,b) p(a,b) factor(product,a,b)]/p(product)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gaussian, TruncatedGamma)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="Product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(product,b) p(product,b) factor(product,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Product" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gaussian, Gaussian, TruncatedGamma)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="Product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(product,a) p(product,a) factor(product,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="Product" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+    </message_doc>
   </message_op_class>
   <message_op_class name="GaussianProductVmpOp">
     <doc>
@@ -23021,6 +23061,26 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
+    <message_doc name="LogEvidenceRatio(double, Gamma, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="max">Constant value for <c>max</c>.</param>
+      <param name="a">Incoming message from <c>val1</c>.</param>
+      <param name="b">Constant value for <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(val1) p(val1) factor(max,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, Gamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="max">Constant value for <c>max</c>.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(val2) p(val2) factor(max,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="LogEvidenceRatio(TruncatedGamma)">
       <summary>Evidence message for EP.</summary>
       <param name="max">Incoming message from <c>max</c>.</param>
@@ -23074,12 +23134,24 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="LogEvidenceRatio2(TruncatedGamma)">
-      <summary />
-      <param name="max">Incoming message from <c>max</c>.</param>
-      <returns />
+    <message_doc name="LogEvidenceRatio(double, TruncatedGamma, double)">
+      <summary>Evidence message for EP.</summary>
+      <param name="max">Constant value for <c>max</c>.</param>
+      <param name="a">Incoming message from <c>val1</c>.</param>
+      <param name="b">Constant value for <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
       <remarks>
-        <para />
+        <para>The formula for the result is <c>log(sum_(val1) p(val1) factor(max,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(double, double, TruncatedGamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="max">Constant value for <c>max</c>.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(val2) p(val2) factor(max,val1,val2))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
     <message_doc name="MaxAverageConditional(TruncatedGamma, double)">
@@ -26205,6 +26277,17 @@
       <exception cref="ImproperMessageException">
         <paramref name="ratio" /> is not a proper distribution.</exception>
     </message_doc>
+    <message_doc name="AAverageConditional(GammaPower, double)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Constant value for <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(ratio) p(ratio) factor(ratio,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="AAverageConditional(double, Gamma)">
       <summary>EP message to <c>a</c>.</summary>
       <param name="ratio">Constant value for <c>ratio</c>.</param>
@@ -26223,7 +26306,37 @@
         <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(b) p(b) factor(ratio,a,b)]/p(ratio)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="RatioAverageConditional(double, GammaPower)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(b) p(b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="RatioAverageConditional(Gamma, double, GammaPower)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(b) p(b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="BAverageConditional(Gamma, double)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Constant value for <c>a</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(ratio) p(ratio) factor(ratio,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(GammaPower, double)">
       <summary>EP message to <c>b</c>.</summary>
       <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="A">Constant value for <c>a</c>.</param>
@@ -26312,6 +26425,36 @@
         <para>The formula for the result is <c>log(sum_(ratio,a) p(ratio,a) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
     </message_doc>
+    <message_doc name="LogEvidenceRatio(GammaPower, double, GammaPower)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(GammaPower, double, Gamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(Gamma, double, GammaPower)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="a">Constant value for <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,b) p(ratio,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
     <message_doc name="LogEvidenceRatio(double, Gamma, double)">
       <summary>Evidence message for EP.</summary>
       <param name="ratio">Constant value for <c>ratio</c>.</param>
@@ -26331,6 +26474,117 @@
       <remarks>
         <para>The formula for the result is <c>log(sum_(b) p(b) factor(ratio,a,b))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
       </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="GammaRatioOp_PointA">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="RatioAverageConditional(Gamma, Gamma)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="RatioAverageConditional(Gamma, GammaPower)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="RatioAverageConditional(Gamma, Gamma, GammaPower)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gamma, Gamma)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(ratio,a) p(ratio,a) factor(ratio,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(GammaPower, Gamma)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(ratio,a) p(ratio,a) factor(ratio,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(GammaPower, Gamma, Gamma)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,a,b) p(ratio,a,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="LogEvidenceRatio(GammaPower, Gamma, GammaPower)">
+      <summary>Evidence message for EP.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="b">Incoming message from <c>b</c>.</param>
+      <returns>Logarithm of the factor's contribution the EP model evidence.</returns>
+      <remarks>
+        <para>The formula for the result is <c>log(sum_(ratio,a,b) p(ratio,a,b) factor(ratio,a,b) / sum_ratio p(ratio) messageTo(ratio))</c>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="GammaRatioOp_PointB">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Ratio(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="RatioAverageConditional(Gamma, TruncatedGamma)">
+      <summary>EP message to <c>ratio</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>ratio</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gamma, GammaPower)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(ratio,b) p(ratio,b) factor(ratio,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(GammaPower, GammaPower)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(ratio,b) p(ratio,b) factor(ratio,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
     </message_doc>
   </message_op_class>
   <message_op_class name="GammaRatioOp_Laplace">
@@ -34520,20 +34774,20 @@
     <doc>
       <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
     </doc>
-    <message_doc name="Buffer0Init()">
-      <summary>Initialize the buffer <c>buffer0</c>.</summary>
-      <returns>Initial value of buffer <c>buffer0</c>.</returns>
+    <message_doc name="BufferGammaInit()">
+      <summary>Initialize the buffer <c>bufferGamma</c>.</summary>
+      <returns>Initial value of buffer <c>bufferGamma</c>.</returns>
       <remarks>
         <para />
       </remarks>
     </message_doc>
-    <message_doc name="Buffer0(Gamma, Gamma, Gamma, RpropBufferData)">
-      <summary>Update the buffer <c>buffer0</c>.</summary>
+    <message_doc name="BufferGamma(Gamma, Gamma, Gamma, RpropBufferData)">
+      <summary>Update the buffer <c>bufferGamma</c>.</summary>
       <param name="use">Incoming message from <c>use</c>.</param>
       <param name="def">Incoming message from <c>def</c>.</param>
       <param name="to_marginal">Previous outgoing message to <c>marginal</c>.</param>
-      <param name="buffer0">Buffer <c>buffer0</c>.</param>
-      <returns>New value of buffer <c>buffer0</c>.</returns>
+      <param name="bufferGamma">Buffer <c>bufferGamma</c>.</param>
+      <returns>New value of buffer <c>bufferGamma</c>.</returns>
       <remarks>
         <para />
       </remarks>
@@ -34542,7 +34796,43 @@
       <summary>EP message to <c>marginal</c>.</summary>
       <param name="use">Incoming message from <c>use</c>.</param>
       <param name="def">Incoming message from <c>def</c>.</param>
-      <param name="buffer0">Buffer <c>buffer0</c>.</param>
+      <param name="bufferGamma">Buffer <c>bufferGamma</c>.</param>
+      <param name="result">Modified to contain the outgoing message.</param>
+      <returns>
+        <paramref name="result" />
+      </returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>marginal</c> as the random arguments are varied. The formula is <c>proj[p(marginal) sum_(use,def) p(use,def) factor(use,def,marginal)]/p(marginal)</c>.</para>
+      </remarks>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="VariablePointOp_RpropGammaPower">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Clone.VariablePoint{T}(T, out T)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="BufferGammaPowerInit()">
+      <summary>Initialize the buffer <c>bufferGammaPower</c>.</summary>
+      <returns>Initial value of buffer <c>bufferGammaPower</c>.</returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="BufferGammaPower(GammaPower, GammaPower, GammaPower, RpropBufferData)">
+      <summary>Update the buffer <c>bufferGammaPower</c>.</summary>
+      <param name="use">Incoming message from <c>use</c>.</param>
+      <param name="def">Incoming message from <c>def</c>.</param>
+      <param name="to_marginal">Previous outgoing message to <c>marginal</c>.</param>
+      <param name="bufferGammaPower">Buffer <c>bufferGammaPower</c>.</param>
+      <returns>New value of buffer <c>bufferGammaPower</c>.</returns>
+      <remarks>
+        <para />
+      </remarks>
+    </message_doc>
+    <message_doc name="MarginalAverageConditional(GammaPower, GammaPower, RpropBufferData, GammaPower)">
+      <summary>EP message to <c>marginal</c>.</summary>
+      <param name="use">Incoming message from <c>use</c>.</param>
+      <param name="def">Incoming message from <c>def</c>.</param>
+      <param name="bufferGammaPower">Buffer <c>bufferGammaPower</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />

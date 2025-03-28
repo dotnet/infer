@@ -3085,6 +3085,64 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaRCRPointMassTest()
+        {
+            GammaRCRPointMass(true);
+            GammaRCRPointMass(false);
+        }
+        private void GammaRCRPointMass(bool useLaplace)
+        { 
+            Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
+            Variable<Gamma> ratePrior = Variable.Observed(default(Gamma));
+            Variable<double> shape = Variable.Observed(2.5).Named("shape");
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<double> rate = Variable<double>.Random(ratePrior).Named("rate");
+            Variable<double> x = Variable.GammaFromShapeAndRate(shape, rate).Named("x");
+            Variable.ConstrainEqualRandom(x, xPrior);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            double tolerance = 1e-10;
+            double tolerance2 = 2e-9;
+            if (useLaplace)
+            {
+                engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
+                tolerance = 1e-15;
+                tolerance2 = 2e-15;
+            }
+            ratePrior.ObservedValue = Gamma.PointMass(1.0 / 4);
+            Gamma xExpected = engine.Infer<Gamma>(x);
+            Gamma rateExpected = engine.Infer<Gamma>(rate);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double xDiffPrev = double.PositiveInfinity;
+            double rateDiffPrev = double.PositiveInfinity;
+            double evDiffPrev = double.PositiveInfinity;
+            for (int i = 9; i < 20; i++)
+            {
+                double scale = System.Math.Pow(10, i);
+                ratePrior.ObservedValue = Gamma.FromShapeAndRate(1 * scale, 4 * scale);
+                Gamma xActual = engine.Infer<Gamma>(x);
+                Gamma rateActual = engine.Infer<Gamma>(rate);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double xDiff = xExpected.MaxDiff(xActual);
+                double rateDiff = MMath.AbsDiff(rateExpected.GetMean(), rateActual.GetMean());
+                double evDiff = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                //Console.WriteLine($"x = {xActual} should be {xExpected}, error = {xDiff}");
+                //Console.WriteLine($"rate = {rateActual} should be {rateExpected}, error = {rateDiff}");
+                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Assert.True(xDiff < xDiffPrev || xDiff < tolerance);
+                Assert.True(rateDiff < rateDiffPrev || rateDiff < tolerance);
+                Assert.True(evDiff < evDiffPrev || evDiff < tolerance2);
+                xDiffPrev = xDiff;
+                rateDiffPrev = rateDiff;
+                evDiffPrev = evDiff;
+            }
+        }
+
+        [Fact]
         public void GammaRatioRRRTest()
         {
             GammaRatioRRR(false);
@@ -3203,10 +3261,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
             Variable<Gamma> ratePrior = Variable.Observed(default(Gamma));
             Variable<double> shape = Variable.Observed(2.5).Named("shape");
-            Gamma xExpected = new Gamma(6.298, 0.1455);
-            Gamma yExpected = new Gamma(3.298, 0.3036);
-            Gamma rateExpected = new Gamma(5.325, 0.2112);
-            double evExpected = -1.89509023271149;
 
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);
@@ -3219,10 +3273,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             engine.Compiler.RecommendedQuality = QualityBand.Experimental;
             ratePrior.ObservedValue = Gamma.PointMass(1.0 / 4);
-            xExpected = engine.Infer<Gamma>(x);
-            yExpected = engine.Infer<Gamma>(y);
-            rateExpected = engine.Infer<Gamma>(rate);
-            evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            Gamma xExpected = engine.Infer<Gamma>(x);
+            Gamma yExpected = engine.Infer<Gamma>(y);
+            Gamma rateExpected = engine.Infer<Gamma>(rate);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
             double xDiffPrev = double.PositiveInfinity;
             double yDiffPrev = double.PositiveInfinity;
             double rateDiffPrev = double.PositiveInfinity;
@@ -3242,7 +3296,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 //Console.WriteLine($"x = {xActual} should be {xExpected}, error = {xDiff}");
                 //Console.WriteLine($"y = {yActual} should be {yExpected}, error = {yDiff}");
                 //Console.WriteLine($"rate = {rateActual} should be {rateExpected}, error = {rateDiff}");
-                Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
                 Assert.True(xDiff < xDiffPrev || xDiff < 1e-15);
                 Assert.True(yDiff < yDiffPrev || yDiff < 1e-15);
                 Assert.True(rateDiff < rateDiffPrev || rateDiff < 1e-15);
