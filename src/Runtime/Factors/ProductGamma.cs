@@ -603,6 +603,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new ArgumentException("B is not a point mass or ratio.Power != -1");
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(Gamma, Gamma, TruncatedGamma)"]/*'/>
         public static TruncatedGamma BAverageConditional([SkipIfUniform] Gamma ratio, [Proper] Gamma A, [Proper] TruncatedGamma B)
         {
             if (ratio.IsPointMass)

@@ -23107,9 +23107,10 @@
         <para>The outgoing message is a distribution matching the moments of <c>max</c> as the random arguments are varied. The formula is <c>proj[p(max) sum_(val2) p(val2) factor(max,val1,val2)]/p(max)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="AAverageConditional(TruncatedGamma, double)">
+    <message_doc name="AAverageConditional(TruncatedGamma, Gamma, double)">
       <summary>EP message to <c>val1</c>.</summary>
       <param name="max">Incoming message from <c>max</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>val1</c>.</param>
       <param name="b">Constant value for <c>val2</c>.</param>
       <returns>The outgoing EP message to the <c>val1</c> argument.</returns>
       <remarks>
@@ -23118,10 +23119,11 @@
       <exception cref="ImproperMessageException">
         <paramref name="max" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="BAverageConditional(TruncatedGamma, double)">
+    <message_doc name="BAverageConditional(TruncatedGamma, double, Gamma)">
       <summary>EP message to <c>val2</c>.</summary>
       <param name="max">Incoming message from <c>max</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
       <returns>The outgoing EP message to the <c>val2</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>val2</c> as the random arguments are varied. The formula is <c>proj[p(val2) sum_(max) p(max) factor(max,val1,val2)]/p(val2)</c>.</para>
@@ -23247,9 +23249,10 @@
         <para>The outgoing message is a distribution matching the moments of <c>min</c> as the random arguments are varied. The formula is <c>proj[p(min) sum_(val2) p(val2) factor(min,val1,val2)]/p(min)</c>.</para>
       </remarks>
     </message_doc>
-    <message_doc name="AAverageConditional(TruncatedGamma, double)">
+    <message_doc name="AAverageConditional(TruncatedGamma, Gamma, double)">
       <summary>EP message to <c>val1</c>.</summary>
       <param name="min">Incoming message from <c>min</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Incoming message from <c>val1</c>.</param>
       <param name="b">Constant value for <c>val2</c>.</param>
       <returns>The outgoing EP message to the <c>val1</c> argument.</returns>
       <remarks>
@@ -23258,10 +23261,11 @@
       <exception cref="ImproperMessageException">
         <paramref name="min" /> is not a proper distribution.</exception>
     </message_doc>
-    <message_doc name="BAverageConditional(TruncatedGamma, double)">
+    <message_doc name="BAverageConditional(TruncatedGamma, double, Gamma)">
       <summary>EP message to <c>val2</c>.</summary>
       <param name="min">Incoming message from <c>min</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="a">Constant value for <c>val1</c>.</param>
+      <param name="b">Incoming message from <c>val2</c>.</param>
       <returns>The outgoing EP message to the <c>val2</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>val2</c> as the random arguments are varied. The formula is <c>proj[p(val2) sum_(min) p(min) factor(min,val1,val2)]/p(val2)</c>.</para>
@@ -26508,6 +26512,17 @@
         <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="BAverageConditional(Gamma, TruncatedGamma)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(ratio,a) p(ratio,a) factor(ratio,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="BAverageConditional(Gamma, Gamma)">
       <summary>EP message to <c>b</c>.</summary>
       <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -26564,6 +26579,17 @@
         <para>The outgoing message is a distribution matching the moments of <c>ratio</c> as the random arguments are varied. The formula is <c>proj[p(ratio) sum_(a,b) p(a,b) factor(ratio,a,b)]/p(ratio)</c>.</para>
       </remarks>
     </message_doc>
+    <message_doc name="AAverageConditional(Gamma, TruncatedGamma)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(ratio,b) p(ratio,b) factor(ratio,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="AAverageConditional(Gamma, GammaPower)">
       <summary>EP message to <c>a</c>.</summary>
       <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -26585,6 +26611,22 @@
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="ratio" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gamma, Gamma, TruncatedGamma)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="ratio">Incoming message from <c>ratio</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(ratio,a) p(ratio,a) factor(ratio,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="ratio" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
     </message_doc>
   </message_op_class>
   <message_op_class name="GammaRatioOp_Laplace">
