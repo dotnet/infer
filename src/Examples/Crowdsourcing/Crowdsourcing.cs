@@ -147,7 +147,6 @@ namespace Crowdsourcing
         /// <param name="startIndex">The first index of the gold set array.</param>
         /// <param name="endIndex">The fast index of the gold set array.</param>
         /// <param name="communityUpperBound">The maximum number of communities</param>
-        /// ///
         static void FindNumCommunities(int startIndex, int endIndex, int communityUpperBound = 10)
         {
             Console.WriteLine("Find community count: Running models");

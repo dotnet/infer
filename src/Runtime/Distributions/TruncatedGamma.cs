@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                                       CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                                       CanGetLogNormalizer, CanGetLogAverageOf<TruncatedGamma>, CanGetLogAverageOfPower<TruncatedGamma>,
                                       CanGetAverageLog<TruncatedGamma>, CanGetMode<double>,
-                                      CanGetProbLessThan<double>, CanGetQuantile<double>
+                                      CanGetProbLessThan<double>, CanGetQuantile<double>, ITruncatableDistribution<double>
     {
         /// <summary>
         /// Untruncated Gamma
@@ -567,6 +567,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetQuantile(double probability)
         {
             return GetQuantile(Gamma, LowerBound, UpperBound, probability);
+        }
+
+        /// <inheritdoc/>
+        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound)
+        {
+            if (lowerBound > upperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > upperBound ({upperBound})");
+            if (lowerBound > this.UpperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > this.UpperBound ({this.UpperBound})");
+            if (upperBound < this.LowerBound) throw new ArgumentOutOfRangeException($"upperBound ({upperBound}) < this.LowerBound ({this.LowerBound})");
+            return new TruncatedGamma(Gamma, Math.Max(LowerBound, lowerBound), Math.Min(UpperBound, upperBound));
         }
 
         /// <summary>

@@ -72,7 +72,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>E(x)</returns>
         public double GetMean()
         {
-            return GetMeanPower(1);
+            // For consistency with SetMeanAndVariance
+            if (IsPointMass) return Point;
+            if (Power == 1)
+            {
+                return Shape / Rate;
+            }
+            else if (Power == -1)
+            {
+                return Rate / (Shape - 1);
+            }
+            else if (Power == 2)
+            {
+                return Shape * (Shape + 1) / (Rate * Rate);
+            }
+            else
+            {
+                return GetMeanPower(1);
+            }
         }
 
         /// <summary>
@@ -407,6 +424,49 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static GammaPower FromGamma(Gamma gamma, double power)
         {
             return FromShapeAndRate(gamma.Shape, gamma.Rate, power);
+        }
+
+        /// <summary>
+        /// Get the derivatives of the log-pdf at a point.
+        /// </summary>
+        /// <param name="dist"></param>
+        /// <param name="x"></param>
+        /// <param name="dlogp">On exit, the first derivative.</param>
+        /// <param name="ddlogp">On exit, the second derivative.</param>
+        public static void GetDerivatives(GammaPower dist, double x, out double dlogp, out double ddlogp)
+        {
+            dist.GetDerivatives(x, out dlogp, out ddlogp);
+        }
+
+        /// <summary>
+        /// Get the derivatives of the log-pdf at a point.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="dlogp">On exit, the first derivative.</param>
+        /// <param name="ddlogp">On exit, the second derivative.</param>
+        public void GetDerivatives(double x, out double dlogp, out double ddlogp)
+        {
+            if (IsPointMass)
+            {
+                ddlogp = double.NegativeInfinity;
+                if (x < Point) dlogp = double.PositiveInfinity;
+                else if (x == Point) dlogp = 0;
+                else dlogp = double.NegativeInfinity;
+                return;
+            }
+
+            dlogp = -this.Rate / this.Power * Math.Pow(x, 1 / this.Power - 1);
+            ddlogp = 0;
+            double a = this.Shape / this.Power - 1;
+            if (a != 0) // avoid 0/0
+            {
+                ddlogp -= a / (x * x);
+                dlogp += a / x;
+                if (double.IsPositiveInfinity(dlogp))
+                {
+                    dlogp = (a - this.Rate / this.Power * Math.Pow(x, 1 / this.Power)) / x;
+                }
+            }
         }
 
         /// <summary>

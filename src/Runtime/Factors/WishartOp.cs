@@ -190,7 +190,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             Wishart samplePost = sample * to_sample;
             PositiveDefiniteMatrix y = samplePost.GetMean();
             PositiveDefiniteMatrix yPlusBr = y + rate.Rate;
-            double result = (shape - c) * y.LogDeterminant() - shape2 * yPlusBr.LogDeterminant() + sample.GetLogProb(y) - samplePost.GetLogProb(y);
+            double result = (shape - c) * y.LogDeterminant() - shape2 * yPlusBr.LogDeterminant() + sample.GetLogProb(y) - samplePost.GetLogProb(y); // TODO: diff
             result += MMath.GammaLn(shape2, dim) - MMath.GammaLn(shape, dim) - MMath.GammaLn(rate.Shape, dim);
             result += rate.Shape * rate.Rate.LogDeterminant();
             return result;

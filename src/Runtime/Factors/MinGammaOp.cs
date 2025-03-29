@@ -43,18 +43,21 @@ namespace Microsoft.ML.Probabilistic.Factors
             return MinAverageConditional(b, a);
         }
 
-        public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma min, double b)
+        public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma min, Gamma a, double b)
         {
             if (min.IsUniform()) return Gamma.Uniform();
-            if (min.LowerBound == 0 && min.UpperBound == b) return min.Gamma;
-            if (!min.IsPointMass)
-                throw new ArgumentException("min is not a point mass");
-            return Gamma.PointMass(min.Point);
+            if (a.IsPointMass) return min.Gamma;
+            if (min.IsPointMass)
+                return Gamma.PointMass(min.Point);
+            TruncatedGamma aTruncated = new TruncatedGamma(a, 0, b);
+            var product = min * aTruncated;
+            var projected = product.ToGamma();
+            return projected / a;
         }
 
-        public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma min, double a)
+        public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma min, double a, Gamma b)
         {
-            return AAverageConditional(min, a);
+            return AAverageConditional(min, b, a);
         }
     }
 
@@ -95,11 +98,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         public static TruncatedGamma AAverageConditional([SkipIfUniform] TruncatedGamma min, double b)
         {
-            if (min.IsUniform()) return TruncatedGamma.Uniform();
-            if (min.UpperBound == b) return new TruncatedGamma(min.Gamma, min.LowerBound, double.PositiveInfinity);
-            if (!min.IsPointMass)
-                throw new ArgumentException("min is not a point mass");
-            return TruncatedGamma.PointMass(min.Point);
+            return min;
         }
 
         public static TruncatedGamma BAverageConditional([SkipIfUniform] TruncatedGamma min, double a)
