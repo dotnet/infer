@@ -3371,9 +3371,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma like = Gamma.FromShapeAndRate(200, 100);
             Gamma result0 = ProductModel();
             Gamma result1 = PowerRatioModel();
+            Assert.Equal(result0, result1);
             Gamma result2 = GammaPowerRatioModel();
-            Gamma result3 = PowerRatioModel2();
-            Gamma result4 = PowerRatioModel3();
+            Gamma result3 = RatioModel();
+            Gamma result4 = RatioModel2();
+            Assert.Equal(result3, result4);
+            Gamma result5 = RatioModel3();
+            Assert.Equal(result4, result5);
 
             Gamma ProductModel()
             {
@@ -3385,7 +3389,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 engine.Compiler.InitialisationAffectsSchedule = true;
-                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
                 return engine.Infer<Gamma>(a);
             }
 
@@ -3401,7 +3405,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 engine.Compiler.InitialisationAffectsSchedule = true;
-                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)} c={engine.Infer(c)}");
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)} c={engine.Infer(c)}");
                 return engine.Infer<Gamma>(a);
             }
 
@@ -3415,11 +3419,11 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 engine.Compiler.InitialisationAffectsSchedule = true;
-                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
                 return engine.Infer<Gamma>(a);
             }
 
-            Gamma PowerRatioModel2()
+            Gamma RatioModel()
             {
                 var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
                 var b = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("b");
@@ -3429,11 +3433,11 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 engine.Compiler.InitialisationAffectsSchedule = true;
-                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
                 return engine.Infer<Gamma>(a);
             }
 
-            Gamma PowerRatioModel3()
+            Gamma RatioModel2()
             {
                 var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
                 var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
@@ -3444,8 +3448,24 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable.ConstrainEqualRandom(ratio, like);
 
                 InferenceEngine engine = new InferenceEngine();
+                engine.ModelName = nameof(RatioModel2);
                 engine.Compiler.InitialisationAffectsSchedule = true;
-                Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma RatioModel3()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b = Variable.Max(0, c).Named("b");
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
                 return engine.Infer<Gamma>(a);
             }
         }

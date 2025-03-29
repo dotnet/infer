@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                           CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>,
                           CanGetLogAverageOf<Gamma>, CanGetLogAverageOfPower<Gamma>,
                           CanGetAverageLog<Gamma>, CanGetLogNormalizer, CanGetMode<double>,
-                          CanGetProbLessThan<double>, CanGetQuantile<double>
+                          CanGetProbLessThan<double>, CanGetQuantile<double>, ITruncatableDistribution<double>
     {
         /// <summary>
         /// Rate parameter for the distribution
@@ -516,6 +516,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetProbBetween(double lowerBound, double upperBound)
         {
             return MMath.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
+        }
+
+        /// <inheritdoc/>
+        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound)
+        {
+            if (lowerBound > upperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > upperBound ({upperBound})");
+            return new TruncatedGamma(this, lowerBound, upperBound);
         }
 
         /// <summary>

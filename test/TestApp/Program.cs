@@ -84,9 +84,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new GatedFactorTests().GatedGammaRatioRRRTest();
-            //new EpTests().GammaRatioPointEstimateTest();
-
             bool runAllTests = false;
             if (runAllTests)
             {
