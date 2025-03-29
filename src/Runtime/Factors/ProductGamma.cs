@@ -452,6 +452,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, double, GammaPower)"]/*'/>
         public static double LogEvidenceRatio(GammaPower ratio, double a, GammaPower b)
         {
+            if (ratio.IsUniform()) return 0.0;
             if (ratio.Power == -b.Power) return 0.0;
             else throw new NotImplementedException();
         }
@@ -534,6 +535,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="LogEvidenceRatio(GammaPower, Gamma, Gamma)"]/*'/>
         public static double LogEvidenceRatio(GammaPower ratio, Gamma A, Gamma b)
         {
+            if (ratio.IsUniform()) return 0.0;
             if (A.IsPointMass)
                 return GammaRatioOp.LogEvidenceRatio(ratio, A.Point, b);
             else
@@ -543,6 +545,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="LogEvidenceRatio(GammaPower, Gamma, GammaPower)"]/*'/>
         public static double LogEvidenceRatio(GammaPower ratio, Gamma A, GammaPower b)
         {
+            if (ratio.IsUniform()) return 0.0;
             if (A.IsPointMass)
                 return GammaRatioOp.LogEvidenceRatio(ratio, A.Point, b);
             else
@@ -671,6 +674,11 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_Laplace"]/message_doc[@name="LogAverageFactor(Gamma, Gamma, Gamma, Gamma)"]/*'/>
         public static double LogAverageFactor(Gamma ratio, Gamma A, Gamma B, Gamma q)
         {
+            if (ratio.IsPointMass)
+            {
+                return GammaRatioOp.LogAverageFactor(ratio.Point, A, B);
+            }
+            if (ratio.IsUniform()) return 0.0;
             if (B.IsPointMass)
                 return GammaRatioOp.LogAverageFactor(ratio, A, B.Point);
             if (A.IsPointMass)
@@ -680,10 +688,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // = a^(y_s-1) y_r^(y_s)/Gamma(y_s)/Gamma(s) r^s int b^(s-y_s) exp(-a/b y_r -rb) db
                 // this requires BesselK
                 throw new NotImplementedException();
-            }
-            if (ratio.IsPointMass)
-            {
-                return GammaRatioOp.LogAverageFactor(ratio.Point, A, B);
             }
             // int Ga(a/b; y_s, y_r) Ga(a; s, r) da = b^s / (br + y_r)^(y_s + s-1)  Gamma(y_s+s-1)
             double x = q.GetMean();

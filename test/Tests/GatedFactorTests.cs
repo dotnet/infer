@@ -5555,13 +5555,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             Variable<double> y = Variable.GammaFromShapeAndRate(shape, rate).Named("y");
             double shape2 = 4;
             double rate2 = 5;
+#if false
             var denom = Variable.Random(GammaPower.FromShapeAndRate(shape2, rate2, -1)).Named("denom");
-#if true
             Variable<double> x = (y / denom).Attrib(new MarginalPrototype(new GammaPower())).Named("x");
-            GammaPower xLike = GammaPower.Uniform(-1);
+            GammaPower xLike = GammaPower.Uniform(1);
 #else
+            var denom = Variable.Random(Gamma.FromShapeAndRate(shape2, rate2)).Named("denom");
             Variable<double> x = (y / denom).Attrib(new MarginalPrototype(new Gamma())).Named("x");
-            Gamma xLike = Gamma.Uniform(-1);
+            Gamma xLike = Gamma.Uniform();
 #endif
             Variable.ConstrainEqualRandom(x, xLike);
             block.CloseBlock();
