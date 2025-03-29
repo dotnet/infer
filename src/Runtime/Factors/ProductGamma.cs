@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return result;
             }
             // (ab)^(shape/power-1) exp(-rate*(ab)^(1/power))
-            return GammaPower.FromShapeAndRate(Product.Shape, Product.Rate * Math.Pow(B, 1 / result.Power), result.Power);
+            return GammaPower.FromShapeAndRate(Product.Shape, Product.Rate * Math.Pow(B, 1 / Product.Power), Product.Power);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp"]/message_doc[@name="AAverageConditional(double, double, GammaPower)"]/*'/>

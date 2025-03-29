@@ -195,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // normalizer is -MMath.GammaLn(Shape) + Shape * Math.Log(Rate) - Math.Log(Math.Abs(Power))
                 }
             }
-            double logz = logf + Gamma.FromShapeAndRate(B.Shape, B.Rate).GetLogProb(qPoint) - q.GetLogProb(qPoint); // TODO: diff
+            double logz = logf + GammaFromShapeAndRateOp_Laplace.GammaLogProbDiff(Gamma.FromShapeAndRate(B.Shape, B.Rate), q, qPoint);
             return logz;
         }
 
@@ -395,7 +395,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double g = 1 / (qPoint * r + A.Rate);
                 double g2 = g * g;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
-                // From above:
+                // When all powers are equal and b is known, the posterior for a^(1/a.Power) is:
+                // (a^pa * b^pb)^(y_s/y_p - 1) exp(-y_r*(a^pa*b^pb)^(1/y_p)) Ga(a;s,r) =
                 // a^(y_s-pa + a_s-1) exp(-(y_r b + a_r)*a)
                 if (shape2 > 2)
                 {

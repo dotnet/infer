@@ -2662,6 +2662,61 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Fact]
+        public void GammaPowerProductRRRPointMassTest()
+        {
+            double power = -1;
+            GammaPower productPrior = GammaPower.FromShapeAndRate(5, 6, power);
+            Variable<GammaPower> bPrior = Variable.Observed(default(GammaPower));
+            Variable<GammaPower> aPrior = Variable.Observed(default(GammaPower));
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<double> a = Variable<double>.Random(aPrior).Named("a");
+            Variable<double> b = Variable<double>.Random(bPrior).Named("b");
+            Variable<double> product = (a * b).Named("product");
+            Variable.ConstrainEqualRandom(product, productPrior);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            aPrior.ObservedValue = GammaPower.FromShapeAndRate(2.5, 1.0, power);
+            bPrior.ObservedValue = GammaPower.PointMass(System.Math.Pow(1.0 / 4, power), power);
+            var aExpected = engine.Infer<GammaPower>(a);
+            var bExpected = engine.Infer<GammaPower>(b);
+            var productExpected = engine.Infer<GammaPower>(product);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double aDiffPrev = double.PositiveInfinity;
+            double bDiffPrev = double.PositiveInfinity;
+            double productDiffPrev = double.PositiveInfinity;
+            double evDiffPrev = double.PositiveInfinity;
+            for (int i = 10; i < 20; i++)
+            {
+                double scale = System.Math.Pow(10, i);
+                bPrior.ObservedValue = GammaPower.FromShapeAndRate(1 * scale, 4 * scale, power);
+                var aActual = engine.Infer<GammaPower>(a);
+                var bActual = engine.Infer<GammaPower>(b);
+                var productActual = engine.Infer<GammaPower>(product);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double aDiff = aExpected.MaxDiff(aActual);
+                double bDiff = MMath.AbsDiff(bExpected.GetMean(), bActual.GetMean());
+                double productDiff = productExpected.MaxDiff(productActual);
+                double evDiff = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                //Console.WriteLine($"a = {aActual} should be {aExpected}, error = {aDiff}");
+                //Console.WriteLine($"b = {bActual} should be {bExpected}, error = {bDiff}");
+                //Console.WriteLine($"product = {productActual} should be {productExpected}, error = {productDiff}");
+                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Assert.True(aDiff < aDiffPrev || aDiff < 1e-15);
+                Assert.True(bDiff < bDiffPrev || bDiff < 1e-15);
+                Assert.True(productDiff < productDiffPrev || productDiff < 1e-15);
+                Assert.True(evDiff < evDiffPrev || evDiff < 3e-15);
+                aDiffPrev = aDiff;
+                bDiffPrev = bDiff;
+                productDiffPrev = productDiff;
+                evDiffPrev = evDiff;
+            }
+        }
+
         internal static void TestLogEvidence()
         {
             LogEvidenceScale(new GammaPower(100, 5.0 / 100, -1), new GammaPower(100, 2.0 / 100, -1), new GammaPower(100, 3.0 / 100, -1), 0.2);

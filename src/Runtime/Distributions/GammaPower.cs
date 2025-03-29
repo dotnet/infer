@@ -72,7 +72,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>E(x)</returns>
         public double GetMean()
         {
-            return GetMeanPower(1);
+            // For consistency with SetMeanAndVariance
+            if (IsPointMass) return Point;
+            if (Power == 1)
+            {
+                return Shape / Rate;
+            }
+            else if (Power == -1)
+            {
+                return Rate / (Shape - 1);
+            }
+            else if (Power == 2)
+            {
+                return Shape * (Shape + 1) / (Rate * Rate);
+            }
+            else
+            {
+                return GetMeanPower(1);
+            }
         }
 
         /// <summary>
