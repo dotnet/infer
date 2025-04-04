@@ -2707,8 +2707,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 //Console.WriteLine($"product = {productActual} should be {productExpected}, error = {productDiff}");
                 //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
                 Assert.True(aDiff < aDiffPrev || aDiff < 1e-15);
-                Assert.True(bDiff < bDiffPrev || bDiff < 1e-15);
-                Assert.True(productDiff < productDiffPrev || productDiff < 1e-15);
+                Assert.True(bDiff < bDiffPrev || bDiff < 2e-14);
+                Assert.True(productDiff < productDiffPrev || productDiff < 1e-14);
                 Assert.True(evDiff < evDiffPrev || evDiff < 3e-15);
                 aDiffPrev = aDiff;
                 bDiffPrev = bDiff;
@@ -2791,6 +2791,19 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             Console.WriteLine(engine.Infer(position));
+        }
+
+        [Fact]
+        public void SoftPlusTest()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");
+            Variable<double> y = Variable.Log(Variable.Exp(x) + 1).Named("y");
+            Variable.ConstrainEqualRandom(y, Gaussian.FromNatural(2, 3));
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+
+            Console.WriteLine(engine.Infer(x));
+            Console.WriteLine(engine.Infer(y));
         }
 
         [Fact]

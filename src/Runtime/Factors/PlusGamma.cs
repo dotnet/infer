@@ -337,6 +337,26 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(Gamma, double)"]/*'/>
+        public static Gamma SumAverageConditional([SkipIfUniform] Gamma a, double b)
+        {
+            if (double.IsInfinity(b) || double.IsNaN(b)) throw new ArgumentOutOfRangeException(nameof(b), b, $"Argument is outside the range of supported values.");
+            if (a.IsUniform() || b == 0) return a;
+            else if (a.IsPointMass) return Gamma.PointMass(a.Point + b);
+            else if (!a.IsProper()) return a;
+            else
+            {
+                // The mean is Shape/Rate
+                // We want to shift the mean by b, preserving the Shape and Power.
+                // This implies newRate = Shape/(oldMean + b)
+                double newMean = Math.Max(0, a.GetMean() + b);
+                double newRate = a.Shape / newMean;
+                if (a.Rate > 0) newRate = Math.Max(double.Epsilon, newRate);
+                if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
+                return Gamma.FromShapeAndRate(a.Shape, newRate);
+            }
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(GammaPower, double)"]/*'/>
         public static GammaPower SumAverageConditional([SkipIfUniform] GammaPower a, double b)
         {
@@ -354,23 +374,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //         = (a.Shape - a.Power) * Math.Pow(a.GetMode() + b, -1 / a.Power);
                 //double logMode = a.Power * (Math.Log(Math.Max(0, a.Shape - a.Power)) - Math.Log(a.Rate));
                 //if (logMode > double.MaxValue) return a; // mode is at infinity
-                double logShapeMinusPower = Math.Log(a.Shape - a.Power);
                 double mode = a.GetMode();
                 if (mode > double.MaxValue) return a; // mode is at infinity
                 double newMode = Math.Max(0, mode + b);
-                double newLogMode = Math.Log(newMode);
-                // Find newLogRate to satisfy a.Power*(logShapeMinusPower - newLogRate) <= newLogMode
-                // logShapeMinusPower - newLogRate >= newLogMode/a.Power
-                // newLogRate - logShapeMinusPower <= -newLogMode/a.Power
-                double newLogModeOverPower = MMath.LargestDoubleRatio(newLogMode, -a.Power);
-                double newLogRate = MMath.LargestDoubleSum(logShapeMinusPower, newLogModeOverPower);
-                if ((double)((logShapeMinusPower - newLogRate) * a.Power) > newLogMode) throw new Exception();
-                // Ideally this would find largest newRate such that log(newRate) <= newLogRate
-                double newRate = Math.Exp(newLogRate);
-                if (logShapeMinusPower == newLogRate) newRate = a.Shape - a.Power;
-                if (a.Rate > 0) newRate = Math.Max(double.Epsilon, newRate);
-                if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
-                return GammaPower.FromShapeAndRate(a.Shape, newRate, a.Power);
+                a.SetMode(newMode);
+                return a;
             }
             else if (!a.IsProper()) return a;
             else
@@ -378,7 +386,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // The mean is Math.Exp(Power * (MMath.RisingFactorialLnOverN(Shape, Power) - Math.Log(Rate)))
                 // We want to shift the mean by b, preserving the Shape and Power.
                 // This implies log(newRate) = MMath.RisingFactorialLnOverN(Shape, Power) - log(newMean)/Power
-                double logShape = MMath.RisingFactorialLnOverN(a.Shape, a.Power);
                 //double logMean = a.GetLogMeanPower(1);
                 //double newLogMean = (b > 0) ? 
                 //    MMath.LogSumExp(logMean, Math.Log(b)) :
@@ -388,27 +395,27 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     newMean = Math.Max(0, TruncatedGammaPowerGetMean(a, -b, double.PositiveInfinity) + b);
                 }
-                double newLogMean = Math.Log(newMean);
-                // If logShape is big, this difference can lose accuracy
-                // Find newLogRate to satisfy logShape - newLogRate <= newLogMean/a.Power
-                double newLogRate;
-                if (a.Power < 0)
-                {
-                    double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, -a.Power);
-                    newLogRate = MMath.LargestDoubleSum(logShape, newLogMeanOverPower);
-                }
-                else
-                {
-                    double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, a.Power);
-                    newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
-                }
-                // check: (logShape - newLogRate)*a.Power <= newLogMean
-                if ((double)((logShape - newLogRate) * a.Power) > newLogMean) throw new Exception();
-                double newRate = Math.Exp(newLogRate);
-                newRate = Math.Max(double.Epsilon, newRate);
-                if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
-                return GammaPower.FromShapeAndRate(a.Shape, newRate, a.Power);
+                a.SetMean(newMean);
+                return a;
             }
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(double, Gamma)"]/*'/>
+        public static Gamma SumAverageConditional(double a, [SkipIfUniform] Gamma b)
+        {
+            return SumAverageConditional(b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="AAverageConditional(Gamma, double)"]/*'/>
+        public static Gamma AAverageConditional([SkipIfUniform] Gamma sum, double b)
+        {
+            return SumAverageConditional(sum, -b);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="BAverageConditional(Gamma, double)"]/*'/>
+        public static Gamma BAverageConditional([SkipIfUniform] Gamma sum, double a)
+        {
+            return AAverageConditional(sum, a);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(double, GammaPower)"]/*'/>

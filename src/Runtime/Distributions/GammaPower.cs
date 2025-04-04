@@ -72,24 +72,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>E(x)</returns>
         public double GetMean()
         {
-            // For consistency with SetMeanAndVariance
             if (IsPointMass) return Point;
-            if (Power == 1)
-            {
-                return Shape / Rate;
-            }
-            else if (Power == -1)
-            {
-                return Rate / (Shape - 1);
-            }
-            else if (Power == 2)
-            {
-                return Shape * (Shape + 1) / (Rate * Rate);
-            }
-            else
-            {
-                return GetMeanPower(1);
-            }
+            else return GetMeanPower(1);
         }
 
         /// <summary>
@@ -139,6 +123,69 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Set the mode by changing the rate, keeping the shape and power constant.
+        /// </summary>
+        /// <param name="mode"></param>
+        public void SetMode(double mode)
+        {
+            if (IsPointMass)
+            {
+                Point = mode;
+                return;
+            }
+            if (Shape <= Power) return; // Can't set the mode
+            double newLogMode = Math.Log(mode);
+            // Find newLogRate to satisfy a.Power*(logShapeMinusPower - newLogRate) <= newLogMode
+            // logShapeMinusPower - newLogRate >= newLogMode/a.Power
+            // newLogRate - logShapeMinusPower <= -newLogMode/a.Power
+            double newLogModeOverPower = MMath.LargestDoubleRatio(newLogMode, -Power);
+            double logShapeMinusPower = Math.Log(Shape - Power);
+            double newLogRate = MMath.LargestDoubleSum(logShapeMinusPower, newLogModeOverPower);
+            if ((double)((logShapeMinusPower - newLogRate) * Power) > newLogMode) throw new Exception();
+            // Ideally this would find largest newRate such that log(newRate) <= newLogRate
+            double newRate = Math.Exp(newLogRate);
+            if (logShapeMinusPower == newLogRate) newRate = Shape - Power;
+            if (Rate > 0) newRate = Math.Max(double.Epsilon, newRate);
+            if (!double.IsPositiveInfinity(Rate)) newRate = Math.Min(double.MaxValue, newRate);
+            Rate = newRate;
+        }
+
+        /// <summary>
+        /// Set the mean by changing the rate, keeping the shape and power constant.
+        /// </summary>
+        /// <param name="mean"></param>
+        public void SetMean(double mean)
+        {
+            if (IsPointMass)
+            {
+                Point = mean;
+                return;
+            }
+            if (Shape <= 0) return; // Can't set the mean
+            double newLogMean = Math.Log(mean);
+            // If logShape is big, this difference can lose accuracy
+            // Find newLogRate to satisfy logShape - newLogRate <= newLogMean/a.Power
+            double newLogRate;
+            double logShape = MMath.RisingFactorialLnOverN(Shape, Power);
+            if (Power < 0)
+            {
+                double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, -Power);
+                newLogRate = MMath.LargestDoubleSum(logShape, newLogMeanOverPower);
+            }
+            else
+            {
+                double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, Power);
+                newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
+            }
+            // check: (logShape - newLogRate)*Power <= newLogMean
+            if ((double)((logShape - newLogRate) * Power) > newLogMean) throw new Exception();
+            double newRate = Math.Exp(newLogRate);
+            newRate = Math.Max(double.Epsilon, newRate);
+            if (!double.IsPositiveInfinity(Rate)) newRate = Math.Min(double.MaxValue, newRate);
+            Rate = newRate;
+        }
+
+        /// <summary>
         /// Set the mean and variance
         /// </summary>
         /// <param name="mean">Mean</param>
@@ -150,6 +197,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (variance == 0)
             {
                 Point = mean;
+                return;
             }
             else if (variance < 0)
             {
@@ -186,6 +234,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new NotImplementedException("Not implemented for power " + Power);
             }
+            SetMean(mean);
             CheckForPointMass();
         }
 
@@ -487,7 +536,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanPower(double power)
         {
-            return Math.Exp(GetLogMeanPower(power));
+            if (IsPointMass) return Math.Pow(Point, power);
+            else return Math.Exp(GetLogMeanPower(power));
         }
 
         /// <summary>
