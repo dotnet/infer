@@ -24447,6 +24447,17 @@
       <exception cref="ImproperMessageException">
         <paramref name="b" /> is not a proper distribution.</exception>
     </message_doc>
+    <message_doc name="SumAverageConditional(Gamma, double)">
+      <summary>EP message to <c>Sum</c>.</summary>
+      <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>B</c>.</param>
+      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(A) p(A) factor(Sum,A,B)]/p(Sum)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
     <message_doc name="SumAverageConditional(GammaPower, double)">
       <summary>EP message to <c>Sum</c>.</summary>
       <param name="a">Incoming message from <c>A</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
@@ -24457,6 +24468,39 @@
       </remarks>
       <exception cref="ImproperMessageException">
         <paramref name="a" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="SumAverageConditional(double, Gamma)">
+      <summary>EP message to <c>Sum</c>.</summary>
+      <param name="a">Constant value for <c>A</c>.</param>
+      <param name="b">Incoming message from <c>B</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>Sum</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>Sum</c> as the random arguments are varied. The formula is <c>proj[p(Sum) sum_(B) p(B) factor(Sum,A,B)]/p(Sum)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="b" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gamma, double)">
+      <summary>EP message to <c>A</c>.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>B</c>.</param>
+      <returns>The outgoing EP message to the <c>A</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>A</c> as the random arguments are varied. The formula is <c>proj[p(A) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(A)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gamma, double)">
+      <summary>EP message to <c>B</c>.</summary>
+      <param name="sum">Incoming message from <c>Sum</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>A</c>.</param>
+      <returns>The outgoing EP message to the <c>B</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>B</c> as the random arguments are varied. The formula is <c>proj[p(B) sum_(Sum) p(Sum) factor(Sum,A,B)]/p(B)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="sum" /> is not a proper distribution.</exception>
     </message_doc>
     <message_doc name="SumAverageConditional(double, GammaPower)">
       <summary>EP message to <c>Sum</c>.</summary>
