@@ -164,6 +164,13 @@ ncdf(-12.2)
         }
 
         [Fact]
+        public void GammaLogProbTest()
+        {
+            double[,] gammaLogProb_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaLogProb.csv"));
+            CheckFunctionValues(nameof(Gamma.GetLogProb), (x,s,r) => Gamma.GetLogProb(x,s,r), gammaLogProb_pairs);
+        }
+
+        [Fact]
         public void GammaUpperTest()
         {
             double[,] gammaUpperScale_pairs = ReadPairs(Path.Combine(TestUtils.DataFolderPath, "SpecialFunctionsValues", "GammaUpperScale.csv"));

@@ -38,17 +38,21 @@ namespace Microsoft.ML.Probabilistic.Factors
             return MaxAverageConditional(b, a);
         }
 
-        public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma max, double b)
+        public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma max, Gamma a, double b)
         {
             if (max.IsUniform()) return Gamma.Uniform();
-            if (!max.IsPointMass)
-                throw new ArgumentException("max is not a point mass");
-            return Gamma.PointMass(max.Point);
+            if (a.IsPointMass) return max.Gamma;
+            if (max.IsPointMass)
+                return Gamma.PointMass(max.Point);
+            TruncatedGamma aTruncated = new TruncatedGamma(a, 0, b);
+            var product = max * aTruncated;
+            var projected = product.ToGamma();
+            return projected / a;
         }
 
-        public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma max, double a)
+        public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma max, double a, Gamma b)
         {
-            return AAverageConditional(max, a);
+            return AAverageConditional(max, b, a);
         }
     }
 
@@ -78,10 +82,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         public static TruncatedGamma AAverageConditional([SkipIfUniform] TruncatedGamma max, double b)
         {
-            if (max.IsUniform()) return TruncatedGamma.Uniform();
-            if (!max.IsPointMass)
-                throw new ArgumentException("max is not a point mass");
-            return TruncatedGamma.PointMass(max.Point);
+            return max;
         }
 
         public static TruncatedGamma BAverageConditional([SkipIfUniform] TruncatedGamma max, double a)

@@ -2662,6 +2662,61 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Fact]
+        public void GammaPowerProductRRRPointMassTest()
+        {
+            double power = -1;
+            GammaPower productPrior = GammaPower.FromShapeAndRate(5, 6, power);
+            Variable<GammaPower> bPrior = Variable.Observed(default(GammaPower));
+            Variable<GammaPower> aPrior = Variable.Observed(default(GammaPower));
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<double> a = Variable<double>.Random(aPrior).Named("a");
+            Variable<double> b = Variable<double>.Random(bPrior).Named("b");
+            Variable<double> product = (a * b).Named("product");
+            Variable.ConstrainEqualRandom(product, productPrior);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            aPrior.ObservedValue = GammaPower.FromShapeAndRate(2.5, 1.0, power);
+            bPrior.ObservedValue = GammaPower.PointMass(System.Math.Pow(1.0 / 4, power), power);
+            var aExpected = engine.Infer<GammaPower>(a);
+            var bExpected = engine.Infer<GammaPower>(b);
+            var productExpected = engine.Infer<GammaPower>(product);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double aDiffPrev = double.PositiveInfinity;
+            double bDiffPrev = double.PositiveInfinity;
+            double productDiffPrev = double.PositiveInfinity;
+            double evDiffPrev = double.PositiveInfinity;
+            for (int i = 10; i < 20; i++)
+            {
+                double scale = System.Math.Pow(10, i);
+                bPrior.ObservedValue = GammaPower.FromShapeAndRate(1 * scale, 4 * scale, power);
+                var aActual = engine.Infer<GammaPower>(a);
+                var bActual = engine.Infer<GammaPower>(b);
+                var productActual = engine.Infer<GammaPower>(product);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double aDiff = aExpected.MaxDiff(aActual);
+                double bDiff = MMath.AbsDiff(bExpected.GetMean(), bActual.GetMean());
+                double productDiff = productExpected.MaxDiff(productActual);
+                double evDiff = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                //Console.WriteLine($"a = {aActual} should be {aExpected}, error = {aDiff}");
+                //Console.WriteLine($"b = {bActual} should be {bExpected}, error = {bDiff}");
+                //Console.WriteLine($"product = {productActual} should be {productExpected}, error = {productDiff}");
+                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Assert.True(aDiff < aDiffPrev || aDiff < 1e-15);
+                Assert.True(bDiff < bDiffPrev || bDiff < 2e-14);
+                Assert.True(productDiff < productDiffPrev || productDiff < 1e-14);
+                Assert.True(evDiff < evDiffPrev || evDiff < 3e-15);
+                aDiffPrev = aDiff;
+                bDiffPrev = bDiff;
+                productDiffPrev = productDiff;
+                evDiffPrev = evDiff;
+            }
+        }
+
         internal static void TestLogEvidence()
         {
             LogEvidenceScale(new GammaPower(100, 5.0 / 100, -1), new GammaPower(100, 2.0 / 100, -1), new GammaPower(100, 3.0 / 100, -1), 0.2);
@@ -2736,6 +2791,19 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             InferenceEngine engine = new InferenceEngine();
             Console.WriteLine(engine.Infer(position));
+        }
+
+        [Fact]
+        public void SoftPlusTest()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");
+            Variable<double> y = Variable.Log(Variable.Exp(x) + 1).Named("y");
+            Variable.ConstrainEqualRandom(y, Gaussian.FromNatural(2, 3));
+            InferenceEngine engine = new InferenceEngine();
+            engine.ShowProgress = false;
+
+            Console.WriteLine(engine.Infer(x));
+            Console.WriteLine(engine.Infer(y));
         }
 
         [Fact]
@@ -3085,6 +3153,64 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaRCRPointMassTest()
+        {
+            GammaRCRPointMass(true);
+            GammaRCRPointMass(false);
+        }
+        private void GammaRCRPointMass(bool useLaplace)
+        { 
+            Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
+            Variable<Gamma> ratePrior = Variable.Observed(default(Gamma));
+            Variable<double> shape = Variable.Observed(2.5).Named("shape");
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<double> rate = Variable<double>.Random(ratePrior).Named("rate");
+            Variable<double> x = Variable.GammaFromShapeAndRate(shape, rate).Named("x");
+            Variable.ConstrainEqualRandom(x, xPrior);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            double tolerance = 1e-10;
+            double tolerance2 = 2e-9;
+            if (useLaplace)
+            {
+                engine.Compiler.GivePriorityTo(typeof(GammaFromShapeAndRateOp_Laplace));
+                tolerance = 1e-15;
+                tolerance2 = 2e-15;
+            }
+            ratePrior.ObservedValue = Gamma.PointMass(1.0 / 4);
+            Gamma xExpected = engine.Infer<Gamma>(x);
+            Gamma rateExpected = engine.Infer<Gamma>(rate);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double xDiffPrev = double.PositiveInfinity;
+            double rateDiffPrev = double.PositiveInfinity;
+            double evDiffPrev = double.PositiveInfinity;
+            for (int i = 9; i < 20; i++)
+            {
+                double scale = System.Math.Pow(10, i);
+                ratePrior.ObservedValue = Gamma.FromShapeAndRate(1 * scale, 4 * scale);
+                Gamma xActual = engine.Infer<Gamma>(x);
+                Gamma rateActual = engine.Infer<Gamma>(rate);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double xDiff = xExpected.MaxDiff(xActual);
+                double rateDiff = MMath.AbsDiff(rateExpected.GetMean(), rateActual.GetMean());
+                double evDiff = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                //Console.WriteLine($"x = {xActual} should be {xExpected}, error = {xDiff}");
+                //Console.WriteLine($"rate = {rateActual} should be {rateExpected}, error = {rateDiff}");
+                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Assert.True(xDiff < xDiffPrev || xDiff < tolerance);
+                Assert.True(rateDiff < rateDiffPrev || rateDiff < tolerance);
+                Assert.True(evDiff < evDiffPrev || evDiff < tolerance2);
+                xDiffPrev = xDiff;
+                rateDiffPrev = rateDiff;
+                evDiffPrev = evDiff;
+            }
+        }
+
+        [Fact]
         public void GammaRatioRRRTest()
         {
             GammaRatioRRR(false);
@@ -3176,7 +3302,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-3);
             }
 
-            if (true)
+            if (false)
             {
                 engine.Compiler.GivePriorityTo(typeof(GammaRatioOp_Laplace));
                 xActual = engine.Infer<Gamma>(x);
@@ -3194,6 +3320,166 @@ namespace Microsoft.ML.Probabilistic.Tests
                     Assert.True(yExpected.MaxDiff(yActual) < 3e-2);
                 Assert.True(rateExpected.MaxDiff(rateActual) < 0.5);
                 Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-2);
+            }
+        }
+
+        [Fact]
+        public void GammaRatioRRRPointMassTest()
+        {
+            Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
+            Variable<Gamma> ratePrior = Variable.Observed(default(Gamma));
+            Variable<double> shape = Variable.Observed(2.5).Named("shape");
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<double> rate = Variable<double>.Random(ratePrior).Named("rate");
+            Variable<double> y = Variable.GammaFromShapeAndRate(shape, 1).Named("y");
+            Variable<double> x = (y / rate).Named("x");
+            Variable.ConstrainEqualRandom(x, xPrior);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            ratePrior.ObservedValue = Gamma.PointMass(1.0 / 4);
+            Gamma xExpected = engine.Infer<Gamma>(x);
+            Gamma yExpected = engine.Infer<Gamma>(y);
+            Gamma rateExpected = engine.Infer<Gamma>(rate);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double xDiffPrev = double.PositiveInfinity;
+            double yDiffPrev = double.PositiveInfinity;
+            double rateDiffPrev = double.PositiveInfinity;
+            double evDiffPrev = double.PositiveInfinity;
+            for (int i = 1; i < 20; i++)
+            {
+                double scale = System.Math.Pow(10, i);
+                ratePrior.ObservedValue = Gamma.FromShapeAndRate(1 * scale, 4 * scale);
+                Gamma xActual = engine.Infer<Gamma>(x);
+                Gamma yActual = engine.Infer<Gamma>(y);
+                Gamma rateActual = engine.Infer<Gamma>(rate);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double xDiff = xExpected.MaxDiff(xActual);
+                double yDiff = yExpected.MaxDiff(yActual);
+                double rateDiff = MMath.AbsDiff(rateExpected.GetMean(), rateActual.GetMean());
+                double evDiff = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                //Console.WriteLine($"x = {xActual} should be {xExpected}, error = {xDiff}");
+                //Console.WriteLine($"y = {yActual} should be {yExpected}, error = {yDiff}");
+                //Console.WriteLine($"rate = {rateActual} should be {rateExpected}, error = {rateDiff}");
+                //Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Assert.True(xDiff < xDiffPrev || xDiff < 1e-15);
+                Assert.True(yDiff < yDiffPrev || yDiff < 1e-15);
+                Assert.True(rateDiff < rateDiffPrev || rateDiff < 1e-15);
+                Assert.True(evDiff < evDiffPrev || evDiff < 2e-15);
+                xDiffPrev = xDiff;
+                yDiffPrev = yDiff;
+                rateDiffPrev = rateDiff;
+                evDiffPrev = evDiff;
+            }
+        }
+
+        [Fact]
+        public void GammaRatioPointEstimateTest()
+        {
+            Gamma aPrior = Gamma.FromShapeAndRate(100, 100);
+            Gamma bPrior = Gamma.FromShapeAndRate(1, 1);
+            Gamma like = Gamma.FromShapeAndRate(200, 100);
+            Gamma result0 = ProductModel();
+            Gamma result1 = PowerRatioModel();
+            Assert.Equal(result0, result1);
+            Gamma result2 = GammaPowerRatioModel();
+            Gamma result3 = RatioModel();
+            Gamma result4 = RatioModel2();
+            Assert.Equal(result3, result4);
+            Gamma result5 = RatioModel3();
+            Assert.Equal(result4, result5);
+
+            Gamma ProductModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var b = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("b");
+                var product = a * b;
+                product.Name = "product";
+                Variable.ConstrainEqualRandom(product, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma PowerRatioModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b = c ^ (-1);
+                //var b = Variable.Copy(c);
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)} c={engine.Infer(c)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma GammaPowerRatioModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var b = Variable.Random(GammaPower.FromGamma(bPrior, -1)).InitialiseTo(GammaPower.PointMass(1.0, -1)).Attrib(new PointEstimate()).Named("b");
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma RatioModel()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var b = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("b");
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma RatioModel2()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b1 = Variable.Max(0, c).Named("b1");
+                var b = Variable.Copy(b1).Attrib(new MarginalPrototype(new Gamma())).Named("b");
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.ModelName = nameof(RatioModel2);
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma RatioModel3()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b = Variable.Max(0, c).Named("b");
+                var ratio = a / b;
+                ratio.Name = "ratio";
+                Variable.ConstrainEqualRandom(ratio, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
             }
         }
 

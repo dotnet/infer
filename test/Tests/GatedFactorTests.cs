@@ -220,13 +220,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             foreach (bool flip in new[] { false, true })
             {
+                var evidence = Variable.Bernoulli(0.5);
+                var evBlock = Variable.If(evidence);
                 Variable<double> x = Variable.TruncatedGammaFromShapeAndRate(2, 3, 1, 10).Named("x");
                 double lowerBound = 4;
                 Variable<double> y = flip ? Variable<double>.Factor(System.Math.Max, x, lowerBound) : Variable<double>.Factor(System.Math.Max, lowerBound, x);
+                var yLike = new TruncatedGamma(4, 5, lowerBound, 10);
+                Variable.ConstrainEqualRandom(y, yLike);
+                evBlock.CloseBlock();
+
                 InferenceEngine engine = new InferenceEngine();
                 var yActual = engine.Infer<TruncatedGamma>(y);
-                var yExpected = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), lowerBound, 10);
+                var yDef = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), lowerBound, 10);
+                var yExpected = yDef * yLike;
                 Assert.True(yExpected.MaxDiff(yActual) < 1e-10);
+                var evExpected = yDef.GetLogAverageOf(yLike);
+                var evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Assert.Equal(evExpected, evActual, 1e-10);
             }
         }
 
@@ -235,13 +245,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             foreach (bool flip in new[] { false, true })
             {
+                var evidence = Variable.Bernoulli(0.5);
+                var evBlock = Variable.If(evidence);
                 Variable<double> x = Variable.GammaFromShapeAndRate(2, 3).Named("x");
                 double lowerBound = 4;
                 Variable<double> y = flip ? Variable<double>.Factor(System.Math.Max, x, lowerBound) : Variable<double>.Factor(System.Math.Max, lowerBound, x);
+                var yLike = new TruncatedGamma(4, 5, lowerBound, double.PositiveInfinity);
+                Variable.ConstrainEqualRandom(y, yLike);
+                evBlock.CloseBlock();
+
                 InferenceEngine engine = new InferenceEngine();
                 var yActual = engine.Infer<TruncatedGamma>(y);
-                var yExpected = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), lowerBound, double.PositiveInfinity);
+                var yDef = new TruncatedGamma(Gamma.FromShapeAndRate(2, 3), lowerBound, double.PositiveInfinity);
+                var yExpected = yDef * yLike;
                 Assert.True(yExpected.MaxDiff(yActual) < 1e-10);
+                var evExpected = yDef.GetLogAverageOf(yLike);
+                var evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Assert.Equal(evExpected, evActual, 1e-10);
             }
         }
 
@@ -5526,6 +5546,44 @@ namespace Microsoft.ML.Probabilistic.Tests
             var denom = Variable.Constant(0.0);
             Variable<double> x = (y / denom).Named("x");
             Gamma xLike = Gamma.Uniform();
+            Variable.ConstrainEqualRandom(x, xLike);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            foreach (var alg in new IAlgorithm[] { new ExpectationPropagation(), new VariationalMessagePassing() })
+            {
+                engine.Algorithm = alg;
+                Gamma yActual = engine.Infer<Gamma>(y);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Gamma yExpected = Gamma.FromShapeAndRate(shape, rate);
+                double evExpected = 0;
+
+                Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
+                Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
+                Assert.True(yExpected.MaxDiff(yActual) < 1e-10);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-6);
+            }
+        }
+
+        [Fact]
+        public void GatedGammaRatioRRRTest()
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            double shape = 2.5;
+            double rate = 3;
+            Variable<double> y = Variable.GammaFromShapeAndRate(shape, rate).Named("y");
+            double shape2 = 4;
+            double rate2 = 5;
+#if false
+            var denom = Variable.Random(GammaPower.FromShapeAndRate(shape2, rate2, -1)).Named("denom");
+            Variable<double> x = (y / denom).Attrib(new MarginalPrototype(new GammaPower())).Named("x");
+            GammaPower xLike = GammaPower.Uniform(1);
+#else
+            var denom = Variable.Random(Gamma.FromShapeAndRate(shape2, rate2)).Named("denom");
+            Variable<double> x = (y / denom).Attrib(new MarginalPrototype(new Gamma())).Named("x");
+            Gamma xLike = Gamma.Uniform();
+#endif
             Variable.ConstrainEqualRandom(x, xLike);
             block.CloseBlock();
 

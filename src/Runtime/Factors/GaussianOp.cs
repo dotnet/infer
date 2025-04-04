@@ -2202,7 +2202,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double m2 = m * m;
             double x = q.GetMean();
             double logf = -MMath.LnSqrt2PI - 0.5 * Math.Log(v + 1 / x) - 0.5 * m2 / (v + 1 / x);
-            double logz = logf + precision.GetLogProb(x) - q.GetLogProb(x);
+            double logz = logf + precision.GetLogProb(x) - q.GetLogProb(x); // TODO: diff
             return logz;
         }
 

@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                           CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>,
                           CanGetLogAverageOf<Gamma>, CanGetLogAverageOfPower<Gamma>,
                           CanGetAverageLog<Gamma>, CanGetLogNormalizer, CanGetMode<double>,
-                          CanGetProbLessThan<double>, CanGetQuantile<double>
+                          CanGetProbLessThan<double>, CanGetQuantile<double>, ITruncatableDistribution<double>
     {
         /// <summary>
         /// Rate parameter for the distribution
@@ -518,6 +518,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return MMath.GammaProbBetween(Shape, Rate, lowerBound, upperBound);
         }
 
+        /// <inheritdoc/>
+        public ITruncatableDistribution<double> Truncate(double lowerBound, double upperBound)
+        {
+            if (lowerBound > upperBound) throw new ArgumentOutOfRangeException($"lowerBound ({lowerBound}) > upperBound ({upperBound})");
+            return new TruncatedGamma(this, lowerBound, upperBound);
+        }
+
         /// <summary>
         /// Returns the value x such that GetProbLessThan(x) == probability.
         /// </summary>
@@ -643,10 +650,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // fall through when rate == 0
             }
             if (normalized) normalized = IsProper(shape, rate);
-            if (shape > 1e10)
+            if (shape >= 5e3)
             {
-                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + MMath.LnSqrt2PI for x > 1e10
-                // Also log(1-1/x) = -1/x - 0.5/x^2  for x > 1e10
+                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x + 1/12/x + MMath.LnSqrt2PI for x >= 5e3
+                // (s-1)*log(x) - x*r + s*log(r) - (s-0.5)*log(s) + s - 1/12/s - MMath.LnSqrt2PI =
+                // (s-1)*log(x*r/(s-1)) - x*r + log(r) + (s-1)*log(s-1) - (s-1)*log(s) - 0.5*log(s) + s - 1/12/s - MMath.LnSqrt2PI =
+                // (s-1)*log(x*r/(s-1)) - x*r + log(r) + (s-1)*log(1-1/s) - 0.5*log(s) + s - 1/12/s - MMath.LnSqrt2PI
                 // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
                 double mode = (shape - 1) / rate; // cannot be zero
                 double xOverMode = x / mode;
@@ -654,7 +663,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else if (normalized)
                 {
                     double logXOverMode = (xOverMode == 0) ? (Math.Log(x) - Math.Log(mode)) : Math.Log(xOverMode);
-                    return (shape - 1) * (logXOverMode + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+                    return (shape - 1) * (logXOverMode + (1 - xOverMode) + MMath.Log1Plus(-1 / shape)) - 1.0/12/shape + (1 - MMath.LnSqrt2PI) + Math.Log(rate) - 0.5 * Math.Log(shape);
                 }
                 else if (shape != 1 && rate != 0 && x != 0)
                 {

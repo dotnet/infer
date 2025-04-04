@@ -245,9 +245,26 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(0, g.GetProbLessThan(double.MinValue));
             Assert.Equal(0, g.GetProbLessThan(double.NegativeInfinity));
 
-            g = GammaPower.FromMeanAndVariance(3, double.PositiveInfinity, -1);
-            Assert.Equal(2, g.Shape);
-            Assert.Equal(3, g.Rate);
+            foreach (var power in new[] { 1, -1 })
+            {
+                foreach (var pair in new[] {
+                    (3, double.PositiveInfinity),
+                    (4.0, 1e-16),
+                })
+                {
+                    double mean = pair.Item1;
+                    double variance = pair.Item2;
+                    g = GammaPower.FromMeanAndVariance(mean, variance, power);
+                    if (!g.IsProper()) continue;
+                    g.GetMeanAndVariance(out double mean2, out double variance2);
+                    Console.WriteLine($"mean={mean2} should be {mean}, variance={variance2} should be {variance}");
+                    Assert.Equal(mean, mean2, 1e-10);
+                    Assert.Equal(variance, variance2, 1e-10);
+                    mean = g.GetMean();
+                    Console.WriteLine($"mean={mean2} should be {mean}");
+                    Assert.Equal(mean, mean2);
+                }
+            }
 
             GammaPowerMomentTest(1);
             GammaPowerMomentTest(-1);

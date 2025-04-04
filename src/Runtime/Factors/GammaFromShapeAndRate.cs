@@ -486,7 +486,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return LogAverageFactor(sample, shape, rate.Point);
             if (sample.IsPointMass)
                 return LogAverageFactor(sample.Point, shape, rate);
-            double shape1 = shape + rate.Shape;
+            double shape1 = shape + 1;
             double shape2 = AddShapesMinus1(shape, sample.Shape);
             double r, rmin, rmax;
             GetIntegrationBoundsForRate(sample, shape, rate, out r, out rmin, out rmax);
@@ -501,10 +501,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 double logx = logrmin + i * inc;
                 double x = Math.Exp(logx);
-                double logp = shape1 * Math.Log(x) - shape2 * Math.Log(x + sample.Rate) - x * rate.Rate;
+                double logp = shape1 * Math.Log(x) - shape2 * Math.Log(x + sample.Rate) + rate.GetLogProb(x);
                 logz = MMath.LogSumExp(logz, logp);
             }
-            logz += Math.Log(inc) + MMath.GammaLn(shape2) - MMath.GammaLn(shape) - rate.GetLogNormalizer() - sample.GetLogNormalizer();
+            logz += Math.Log(inc) + MMath.GammaLn(shape2) - MMath.GammaLn(shape) - sample.GetLogNormalizer();
             return logz;
         }
 
@@ -600,7 +600,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         double logx = logymin + i * inc;
                         double x = Math.Exp(logx);
-                        double diff = shape1 * Math.Log(x / y) - shape2 * Math.Log((x + rate.Rate) / (y + rate.Rate)) - sample.Rate * (x - y);
+                        // log((x + r) / (y + r)) = log(1 + (x - y) / (y + r))
+                        double diff = shape1 * Math.Log(x / y) - shape2 * MMath.Log1Plus((x - y) / (y + rate.Rate)) - sample.Rate * (x - y);
                         double f = Math.Exp(diff);
                         double q = x / (x + rate.Rate);
                         double xdlogf = shape - 1 - shape2 * q;
@@ -1146,6 +1147,34 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gamma.FromShapeAndRate(a, b);
         }
 
+        internal static double GammaLogProbDiff(Gamma A, Gamma B, double x)
+        {
+            if (A.IsProper() && !A.IsPointMass && B.IsProper() && !B.IsPointMass)
+            {
+                // We want to compute:
+                // (A.Shape - B.Shape) * Math.Log(x) - (A.Rate - B.Rate) * x +
+                // (A.Shape * Math.Log(A.Rate) - B.Shape * Math.Log(B.Rate)) -
+                // (MMath.GammaLn(A.Shape) - MMath.GammaLn(B.Shape))
+                // Replace the second line with:
+                // A.Shape * Math.Log(B.Rate + dr) - (A.Shape - ds) * Math.Log(B.Rate)
+                // = A.Shape * Math.Log(1 + dr / B.Rate) + ds * Math.Log(B.Rate)
+                // Replace the third line with:
+                // MMath.GammaLn(B.Shape + ds) - MMath.GammaLn(B.Shape)
+                // = ds * MMath.RisingFactorialLnOverN(B.Shape, ds)
+                double ds = A.Shape - B.Shape;
+                double dr = A.Rate - B.Rate;
+                double drB = dr / B.Rate;
+                return ds * (Math.Log(x) + Math.Log(B.Rate / B.Shape))
+                    - dr * (x - A.Shape / B.Rate)
+                    + A.Shape * (MMath.Log1Plus(drB) - drB)
+                    - ds * (MMath.RisingFactorialLnOverN(B.Shape, ds) - Math.Log(B.Shape));
+            }
+            else
+            {
+                return A.GetLogProb(x) - B.GetLogProb(x);
+            }
+        }
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaFromShapeAndRateOp_Laplace"]/message_doc[@name="LogAverageFactor(Gamma, double, Gamma, Gamma)"]/*'/>
         public static double LogAverageFactor(Gamma sample, double shape, Gamma rate, Gamma q)
         {
@@ -1157,7 +1186,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(sample.Shape, shape);
             double logf = shape * Math.Log(x) - shape2 * Math.Log(x + sample.Rate) +
               MMath.GammaLn(shape2) - MMath.GammaLn(shape) - sample.GetLogNormalizer();
-            double logz = logf + rate.GetLogProb(x) - q.GetLogProb(x);
+            double logz = logf + GammaLogProbDiff(rate, q, x);
             return logz;
         }
 

@@ -72,7 +72,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>E(x)</returns>
         public double GetMean()
         {
-            return GetMeanPower(1);
+            if (IsPointMass) return Point;
+            else return GetMeanPower(1);
         }
 
         /// <summary>
@@ -122,6 +123,69 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Set the mode by changing the rate, keeping the shape and power constant.
+        /// </summary>
+        /// <param name="mode"></param>
+        public void SetMode(double mode)
+        {
+            if (IsPointMass)
+            {
+                Point = mode;
+                return;
+            }
+            if (Shape <= Power) return; // Can't set the mode
+            double newLogMode = Math.Log(mode);
+            // Find newLogRate to satisfy a.Power*(logShapeMinusPower - newLogRate) <= newLogMode
+            // logShapeMinusPower - newLogRate >= newLogMode/a.Power
+            // newLogRate - logShapeMinusPower <= -newLogMode/a.Power
+            double newLogModeOverPower = MMath.LargestDoubleRatio(newLogMode, -Power);
+            double logShapeMinusPower = Math.Log(Shape - Power);
+            double newLogRate = MMath.LargestDoubleSum(logShapeMinusPower, newLogModeOverPower);
+            if ((double)((logShapeMinusPower - newLogRate) * Power) > newLogMode) throw new Exception();
+            // Ideally this would find largest newRate such that log(newRate) <= newLogRate
+            double newRate = Math.Exp(newLogRate);
+            if (logShapeMinusPower == newLogRate) newRate = Shape - Power;
+            if (Rate > 0) newRate = Math.Max(double.Epsilon, newRate);
+            if (!double.IsPositiveInfinity(Rate)) newRate = Math.Min(double.MaxValue, newRate);
+            Rate = newRate;
+        }
+
+        /// <summary>
+        /// Set the mean by changing the rate, keeping the shape and power constant.
+        /// </summary>
+        /// <param name="mean"></param>
+        public void SetMean(double mean)
+        {
+            if (IsPointMass)
+            {
+                Point = mean;
+                return;
+            }
+            if (Shape <= 0) return; // Can't set the mean
+            double newLogMean = Math.Log(mean);
+            // If logShape is big, this difference can lose accuracy
+            // Find newLogRate to satisfy logShape - newLogRate <= newLogMean/a.Power
+            double newLogRate;
+            double logShape = MMath.RisingFactorialLnOverN(Shape, Power);
+            if (Power < 0)
+            {
+                double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, -Power);
+                newLogRate = MMath.LargestDoubleSum(logShape, newLogMeanOverPower);
+            }
+            else
+            {
+                double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, Power);
+                newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
+            }
+            // check: (logShape - newLogRate)*Power <= newLogMean
+            if ((double)((logShape - newLogRate) * Power) > newLogMean) throw new Exception();
+            double newRate = Math.Exp(newLogRate);
+            newRate = Math.Max(double.Epsilon, newRate);
+            if (!double.IsPositiveInfinity(Rate)) newRate = Math.Min(double.MaxValue, newRate);
+            Rate = newRate;
+        }
+
+        /// <summary>
         /// Set the mean and variance
         /// </summary>
         /// <param name="mean">Mean</param>
@@ -133,6 +197,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (variance == 0)
             {
                 Point = mean;
+                return;
             }
             else if (variance < 0)
             {
@@ -169,6 +234,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new NotImplementedException("Not implemented for power " + Power);
             }
+            SetMean(mean);
             CheckForPointMass();
         }
 
@@ -410,6 +476,49 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Get the derivatives of the log-pdf at a point.
+        /// </summary>
+        /// <param name="dist"></param>
+        /// <param name="x"></param>
+        /// <param name="dlogp">On exit, the first derivative.</param>
+        /// <param name="ddlogp">On exit, the second derivative.</param>
+        public static void GetDerivatives(GammaPower dist, double x, out double dlogp, out double ddlogp)
+        {
+            dist.GetDerivatives(x, out dlogp, out ddlogp);
+        }
+
+        /// <summary>
+        /// Get the derivatives of the log-pdf at a point.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="dlogp">On exit, the first derivative.</param>
+        /// <param name="ddlogp">On exit, the second derivative.</param>
+        public void GetDerivatives(double x, out double dlogp, out double ddlogp)
+        {
+            if (IsPointMass)
+            {
+                ddlogp = double.NegativeInfinity;
+                if (x < Point) dlogp = double.PositiveInfinity;
+                else if (x == Point) dlogp = 0;
+                else dlogp = double.NegativeInfinity;
+                return;
+            }
+
+            dlogp = -this.Rate / this.Power * Math.Pow(x, 1 / this.Power - 1);
+            ddlogp = 0;
+            double a = this.Shape / this.Power - 1;
+            if (a != 0) // avoid 0/0
+            {
+                ddlogp -= a / (x * x);
+                dlogp += a / x;
+                if (double.IsPositiveInfinity(dlogp))
+                {
+                    dlogp = (a - this.Rate / this.Power * Math.Pow(x, 1 / this.Power)) / x;
+                }
+            }
+        }
+
+        /// <summary>
         /// Computes E[log(x)]
         /// </summary>
         /// <returns></returns>
@@ -427,7 +536,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanPower(double power)
         {
-            return Math.Exp(GetLogMeanPower(power));
+            if (IsPointMass) return Math.Pow(Point, power);
+            else return Math.Exp(GetLogMeanPower(power));
         }
 
         /// <summary>

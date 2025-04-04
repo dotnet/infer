@@ -1061,7 +1061,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             A.GetMeanAndVariance(out ma, out va);
             Gaussian Apost = A * to_A;
             double ahat = Apost.GetMean();
-            return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat);
+            return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat); // TODO: diff
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
@@ -1269,7 +1269,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             A.GetMeanAndVariance(out ma, out va);
             Gaussian Apost = A * to_A;
             double ahat = Apost.GetMean();
-            return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat);
+            return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat); // TODO: diff
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian)"]/*'/>
@@ -1438,7 +1438,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             A.GetMeanAndVariance(out ma, out va);
             Gaussian Apost = A * to_A;
             double ahat = Apost.GetMean();
-            return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat);
+            return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat); // TODO: diff
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian)"]/*'/>
