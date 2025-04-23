@@ -269,6 +269,56 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/doc/*'/>
+    [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
+    [Quality(QualityBand.Preview)]
+    public static class GammaProductOp_PointB
+    {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointA"]/message_doc[@name="RatioAverageConditional(Gamma, TruncatedGamma)"]/*'/>
+        public static Gamma ProductAverageConditional(Gamma A, TruncatedGamma B)
+        {
+            if (B.IsPointMass)
+                return GammaProductOp.ProductAverageConditional(A, B.Point);
+            else
+                throw new ArgumentException("B is not a point mass");
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(Gamma, TruncatedGamma)"]/*'/>
+        public static Gamma AAverageConditional([SkipIfUniform] Gamma product, TruncatedGamma B)
+        {
+            if (B.IsPointMass)
+                return GammaProductOp.AAverageConditional(product, B.Point);
+            else
+                throw new ArgumentException("B is not a point mass");
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(Gamma, GammaPower)"]/*'/>
+        public static Gamma AAverageConditional([SkipIfUniform] Gamma product, GammaPower B)
+        {
+            if (B.IsPointMass)
+                return GammaProductOp.AAverageConditional(product, B.Point);
+            else
+                throw new ArgumentException("B is not a point mass");
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(GammaPower, GammaPower)"]/*'/>
+        public static Gamma AAverageConditional([SkipIfUniform] GammaPower product, GammaPower B)
+        {
+            if (B.IsPointMass && product.Power == 1)
+                return GammaProductOp.AAverageConditional(Gamma.FromShapeAndRate(product.Shape, product.Rate), B.Point);
+            else
+                throw new ArgumentException("B is not a point mass or product.Power != 1");
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_PointB"]/message_doc[@name="BAverageConditional(Gamma, Gamma, TruncatedGamma)"]/*'/>
+        public static TruncatedGamma BAverageConditional([SkipIfUniform] Gamma product, [Proper] Gamma A, [Proper] TruncatedGamma B)
+        {
+            if (!B.IsPointMass)
+                throw new ArgumentException("B is not a point mass");
+            return TruncatedGamma.FromGamma(GammaProductOp_Laplace.BAverageConditional(product, A, B.Gamma, B.Gamma));
+        }
+    }
+
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Ratio", typeof(double), typeof(double))]
     [Quality(QualityBand.Preview)]
@@ -600,7 +650,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (B.IsPointMass && ratio.Power == 1)
                 return GammaRatioOp.AAverageConditional(Gamma.FromShapeAndRate(ratio.Shape, ratio.Rate), B.Point);
             else
-                throw new ArgumentException("B is not a point mass or ratio.Power != -1");
+                throw new ArgumentException("B is not a point mass or ratio.Power != 1");
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaRatioOp_PointB"]/message_doc[@name="BAverageConditional(Gamma, Gamma, TruncatedGamma)"]/*'/>
