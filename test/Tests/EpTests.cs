@@ -3324,6 +3324,59 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaProductRRRPointMassTest()
+        {
+            Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
+            Variable<Gamma> ratePrior = Variable.Observed(default(Gamma));
+            Variable<double> shape = Variable.Observed(2.5).Named("shape");
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<double> rate = Variable<double>.Random(ratePrior).Named("rate");
+            Variable<double> y = Variable.GammaFromShapeAndRate(shape, 1).Named("y");
+            Variable<double> x = (y * rate).Named("x");
+            Variable.ConstrainEqualRandom(x, xPrior);
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
+            ratePrior.ObservedValue = Gamma.PointMass(1.0 / 4);
+            Gamma xExpected = engine.Infer<Gamma>(x);
+            Gamma yExpected = engine.Infer<Gamma>(y);
+            Gamma rateExpected = engine.Infer<Gamma>(rate);
+            double evExpected = engine.Infer<Bernoulli>(evidence).LogOdds;
+            double xDiffPrev = double.PositiveInfinity;
+            double yDiffPrev = double.PositiveInfinity;
+            double rateDiffPrev = double.PositiveInfinity;
+            double evDiffPrev = double.PositiveInfinity;
+            for (int i = 1; i < 20; i++)
+            {
+                double scale = System.Math.Pow(10, i);
+                ratePrior.ObservedValue = Gamma.FromShapeAndRate(1 * scale, 4 * scale);
+                Gamma xActual = engine.Infer<Gamma>(x);
+                Gamma yActual = engine.Infer<Gamma>(y);
+                Gamma rateActual = engine.Infer<Gamma>(rate);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double xDiff = xExpected.MaxDiff(xActual);
+                double yDiff = yExpected.MaxDiff(yActual);
+                double rateDiff = MMath.AbsDiff(rateExpected.GetMean(), rateActual.GetMean());
+                double evDiff = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                Console.WriteLine($"x = {xActual} should be {xExpected}, error = {xDiff}");
+                Console.WriteLine($"y = {yActual} should be {yExpected}, error = {yDiff}");
+                Console.WriteLine($"rate = {rateActual} should be {rateExpected}, error = {rateDiff}");
+                Console.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evDiff}");
+                Assert.True(xDiff < xDiffPrev || xDiff < 1e-15);
+                Assert.True(yDiff < yDiffPrev || yDiff < 1e-15);
+                Assert.True(rateDiff < rateDiffPrev || rateDiff < 1e-15);
+                Assert.True(evDiff < evDiffPrev || evDiff < 8e-15);
+                xDiffPrev = xDiff;
+                yDiffPrev = yDiff;
+                rateDiffPrev = rateDiff;
+                evDiffPrev = evDiff;
+            }
+        }
+
+        [Fact]
         public void GammaRatioRRRPointMassTest()
         {
             Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
@@ -3382,20 +3435,55 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma aPrior = Gamma.FromShapeAndRate(100, 100);
             Gamma bPrior = Gamma.FromShapeAndRate(1, 1);
             Gamma like = Gamma.FromShapeAndRate(200, 100);
-            Gamma result0 = ProductModel();
+            Gamma productResult = ProductModel();
+            Gamma productResult2 = ProductModel2();
+            Assert.Equal(productResult, productResult2);
+            Gamma productResult3 = ProductModel3();
+            Assert.Equal(productResult2, productResult3);
             Gamma result1 = PowerRatioModel();
-            Assert.Equal(result0, result1);
+            Assert.Equal(productResult, result1);
             Gamma result2 = GammaPowerRatioModel();
-            Gamma result3 = RatioModel();
-            Gamma result4 = RatioModel2();
-            Assert.Equal(result3, result4);
-            Gamma result5 = RatioModel3();
-            Assert.Equal(result4, result5);
+            Gamma ratioResult = RatioModel();
+            Gamma ratioResult2 = RatioModel2();
+            Assert.Equal(ratioResult, ratioResult2);
+            Gamma ratioResult3 = RatioModel3();
+            Assert.Equal(ratioResult2, ratioResult3);
 
             Gamma ProductModel()
             {
                 var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
                 var b = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("b");
+                var product = a * b;
+                product.Name = "product";
+                Variable.ConstrainEqualRandom(product, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma ProductModel2()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b1 = Variable.Max(0, c).Named("b1");
+                var b = Variable.Copy(b1).Attrib(new MarginalPrototype(new Gamma())).Named("b");
+                var product = a * b;
+                product.Name = "product";
+                Variable.ConstrainEqualRandom(product, like);
+
+                InferenceEngine engine = new InferenceEngine();
+                engine.Compiler.InitialisationAffectsSchedule = true;
+                //Console.WriteLine($"a={engine.Infer(a)}, b={engine.Infer(b)}");
+                return engine.Infer<Gamma>(a);
+            }
+
+            Gamma ProductModel3()
+            {
+                var a = Variable.Random(aPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("a");
+                var c = Variable.Random(bPrior).InitialiseTo(Gamma.PointMass(1.0)).Attrib(new PointEstimate()).Named("c");
+                var b = Variable.Max(0, c).Named("b");
                 var product = a * b;
                 product.Name = "product";
                 Variable.ConstrainEqualRandom(product, like);

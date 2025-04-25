@@ -12525,6 +12525,69 @@
       </remarks>
     </message_doc>
   </message_op_class>
+  <message_op_class name="GammaProductOp_PointB">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="Factor.Product(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="ProductAverageConditional(Gamma, TruncatedGamma)">
+      <summary>EP message to <c>product</c>.</summary>
+      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>product</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>product</c> as the random arguments are varied. The formula is <c>proj[p(product) sum_(a,b) p(a,b) factor(product,a,b)]/p(product)</c>.</para>
+      </remarks>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gamma, TruncatedGamma)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(product,b) p(product,b) factor(product,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="product" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(Gamma, GammaPower)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(product,b) p(product,b) factor(product,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="product" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="AAverageConditional(GammaPower, GammaPower)">
+      <summary>EP message to <c>a</c>.</summary>
+      <param name="product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>.</param>
+      <returns>The outgoing EP message to the <c>a</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>a</c> as the random arguments are varied. The formula is <c>proj[p(a) sum_(product,b) p(product,b) factor(product,a,b)]/p(a)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="product" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(Gamma, Gamma, TruncatedGamma)">
+      <summary>EP message to <c>b</c>.</summary>
+      <param name="product">Incoming message from <c>product</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="A">Incoming message from <c>a</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="B">Incoming message from <c>b</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <returns>The outgoing EP message to the <c>b</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(product,a) p(product,a) factor(product,a,b)]/p(b)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="product" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="A" /> is not a proper distribution.</exception>
+      <exception cref="ImproperMessageException">
+        <paramref name="B" /> is not a proper distribution.</exception>
+    </message_doc>
+  </message_op_class>
   <message_op_class name="GammaProductVmpOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="Factor.Product(double, double)" />, given random arguments to the function.</summary>
