@@ -55,6 +55,99 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double Precision;
 
         /// <summary>
+        /// Creates a Poisson distribution with the given mean.
+        /// </summary>
+        /// <param name="mean"></param>
+        public Poisson(double mean)
+        {
+            Rate = mean;
+            Precision = 1;
+        }
+
+        /// <summary>
+        /// Create a Com-Poisson distribution with the given rate and precision.
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <param name="precision"></param>
+        [Construction("Rate", "Precision")]
+        public Poisson(double rate, double precision)
+        {
+            Rate = rate;
+            Precision = precision;
+        }
+
+        /// <summary>
+        /// Copy constructor.
+        /// </summary>
+        /// <param name="that"></param>
+        public Poisson(Poisson that)
+        {
+            // explicit field assignment required by C# rules
+            //SetTo(that);
+            Rate = that.Rate;
+            Precision = that.Precision;
+        }
+
+        /// <summary>
+        /// Samples from a Poisson distribution with given mean
+        /// </summary>
+        /// <param name="mean">Must be >= 0</param>
+        /// <returns>An integer in [0,infinity)</returns>
+        [Stochastic]
+        public static int Sample(double mean)
+        {
+            return Rand.Poisson(mean);
+        }
+
+        /// <summary>
+        /// Samples from a COM-Poisson distribution
+        /// </summary>
+        /// <param name="rate">Rate.</param>
+        /// <param name="precision">Precision.</param>
+        /// <returns></returns>
+        [Stochastic]
+        public static int Sample(double rate, double precision)
+        {
+            if (rate == 0) return 0;
+            if (precision == 1) return Sample(rate);
+            double logZ = GetLogNormalizer(rate, precision);
+            double p = Math.Exp(-logZ);
+            double u = Rand.Double();
+            double sum = p;
+            int x = 0;
+            while (sum < u)
+            {
+                x++;
+                p *= rate*Math.Pow(x, -precision);
+                sum += p;
+            }
+            return x;
+        }
+
+        /// <summary>
+        /// Samples from a Poisson distribution with the given mean
+        /// </summary>
+        /// <param name="mean">The mean</param>
+        /// <returns>A long integer sample</returns>
+        [Stochastic]
+        public static long SampleLong(double mean)
+        {
+            return new Poisson(mean).SampleLong();
+        }
+
+        /// <summary>
+        /// Samples from a COM-Poisson distribution with the given rate and precision
+        /// </summary>
+        /// <param name="rate">The rate parameter</param>
+        /// <param name="precision">The precision parameter</param>
+        /// <returns>A long integer sample</returns>
+        [Stochastic]
+        public static long SampleLong(double rate, double precision)
+        {
+            return new Poisson(rate, precision).SampleLong();
+        }
+
+        /// <summary>
         /// Gets the expected value E(x)
         /// </summary>
         /// <returns>E(x)</returns>
@@ -945,42 +1038,50 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Create a uniform Com-Poisson distribution.
         /// </summary>
-        public Poisson()
+        [Construction(UseWhen = "IsUniform"), Skip]
+        public static Poisson Uniform()
         {
+            Poisson result = new Poisson();
+            result.SetToUniform();
+            return result;
         }
 
         /// <summary>
-        /// Creates a Poisson distribution with the given mean.
+        /// Creates a Com-Poisson distribution which only allows one value.
         /// </summary>
-        /// <param name="mean"></param>
-        public Poisson(double mean)
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Construction("Point", UseWhen = "IsPointMass")]
+        public static Poisson PointMass(int value)
         {
-            Rate = mean;
-            Precision = 1;
+            Poisson result = new Poisson();
+            result.Point = value;
+            return result;
         }
 
         /// <summary>
-        /// Create a Com-Poisson distribution with the given rate and precision.
+        /// ToString override
         /// </summary>
-        /// <param name="rate"></param>
-        /// <param name="precision"></param>
-        [Construction("Rate", "Precision")]
-        public Poisson(double rate, double precision)
+        /// <returns>String representation of the instance</returns>
+        /// <exclude/>
+        public override string ToString()
         {
-            Rate = rate;
-            Precision = precision;
-        }
-
-        /// <summary>
-        /// Copy constructor.
-        /// </summary>
-        /// <param name="that"></param>
-        public Poisson(Poisson that)
-        {
-            // explicit field assignment required by C# rules
-            //SetTo(that);
-            Rate = that.Rate;
-            Precision = that.Precision;
+            if (IsPointMass)
+            {
+                return "Poisson.PointMass(" + Point + ")";
+            }
+            else if (IsUniform())
+            {
+                return "Poisson.Uniform";
+            }
+            else if (Precision == 1)
+            {
+                return "Poisson(" + Rate + ")";
+            }
+            else
+            {
+                return "Poisson(" + Rate + "," + Precision + ")";
+            }
         }
 
         /// <summary>
@@ -1003,42 +1104,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public int Sample(int result)
         {
             return Sample();
-        }
-
-        /// <summary>
-        /// Samples from a Poisson distribution with given mean
-        /// </summary>
-        /// <param name="mean">Must be >= 0</param>
-        /// <returns>An integer in [0,infinity)</returns>
-        [Stochastic]
-        public static int Sample(double mean)
-        {
-            return Rand.Poisson(mean);
-        }
-
-        /// <summary>
-        /// Samples from a COM-Poisson distribution
-        /// </summary>
-        /// <param name="rate">Rate.</param>
-        /// <param name="precision">Precision.</param>
-        /// <returns></returns>
-        [Stochastic]
-        public static int Sample(double rate, double precision)
-        {
-            if (rate == 0) return 0;
-            if (precision == 1) return Sample(rate);
-            double logZ = GetLogNormalizer(rate, precision);
-            double p = Math.Exp(-logZ);
-            double u = Rand.Double();
-            double sum = p;
-            int x = 0;
-            while (sum < u)
-            {
-                x++;
-                p *= rate*Math.Pow(x, -precision);
-                sum += p;
-            }
-            return x;
         }
 
         /// <summary>
@@ -1139,82 +1204,28 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="result">Dummy argument</param>
         /// <returns>A long integer sample</returns>
         [Stochastic]
-        public long SampleLong(long result)
+        public long Sample(long result)
         {
             return SampleLong();
         }
 
-        /// <summary>
-        /// Samples from a Poisson distribution with the given mean
-        /// </summary>
-        /// <param name="mean">The mean</param>
-        /// <returns>A long integer sample</returns>
-        [Stochastic]
-        public static long SampleLong(double mean)
+        // Explicit interface implementation for Sampleable<int>
+        int Sampleable<int>.Sample()
         {
-            return new Poisson(mean).SampleLong();
+            return Sample();
         }
-
-        /// <summary>
-        /// Samples from a COM-Poisson distribution with the given rate and precision
-        /// </summary>
-        /// <param name="rate">The rate parameter</param>
-        /// <param name="precision">The precision parameter</param>
-        /// <returns>A long integer sample</returns>
-        [Stochastic]
-        public static long SampleLong(double rate, double precision)
+        int Sampleable<int>.Sample(int result)
         {
-            return new Poisson(rate, precision).SampleLong();
+            return Sample(result);
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Poisson"/> class with default parameters.
-        /// </summary>
-        /// <returns>A new uniform Com-Poisson distribution</returns>
-        [Construction(UseWhen = "IsUniform"), Skip]
-        public static Poisson Uniform()
+        // Explicit interface implementation for Sampleable<long>
+        long Sampleable<long>.Sample()
         {
-            Poisson result = new Poisson();
-            result.SetToUniform();
-            return result;
+            return SampleLong();
         }
-
-        /// <summary>
-        /// Creates a Com-Poisson distribution which only allows one value.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        [Construction("Point", UseWhen = "IsPointMass")]
-        public static Poisson PointMass(int value)
+        long Sampleable<long>.Sample(long result)
         {
-            Poisson result = new Poisson();
-            result.Point = value;
-            return result;
-        }
-
-        /// <summary>
-        /// ToString override
-        /// </summary>
-        /// <returns>String representation of the instance</returns>
-        /// <exclude/>
-        public override string ToString()
-        {
-            if (IsPointMass)
-            {
-                return "Poisson.PointMass(" + Point + ")";
-            }
-            else if (IsUniform())
-            {
-                return "Poisson.Uniform";
-            }
-            else if (Precision == 1)
-            {
-                return "Poisson(" + Rate + ")";
-            }
-            else
-            {
-                return "Poisson(" + Rate + "," + Precision + ")";
-            }
+            return SampleLong();
         }
     }
 }

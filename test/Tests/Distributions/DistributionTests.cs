@@ -2605,6 +2605,53 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         #endregion
+
+        [Fact]
+        public void PoissonLongSamplingTest()
+        {
+            // Test standard Poisson (Precision = 1)
+            var poisson1 = new Poisson(1000);
+            var samples1 = new List<long>();
+            for (int i = 0; i < 1000; i++)
+            {
+                samples1.Add(poisson1.SampleLong());
+            }
+            
+            // Verify mean and variance
+            double mean1 = samples1.Average();
+            double variance1 = samples1.Select(x => Math.Pow(x - mean1, 2)).Average();
+            Assert.True(Math.Abs(mean1 - 1000) < 50); // Allow some variance
+            Assert.True(Math.Abs(variance1 - 1000) < 100); // Allow some variance
+
+            // Test COM-Poisson (Precision != 1)
+            var poisson2 = new Poisson(1000, 1.5);
+            var samples2 = new List<long>();
+            for (int i = 0; i < 1000; i++)
+            {
+                samples2.Add(poisson2.SampleLong());
+            }
+            
+            // Verify mean and variance
+            double mean2 = samples2.Average();
+            double variance2 = samples2.Select(x => Math.Pow(x - mean2, 2)).Average();
+            double expectedMean2 = poisson2.GetMean();
+            double expectedVariance2 = poisson2.GetVariance();
+            Assert.True(Math.Abs(mean2 - expectedMean2) < 50); // Allow some variance
+            Assert.True(Math.Abs(variance2 - expectedVariance2) < 100); // Allow some variance
+
+            // Test edge cases
+            var poisson3 = new Poisson(0);
+            Assert.Equal(0, poisson3.SampleLong());
+
+            var poisson4 = Poisson.PointMass(5);
+            Assert.Equal(5, poisson4.SampleLong());
+
+            // Test large mean case
+            var poisson5 = new Poisson(10000);
+            var sample5 = poisson5.SampleLong();
+            Assert.True(sample5 >= 0);
+            Assert.True(sample5 < long.MaxValue);
+        }
     }
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
