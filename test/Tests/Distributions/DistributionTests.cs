@@ -2619,9 +2619,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             
             // Verify mean and variance
             double mean1 = samples1.Average();
-            double variance1 = samples1.Select(x => Math.Pow(x - mean1, 2)).Average();
-            Assert.True(Math.Abs(mean1 - 1000) < 50); // Allow some variance
-            Assert.True(Math.Abs(variance1 - 1000) < 100); // Allow some variance
+            double variance1 = samples1.Select(x => System.Math.Pow(x - mean1, 2)).Average();
+            Assert.True(System.Math.Abs(mean1 - 1000) < 50); // Allow some variance
+            Assert.True(System.Math.Abs(variance1 - 1000) < 100); // Allow some variance
 
             // Test COM-Poisson (Precision != 1)
             var poisson2 = new Poisson(1000, 1.5);
@@ -2633,11 +2633,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             
             // Verify mean and variance
             double mean2 = samples2.Average();
-            double variance2 = samples2.Select(x => Math.Pow(x - mean2, 2)).Average();
+            double variance2 = samples2.Select(x => System.Math.Pow(x - mean2, 2)).Average();
             double expectedMean2 = poisson2.GetMean();
             double expectedVariance2 = poisson2.GetVariance();
-            Assert.True(Math.Abs(mean2 - expectedMean2) < 50); // Allow some variance
-            Assert.True(Math.Abs(variance2 - expectedVariance2) < 100); // Allow some variance
+            Assert.True(System.Math.Abs(mean2 - expectedMean2) < 50); // Allow some variance
+            Assert.True(System.Math.Abs(variance2 - expectedVariance2) < 100); // Allow some variance
 
             // Test edge cases
             var poisson3 = new Poisson(0);
