@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                             SettableToPower<Poisson>, SettableToWeightedSum<Poisson>,
                             CanGetLogAverageOf<Poisson>, CanGetLogAverageOfPower<Poisson>,
                             CanGetAverageLog<Poisson>,
-                            Sampleable<int>, CanGetMean<double>, CanGetVariance<double>,
+                            Sampleable<int>, Sampleable<long>, CanGetMean<double>, CanGetVariance<double>,
                             CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>
     {
         /// <summary>
@@ -943,6 +943,47 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Create a uniform Com-Poisson distribution.
+        /// </summary>
+        public Poisson()
+        {
+        }
+
+        /// <summary>
+        /// Creates a Poisson distribution with the given mean.
+        /// </summary>
+        /// <param name="mean"></param>
+        public Poisson(double mean)
+        {
+            Rate = mean;
+            Precision = 1;
+        }
+
+        /// <summary>
+        /// Create a Com-Poisson distribution with the given rate and precision.
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <param name="precision"></param>
+        [Construction("Rate", "Precision")]
+        public Poisson(double rate, double precision)
+        {
+            Rate = rate;
+            Precision = precision;
+        }
+
+        /// <summary>
+        /// Copy constructor.
+        /// </summary>
+        /// <param name="that"></param>
+        public Poisson(Poisson that)
+        {
+            // explicit field assignment required by C# rules
+            //SetTo(that);
+            Rate = that.Rate;
+            Precision = that.Precision;
+        }
+
+        /// <summary>
         /// Samples from a Poisson distribution
         /// </summary>
         [Stochastic]
@@ -1000,51 +1041,134 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return x;
         }
 
-#if false
-    /// <summary>
-    /// Create a uniform Com-Poisson distribution.
-    /// </summary>
-        public Poisson()
-        {
-        }
-#endif
-
         /// <summary>
-        /// Creates a Poisson distribution with the given mean.
+        /// Samples from the COM-Poisson distribution
         /// </summary>
-        /// <param name="mean"></param>
-        public Poisson(double mean)
+        /// <returns>A long integer sample</returns>
+        [Stochastic]
+        public long SampleLong()
         {
-            Rate = mean;
-            Precision = 1;
+            if (IsPointMass) return Point;
+            if (!IsProper()) throw new ImproperDistributionException(this);
+            if (Precision == 1.0)
+            {
+                // standard Poisson
+                if (Rate > 1000)
+                {
+                    // Use normal approximation for large mean
+                    double sample = Rand.Normal(Rate, System.Math.Sqrt(Rate)) + 0.5;
+                    return (long)System.Math.Max(0, sample);
+                }
+                else
+                {
+                    // Algorithm due to W. Hoermann, J. Leydold, and G. Derflinger
+                    // Efficient sampling from Poisson distributions
+                    // ACM Trans. Modeling and Computer Simulation 14.3 (2004): 268-282.
+                    double sl = System.Math.Log(Rate);
+                    double delta = System.Math.Floor(0.43 + 0.62 * Rate);
+                    double c = 0.92 - 0.018 * System.Math.Log(Rate);
+                    double b = 0.76 * System.Math.Sqrt(Rate) * System.Math.Exp(-Rate);
+                    double a = 2.6 
+                               * System.Math.Sqrt(Rate) 
+                               / Rate 
+                               * System.Math.Exp(-Rate);
+                    double u, v, x, r;
+                    while (true)
+                    {
+                        u = Rand.Double();
+                        v = Rand.Double();
+                        x = delta + (int)((Rate / delta) * System.Math.Log(v / (1.0 - u)));
+                        if (x < 0) continue;
+                        r = (Rate / delta) * System.Math.Exp((delta - x) * (1.0 + (x / delta) * (1.0 - (x / delta) / 2.0)));
+                        if (r > a / (u * u) + b * u || (System.Math.Log(r) > (sl * x - MMath.GammaLn(x + 1.0))))
+                        {
+                            continue;
+                        }
+                        return (long)x;
+                    }
+                }
+            }
+            else
+            {
+                // COM-Poisson sampling implementation
+                if (Rate == 0) return 0;
+                
+                // For large means, use normal approximation
+                double mean = GetMean();
+                if (mean > 1000)
+                {
+                    double variance = GetVariance();
+                    double sample = Rand.Normal(mean, System.Math.Sqrt(variance)) + 0.5;
+                    return (long)System.Math.Max(0, sample);
+                }
+                
+                // For smaller means, use rejection sampling
+                double logZ = GetLogNormalizer(Rate, Precision);
+                double p = Math.Exp(-logZ);
+                double u = Rand.Double();
+                double sum = p;
+                long x = 0;
+                
+                // Use a maximum iteration limit to prevent infinite loops
+                const int maxIterations = 1000000;
+                int iterations = 0;
+                
+                while (sum < u && iterations < maxIterations)
+                {
+                    x++;
+                    p *= Rate * Math.Pow(x, -Precision);
+                    sum += p;
+                    iterations++;
+                }
+                
+                if (iterations >= maxIterations)
+                {
+                    // If we hit the iteration limit, fall back to normal approximation
+                    double variance = GetVariance();
+                    double sample = Rand.Normal(mean, System.Math.Sqrt(variance)) + 0.5;
+                    return (long)System.Math.Max(0, sample);
+                }
+                
+                return x;
+            }
         }
 
         /// <summary>
-        /// Create a Com-Poisson distribution with the given rate and precision.
+        /// Samples from the COM-Poisson distribution
         /// </summary>
-        /// <param name="rate"></param>
-        /// <param name="precision"></param>
-        [Construction("Rate", "Precision")]
-        public Poisson(double rate, double precision)
+        /// <param name="result">Dummy argument</param>
+        /// <returns>A long integer sample</returns>
+        [Stochastic]
+        public long SampleLong(long result)
         {
-            Rate = rate;
-            Precision = precision;
+            return SampleLong();
         }
 
         /// <summary>
-        /// Copy constructor.
+        /// Samples from a Poisson distribution with the given mean
         /// </summary>
-        /// <param name="that"></param>
-        public Poisson(Poisson that)
+        /// <param name="mean">The mean</param>
+        /// <returns>A long integer sample</returns>
+        [Stochastic]
+        public static long SampleLong(double mean)
         {
-            // explicit field assignment required by C# rules
-            //SetTo(that);
-            Rate = that.Rate;
-            Precision = that.Precision;
+            return new Poisson(mean).SampleLong();
         }
 
         /// <summary>
-        /// Instantiates a uniform Com-Poisson distribution
+        /// Samples from a COM-Poisson distribution with the given rate and precision
+        /// </summary>
+        /// <param name="rate">The rate parameter</param>
+        /// <param name="precision">The precision parameter</param>
+        /// <returns>A long integer sample</returns>
+        [Stochastic]
+        public static long SampleLong(double rate, double precision)
+        {
+            return new Poisson(rate, precision).SampleLong();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Poisson"/> class with default parameters.
         /// </summary>
         /// <returns>A new uniform Com-Poisson distribution</returns>
         [Construction(UseWhen = "IsUniform"), Skip]
