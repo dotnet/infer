@@ -179,10 +179,30 @@ namespace Microsoft.ML.Probabilistic.Factors
             // to_value holds the last message to value.
             // result = to_value^(1-stepsize) * backward^stepsize
             Distribution result = to_value;
-            result.SetToPower(to_value, (1 - stepsize) / stepsize);
-            result.SetToProduct(result, backward);
-            result.SetToPower(result, stepsize);
+            if (stepsize != 0)
+            {
+                result.SetToPower(to_value, (1 - stepsize) / stepsize);
+                result.SetToProduct(result, backward);
+                result.SetToPower(result, stepsize);
+            }
             return result;
+        }
+
+        public static Gaussian ValueAverageConditional2(
+            [SkipIfUniform] Gaussian backward, double stepsize, Gaussian forward, Gaussian previous, Gaussian to_value)
+        {
+            Gaussian bound = forward / previous;
+            Gaussian delta = backward / to_value;
+            Gaussian result = backward;
+            double stepsizeBound = Abs(bound) / Abs(delta);
+            stepsize = Math.Min(1.0, stepsize * stepsizeBound);
+            Console.WriteLine($"stepsize: {stepsize}");
+            return ValueAverageConditional<Gaussian>(backward, stepsize, to_value);
+        }
+
+        private static double Abs(Gaussian gaussian)
+        {
+            return Math.Max(Math.Abs(gaussian.MeanTimesPrecision), gaussian.Precision);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DampBackwardOp"]/message_doc[@name="ValueAverageLogarithm{Distribution}(Distribution, double, Distribution)"]/*'/>
