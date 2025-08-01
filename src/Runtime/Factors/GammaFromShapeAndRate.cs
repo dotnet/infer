@@ -486,8 +486,19 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return LogAverageFactor(sample, shape, rate.Point);
             if (sample.IsPointMass)
                 return LogAverageFactor(sample.Point, shape, rate);
-            double shape1 = shape + 1;
+            if (sample.IsUniform())
+                return 0.0;
+            // Z = int_r int_x x^(shape-1) r^shape exp(-r*x) p(x) dx p(r) dr / Gamma(shape)
+            //   = int_r r^shape (r + b)^-(shape + a - 1) p(r) dr * Gamma(shape + a - 1) / Gamma(shape)
             double shape2 = AddShapesMinus1(shape, sample.Shape);
+            if (sample.Rate == 0)
+            {
+                // Z = int_r r^(1-a) p(r) dr * Gamma(shape + a - 1) / Gamma(shape)
+                if (rate.Shape <= sample.Shape - 1)
+                    return double.PositiveInfinity;
+                return Math.Log(rate.GetMeanPower(1 - sample.Shape)) + MMath.GammaLn(shape2) - MMath.GammaLn(shape);
+            }
+            double shape1 = shape + 1;
             double r, rmin, rmax;
             GetIntegrationBoundsForRate(sample, shape, rate, out r, out rmin, out rmax);
             if (r == 0)
@@ -570,8 +581,14 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //                 = r^s / r^(ax-1+s) = r^(1-ax)
                 double shape2 = AddShapesMinus1(shape, sample.Shape);
                 Gamma ratePost = Gamma.FromShapeAndRate(rate.Shape + (1 - sample.Shape), rate.Rate);
-                sampleMean = shape2 * ratePost.GetMeanInverse();
-                sampleVariance = shape2 * (1 + shape2) * ratePost.GetMeanPower(-2) - sampleMean * sampleMean;
+                if (ratePost.Shape <= 1)
+                    return Gamma.FromShapeAndRate(shape, 0);
+                else
+                    sampleMean = shape2 * ratePost.GetMeanInverse();
+                if (ratePost.Shape <= 2)
+                    sampleVariance = 1e100;
+                else
+                    sampleVariance = shape2 * (1 + shape2) * ratePost.GetMeanPower(-2) - sampleMean * sampleMean;
             }
             else if (true)
             {
@@ -842,7 +859,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //double f = shape1*Math.Log(rmax) - shape2*Math.Log(rmax+sample.Rate) - rmax*rate.Rate - bound;
                 double f = shape1 * Math.Log(rmax / r) - shape2 * Math.Log((rmax + sample.Rate) / (r + sample.Rate)) - (rmax - r) * rate.Rate + 50;
                 //Console.WriteLine("{0}: {1}", iter, f);
-                double df = shape1 / rmax - rate.Rate - shape2 / (rmax + sample.Rate);
+                double df = shape1 / rmax - shape2 / (rmax + sample.Rate) - rate.Rate;
+                if (df == 0.0) 
+                    throw new Exception("df == 0");
                 rmax = rmax - f / df;
                 if (rmax < r)
                 {
@@ -878,7 +897,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     rmin = Math.Exp((bound + shape2 * Math.Log(sample.Rate)) / shape1);
                 }
+                rmin = Math.Max(rmin, double.Epsilon);
+                rmin = Math.Max(rmin, r * double.Epsilon);
                 double f = shape1 * Math.Log(rmin / r) - shape2 * Math.Log((rmin + sample.Rate) / (r + sample.Rate)) - (rmin - r) * rate.Rate + 50;
+                if (double.IsNaN(f)) 
+                    throw new Exception("f is NaN");
                 //Console.WriteLine("{0}: {1} {2}", iter, f, rmin);
                 double df = shape1 - rate.Rate * rmin - shape2 * rmin / (rmin + sample.Rate);
                 rmin *= Math.Exp(-f / df);
@@ -1082,7 +1105,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             else
             {
                 // logf = s*log(r) - (s+ya-1)*log(r + yb)
-                double p = r / (r + y.Rate);
+                double p = (y.Rate == 0) ? 1.0 : r / (r + y.Rate);
                 double p2 = p * p;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(y.Shape, shape);
                 double dlogf = shape - shape2 * p;
@@ -1111,7 +1134,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double shape1 = shape + rate.Shape;
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(shape, sample.Shape);
             double x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, sample.Rate, rate.Rate);
-            if (x == 0 || double.IsInfinity(x))
+            if (sample.Rate != 0 && (x == 0 || double.IsInfinity(x)))
                 return rate;
             double[] xdlogfss = xdlogfs(x, shape, sample);
             double xdlogf = xdlogfss[0];
@@ -1136,10 +1159,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         // Same as Gamma.FromDerivatives multiplied by B
         internal static Gamma GammaFromDerivatives2(Gamma B, double x, double xdlogf, double x2ddlogf)
         {
-            double b = B.Rate - (xdlogf + x2ddlogf) / x;
+            double b = B.Rate;
+            if (x != 0) // avoid 0/0
+                b -= (xdlogf + x2ddlogf) / x;
             double a = B.Shape - x2ddlogf;
             if (a <= 0)
-                a = b * B.Shape / (B.Rate - xdlogf / x);
+                a = Math.Max(double.Epsilon, b * B.Shape / (B.Rate - xdlogf / x));
             if (a <= 0 || b <= 0)
                 throw new InferRuntimeException("a <= 0 || b <= 0");
             if (double.IsNaN(a) || double.IsNaN(b))
@@ -1164,10 +1189,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double ds = A.Shape - B.Shape;
                 double dr = A.Rate - B.Rate;
                 double drB = dr / B.Rate;
-                return ds * (Math.Log(x) + Math.Log(B.Rate / B.Shape))
+                return ds * (Math.Log(x) + Math.Log(B.Rate) - MMath.RisingFactorialLnOverN(B.Shape, ds))
                     - dr * (x - A.Shape / B.Rate)
-                    + A.Shape * (MMath.Log1Plus(drB) - drB)
-                    - ds * (MMath.RisingFactorialLnOverN(B.Shape, ds) - Math.Log(B.Shape));
+                    + A.Shape * (MMath.Log1Plus(drB) - drB);
             }
             else
             {
@@ -1236,6 +1260,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GammaFromShapeAndRateOp.SampleAverageConditional(shape, rate.Point);
             if (q.IsPointMass)
                 throw new InferRuntimeException();
+            if (sample.Rate == 0)
+                return GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
             double sampleMean, sampleVariance;
             if (sample.Rate < 1e-20)
                 sample.Rate = 1e-20;
@@ -1280,7 +1306,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // sampleVariance = var(shape2/(sample.Rate + r)) + E[ shape2/(sample.Rate+r)^2 ]
                     //                = shape2^2*var(1/(sample.Rate + r)) + shape2*(var(1/(sample.Rate+r)) + (sampleMean/shape2)^2)
                     // Note: this is not a good approximation if sample.Rate is small
-                    double p = x / (x + sample.Rate);
+                    double p = (sample.Rate == 0) ? 1.0 : x / (x + sample.Rate);
                     double p2 = p * p;
                     double[] xg = new double[] { p, -p2, 2 * p2 * p, -6 * p2 * p2 };
                     double pMean, pVariance;
