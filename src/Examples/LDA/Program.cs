@@ -151,16 +151,20 @@ namespace LDAExample
 
             // Train the model - we will also get rough estimates of execution time and memory
             GC.Collect();
+#if WINDOWS
             PerformanceCounter memCounter = new PerformanceCounter("Memory", "Available MBytes");
             float preMem = memCounter.NextValue();
+#endif
             stopWatch.Reset();
             stopWatch.Start();
             double logEvidence = model.Infer(trainWordsInTrainDoc, alpha, beta, out Dirichlet[] postTheta, out Dirichlet[] postPhi);
             stopWatch.Stop();
+#if WINDOWS
             float postMem = memCounter.NextValue();
             double approxMB = preMem - postMem;
             GC.KeepAlive(model); // Keep the model alive to this point (for the memory counter)
             Console.WriteLine(String.Format("Approximate memory usage: {0:F2} MB", approxMB));
+#endif
             Console.WriteLine(String.Format("Approximate execution time (including model compilation): {0} seconds", stopWatch.ElapsedMilliseconds / 1000));
 
             // Calculate average log evidence over total training words

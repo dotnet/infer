@@ -79,12 +79,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             segment = Utilities.GetBatch(433, array, 735);
             Assert.NotNull(segment);
-            Assert.Equal(1, segment.Count);
+            Assert.Single(segment);
             Assert.Equal(434, segment[0]);
 
             segment = Utilities.GetBatch(734, array, 735);
             Assert.NotNull(segment);
-            Assert.Equal(1, segment.Count);
+            Assert.Single(segment);
             Assert.Equal(735, segment[0]);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => Utilities.GetBatch(735, array, 735));

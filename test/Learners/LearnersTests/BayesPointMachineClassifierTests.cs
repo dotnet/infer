@@ -6486,7 +6486,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.NotNull(((ILearner)classifier).Settings);
 
             // Check dimensions of posterior distributions over weights
-            Assert.Equal(1, classifier.WeightPosteriorDistributions.Count);
+            Assert.Single(classifier.WeightPosteriorDistributions);
             Assert.Equal(nativePredictionData.FeatureCount, classifier.WeightPosteriorDistributions[0].Count);
         }
 
@@ -6596,7 +6596,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.NotNull(((ILearner)classifier).Settings);
 
             // Check dimensions of posterior distributions over weights
-            Assert.Equal(1, classifier.WeightPosteriorDistributions.Count);
+            Assert.Single(classifier.WeightPosteriorDistributions);
             Assert.Equal(standardPredictionData.FeatureVectors["First"].Count, classifier.WeightPosteriorDistributions[0].Count);
         }
 

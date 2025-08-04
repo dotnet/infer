@@ -115,7 +115,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         public void BugsSeeds()
         {
-            Assert.True(false, "This Bugs example test will always fail with Gibbs - we need hybrid Metropolis/Gibbs");
+            Assert.Fail("This Bugs example test will always fail with Gibbs - we need hybrid Metropolis/Gibbs");
 
             //model
             //{
@@ -179,7 +179,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         public void BugsAir()
         {
-            Assert.True(false, "This Bugs example test will always fail with Gibbs - we need hybrid Metropolis/Gibbs");
+            Assert.Fail("This Bugs example test will always fail with Gibbs - we need hybrid Metropolis/Gibbs");
 
             //model
             //{
@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         public void BugsJaws()
         {
-            Assert.True(false, "This Bugs example is incomplete -- TODO");
+            Assert.Fail("This Bugs example is incomplete -- TODO");
 
             Vector[] jawData =
                 {

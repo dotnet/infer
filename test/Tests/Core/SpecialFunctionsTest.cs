@@ -711,7 +711,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     string strMsg = $"{name}({x:g17})\t has wrong sign (result = {result:g17})";
                     Trace.WriteLine(strMsg);
-                    Assert.True(false, strMsg);
+                    Assert.Fail(strMsg);
                 }
                 double err = MMath.AbsDiff(result, fx, 1e14*double.Epsilon);
                 if (Double.IsInfinity(fx))
@@ -731,7 +731,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     string strMsg = $"{name}({x:g17})\t wrong by {err.ToString("g2")} (result = {result:g17})";
                     Trace.WriteLine(strMsg);
                     if (IsErrorSignificant(assertTolerance, err) || double.IsNaN(err))
-                        Assert.True(false, strMsg);
+                        Assert.Fail(strMsg);
                 }
             }
         }

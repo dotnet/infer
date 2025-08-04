@@ -1026,7 +1026,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="expected">Expected value.</param>
         /// <param name="observed">Actual value.</param>
         /// <param name="eps">Precision.</param>
-        public static void Equal(double expected, double observed, double eps)
+        public static new void Equal(double expected, double observed, double eps)
         {
             // Infinity check
             if (expected == observed)

@@ -502,7 +502,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
                 Assert.True(xExpected.MaxDiff(yActual) < 1e-10);
                 Assert.True(xExpected.MaxDiff(zActual) < 1e-10);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (CompilationFailedException ex)
             {
@@ -866,7 +866,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double evExpected = yLike.GetLogAverageOf(new Gaussian(0, 2));
                 Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
                 Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-2);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (CompilationFailedException ex)
             {
@@ -956,7 +956,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Gaussian xExpected = new Gaussian(1.533, 1.733); //(new InferenceEngine()).Infer<Gaussian>(x);
                 Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-1);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (CompilationFailedException ex)
             {
@@ -1003,7 +1003,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Bernoulli xExpected = (new Bernoulli(xPrior))*(new Bernoulli(zLike));
                 Console.WriteLine("x = {0} should be {1}", xActual, xExpected);
                 Assert.True(xExpected.MaxDiff(xActual) < 1e-10);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (CompilationFailedException ex)
             {
@@ -1163,7 +1163,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 engine.Group(c, a); // Downstream variable is root - not allowed except for GateExitRandom
                 engine.Group(c, b); // Downstream variable is root - not allowed except for GateExitRandom
                 var marg = engine.Infer<Gaussian>(c);
-                Assert.True(false, "An exception should be thrown for the bad root");
+                Assert.Fail("An exception should be thrown for the bad root");
             }
             catch (Exception e)
             {

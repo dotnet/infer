@@ -1333,7 +1333,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(0, e.Warnings.Count);
+                Assert.Empty(e.Warnings);
             };
             engine.Infer(userThresholds);
         }
@@ -1359,7 +1359,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1402,7 +1402,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1438,7 +1438,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1477,7 +1477,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             var boolsActual = engine.Infer<IList<Bernoulli>>(bools);
             var boolsExpected = new BernoulliArray(C.SizeAsInt, i =>
@@ -1729,7 +1729,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             IDistribution<bool[]> post = engine.Infer<IDistribution<bool[]>>(bools);            
         }
@@ -1866,7 +1866,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             IDistribution<bool[][]> weightsActual = engine.Infer<IDistribution<bool[][]>>(bools);
         }
@@ -2436,7 +2436,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(0, e.Warnings.Count);
+                Assert.Empty(e.Warnings);
             };
             indices.ObservedValue = new int[] {0};
             indicesLength.ObservedValue = indices.ObservedValue.Length;
@@ -2538,7 +2538,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(0, e.Warnings.Count);
+                Assert.Empty(e.Warnings);
             };
             indices.ObservedValue = new int[][] {new int[] {0}, new int[] {3}};
             indicesLength.ObservedValue = new int[] {indices.ObservedValue[0].Length, indices.ObservedValue[1].Length};

@@ -736,7 +736,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             x.ObservedValue = 0.5;
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-            Assert.Equal(evActual, double.NegativeInfinity);
+            Assert.Equal(double.NegativeInfinity, evActual);
 
             x.ObservedValue = 1;
             evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
@@ -1332,7 +1332,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
                 if (shouldThrow)
                 {
-                    if (pointPrior) Assert.True(false, "Did not throw AllZeroException");
+                    if (pointPrior) Assert.Fail("Did not throw AllZeroException");
                     else continue;
                 }
                 Gaussian x1Actual = engine.Infer<Gaussian>(x1);
@@ -2360,7 +2360,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     if (shouldThrow) continue;
                     else throw;
                 }
-                if (shouldThrow) Assert.True(false, "Did not throw AllZeroException");
+                if (shouldThrow) Assert.Fail("Did not throw AllZeroException");
                 VectorGaussian x1Actual = engine.Infer<VectorGaussian>(x1);
                 VectorGaussian x2Actual = engine.Infer<VectorGaussian>(x2);
 
@@ -2500,7 +2500,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     else
                         throw;
                 }
-                if (shouldThrow) Assert.True(false, "Did not throw AllZeroException");
+                if (shouldThrow) Assert.Fail("Did not throw AllZeroException");
 
                 VectorGaussian cExpected;
                 double evExpected;

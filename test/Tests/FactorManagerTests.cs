@@ -108,8 +108,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Not", parameterTypes);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
-            Assert.Equal(1, fcninfo.Dependencies.Count);
-            Assert.Equal(1, fcninfo.Requirements.Count);
+            Assert.Single(fcninfo.Dependencies);
+            Assert.Single(fcninfo.Requirements);
             Console.WriteLine(fcninfo);
         }
 
@@ -127,7 +127,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "Random", parameterTypes);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
-            Assert.Equal(1, fcninfo.Dependencies.Count);
+            Assert.Single(fcninfo.Dependencies);
         }
 
         [Fact]
@@ -145,8 +145,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             MessageFcnInfo fcninfo = info.GetMessageFcnInfo(factorManager, "AverageConditional", "value", parameterTypes);
             Assert.False(fcninfo.PassResult);
             Assert.False(fcninfo.PassResultIndex);
-            Assert.Equal(1, fcninfo.Dependencies.Count);
-            Assert.Equal(1, fcninfo.Requirements.Count);
+            Assert.Single(fcninfo.Dependencies);
+            Assert.Single(fcninfo.Requirements);
 
             bool verbose = false;
             if (verbose) Console.WriteLine("All MessageFcnInfos:");
@@ -195,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(fcninfo.PassResult);
                 Assert.True(fcninfo.PassResultIndex);
                 Assert.Equal(2, fcninfo.Dependencies.Count);
-                Assert.Equal(1, fcninfo.Requirements.Count);
+                Assert.Single(fcninfo.Requirements);
                 Assert.True(fcninfo.SkipIfAllUniform);
 
                 if (i == 0)
@@ -261,9 +261,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(fcninfo.PassResult);
                 Assert.True(fcninfo.PassResultIndex);
                 Assert.Equal(2, fcninfo.Dependencies.Count);
-                Assert.Equal(1, fcninfo.Requirements.Count);
+                Assert.Single(fcninfo.Requirements);
                 Assert.True(fcninfo.SkipIfAllUniform);
-                Assert.Equal(1, fcninfo.Triggers.Count);
+                Assert.Single(fcninfo.Triggers);
 
                 if (i == 0)
                 {
@@ -273,7 +273,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             parameterTypes.Remove("resultIndex");
             MessageFcnInfo fcninfo2 = info.GetMessageFcnInfo(factorManager, "AverageLogarithm", "Def", parameterTypes);
             Assert.True(fcninfo2.SkipIfAllUniform);
-            Assert.Equal(1, fcninfo2.Triggers.Count);
+            Assert.Single(fcninfo2.Triggers);
 
             depInfo = FactorManager.GetDependencyInfo(fcninfo2.Method);
         }
@@ -300,12 +300,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 fcninfo = info.GetMessageFcnInfo(factorManager, "Rubbish", "Difference", parameterTypes);
-                Assert.True(false, "Did not throw an exception");
+                Assert.Fail("Did not throw an exception");
             }
             catch (ArgumentException ex)
             {
                 if (!ex.Message.Contains("MissingMethodException"))
-                    Assert.True(false, "Correctly threw exception, but with wrong message");
+                    Assert.Fail("Correctly threw exception, but with wrong message");
                 Console.WriteLine("Different exception: " + ex);
             }
 

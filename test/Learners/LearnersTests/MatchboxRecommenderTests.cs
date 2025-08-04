@@ -1076,7 +1076,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Equal(this.standardTrainingData.Observations.Select(o => o.Item3).Distinct().Count() + 1, posteriors.Users.First().Value.Thresholds.Count);
             Assert.Equal(this.standardTrainingData.Observations.Select(o => o.Item2).Distinct().Count(), posteriors.Items.Count);
             Assert.Equal(this.standardTrainingDataFeatures.UserFeatures.First().Value.Count, posteriors.UserFeatures.Count);
-            Assert.Equal(0, posteriors.ItemFeatures.Count);
+            Assert.Empty(posteriors.ItemFeatures);
             Assert.Equal(recommender.Settings.Training.TraitCount, posteriors.UserFeatures.First().TraitWeights.Count);
         }
 
@@ -1095,7 +1095,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             Assert.Equal(recommender.Settings.Training.TraitCount, posteriors.Users.First().Value.Traits.Count);
             Assert.Equal(this.nativeTrainingData.Ratings.Distinct().Count() + 1, posteriors.Users.First().Value.Thresholds.Count);
             Assert.Equal(this.nativeTrainingData.ItemCount, posteriors.Items.Count);
-            Assert.Equal(0, posteriors.UserFeatures.Count);
+            Assert.Empty(posteriors.UserFeatures);
             Assert.Equal(this.nativeTrainingData.NonZeroItemFeatureValues.First().Length, posteriors.ItemFeatures.Count);
             Assert.Equal(recommender.Settings.Training.TraitCount, posteriors.ItemFeatures.First().TraitWeights.Count);
         }

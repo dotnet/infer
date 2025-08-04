@@ -122,7 +122,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 Assert.True(GaussianProductVmpOp.AAverageLogarithm(6.0, g).IsUniform());
-                Assert.True(false, "Did not throw NotSupportedException");
+                Assert.Fail("Did not throw NotSupportedException");
             }
             catch (NotSupportedException)
             {
@@ -130,7 +130,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 g = GaussianProductOp.AAverageConditional(12.0, 0.0);
-                Assert.True(false, "Did not throw AllZeroException");
+                Assert.Fail("Did not throw AllZeroException");
             }
             catch (AllZeroException)
             {
@@ -138,7 +138,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 g = GaussianProductVmpOp.AAverageLogarithm(12.0, 0.0);
-                Assert.True(false, "Did not throw AllZeroException");
+                Assert.Fail("Did not throw AllZeroException");
             }
             catch (AllZeroException)
             {

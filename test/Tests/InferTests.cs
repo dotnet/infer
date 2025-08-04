@@ -1968,7 +1968,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs e)
                 {
                     if (e.Iteration != iterationExpected)
-                        Assert.True(false, String.Format("Wrong iteration number: {0} should be {1}", e.Iteration, iterationExpected));
+                        Assert.Fail(String.Format("Wrong iteration number: {0} should be {1}", e.Iteration, iterationExpected));
                     iterationExpected++;
                 };
             double[] data = new double[] { 1, 2 };
@@ -2000,7 +2000,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.ProgressChanged += delegate (InferenceEngine sender, InferenceProgressEventArgs e)
                 {
                     if (e.Iteration != iterationExpected)
-                        Assert.True(false, String.Format("Wrong iteration number: {0} should be {1}", e.Iteration, iterationExpected));
+                        Assert.Fail(String.Format("Wrong iteration number: {0} should be {1}", e.Iteration, iterationExpected));
                     iterationExpected++;
                 };
             m.ObservedValue = 10;
@@ -2026,7 +2026,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             gen.ProgressChanged += delegate (object sender, ProgressChangedEventArgs e)
                 {
                     if (e.Iteration != iterationExpected)
-                        Assert.True(false, String.Format("Wrong iteration number: {0} should be {1}", e.Iteration, iterationExpected));
+                        Assert.Fail(String.Format("Wrong iteration number: {0} should be {1}", e.Iteration, iterationExpected));
                     iterationExpected++;
                 };
             gen.SetObservedValue(m.NameInGeneratedCode, 10.0);

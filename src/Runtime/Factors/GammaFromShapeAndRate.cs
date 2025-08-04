@@ -1260,7 +1260,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GammaFromShapeAndRateOp.SampleAverageConditional(shape, rate.Point);
             if (q.IsPointMass)
                 throw new InferRuntimeException();
-            if (sample.Rate == 0)
+            if (sample.Rate == 0 && false)
                 return GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
             double sampleMean, sampleVariance;
             if (sample.Rate < 1e-20)

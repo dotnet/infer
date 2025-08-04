@@ -1076,7 +1076,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine();
                 Console.WriteLine(engine.Infer(index));
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             });
         }
 
@@ -4374,7 +4374,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             for (int trial = 0; trial < 2; trial++)
             {
@@ -5757,7 +5757,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Discrete expected = new Discrete(sumXCond0 / Z, sumXCond1 / Z);
                 Console.WriteLine("c = {0} (should be {1})", actual, expected);
                 //Assert.True(actual.MaxDiff(expected) < 1e-10);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (InvalidOperationException exn)
             {
@@ -7287,7 +7287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             DistributionArray<Bernoulli> bDist = engine.Infer<DistributionArray<Bernoulli>>(b);
             for (int i = 0; i < bDist.Count; i++)
@@ -7329,7 +7329,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             DistributionArray<Bernoulli> bDist = engine.Infer<DistributionArray<Bernoulli>>(b);
             for (int i = 0; i < bDist.Count; i++)
@@ -7376,7 +7376,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine.Compiler.Compiled += (sender, e) =>
             {
                 // check for the inefficient replication warning
-                Assert.Equal(1, e.Warnings.Count);
+                Assert.Single(e.Warnings);
             };
             DistributionArray<Bernoulli> bDist = engine.Infer<DistributionArray<Bernoulli>>(b);
             for (int i = 0; i < bDist.Count; i++)
@@ -7391,7 +7391,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             engine2.ShowProgress = false;
             engine2.Compiler.Compiled += (sender, e) =>
             {
-                Assert.Equal(0, e.Warnings.Count);
+                Assert.Empty(e.Warnings);
             };
             DistributionArray<Bernoulli> bDist2 = engine2.Infer<DistributionArray<Bernoulli>>(b);
         }
