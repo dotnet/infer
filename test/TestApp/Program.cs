@@ -84,7 +84,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new EpTests().GammaProductRRRPointMassTest();
 
             bool runAllTests = false;
             if (runAllTests)

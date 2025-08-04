@@ -115,6 +115,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
             }
         }
+
+        /// <summary>
+        /// Fails because GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio returns infinity when rate.Shape is 1 and sample.Rate is 0.
+        /// </summary>
         [Fact]
         [Trait("Category", "OpenBug")]
         public void GammaFromShapeAndRateOpTest4()

@@ -1189,9 +1189,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double ds = A.Shape - B.Shape;
                 double dr = A.Rate - B.Rate;
                 double drB = dr / B.Rate;
-                return ds * (Math.Log(x) + Math.Log(B.Rate) - MMath.RisingFactorialLnOverN(B.Shape, ds))
+                return ds * (Math.Log(x) + Math.Log(B.Rate / B.Shape))
                     - dr * (x - A.Shape / B.Rate)
-                    + A.Shape * (MMath.Log1Plus(drB) - drB);
+                    + A.Shape * (MMath.Log1Plus(drB) - drB)
+                    - ds * (MMath.RisingFactorialLnOverN(B.Shape, ds) - Math.Log(B.Shape));
             }
             else
             {
