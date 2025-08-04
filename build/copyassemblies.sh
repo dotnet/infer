@@ -47,14 +47,6 @@ cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visuali
 cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.pdb ${dst}
 cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.xml ${dst}
 
-mkdir "${out}/net6.0-windows"
-dst="${out}/net6.0-windows"
-src="bin/${configuration}/net6.0-windows"
-
-cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.dll ${dst}
-cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.pdb ${dst}
-cp ../src/Visualizers/Windows/${src}/Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows.xml ${dst}
-
 mkdir "${out}/net8.0-windows"
 dst="${out}/net8.0-windows"
 src="bin/${configuration}/net8.0-windows"
