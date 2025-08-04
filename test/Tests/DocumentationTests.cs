@@ -180,7 +180,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable<double> X = Variable.GaussianFromMeanAndVariance(0, V);
                 Gaussian marginalX = engine.Infer<Gaussian>(X); // fails
                 Console.WriteLine("Posterior X = " + marginalX);
-                Assert.True(false, "Missing operator exception not thrown");
+                Assert.Fail("Missing operator exception not thrown");
             });
         }
 

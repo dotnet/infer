@@ -31,6 +31,9 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
                 .Select(x => x.First())
                 .ToList();
             compiler = new CodeCompiler();
+
+            // Ensure that the Console class is loaded into memory.
+            Console.OpenStandardOutput();
         }
 
         abstract protected void CheckCompiling();

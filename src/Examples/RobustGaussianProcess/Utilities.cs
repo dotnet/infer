@@ -117,7 +117,7 @@ namespace RobustGaussianProcess
         public static void PlotGraph(PlotModel model, string graphPath)
         {
             // Required for plotting
-            Thread thread = new Thread(() => PngExporter.Export(model, graphPath, 800, 600, OxyColors.White));
+            Thread thread = new Thread(() => PngExporter.Export(model, graphPath, 800, 600));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }

@@ -1869,16 +1869,20 @@ namespace Microsoft.ML.Probabilistic.Factors
             double dxix = xdg / a;
             double xa1 = -2 * xxddlogf - xxxdddlogf;
             double da = -xxddg + dxix * xa1;
-            m = xg[0] + (MMath.Digamma(a) - Math.Log(a)) * da;
+            m = xg[0];
+            if (da != 0) // avoid 0 * infinity
+                m += (MMath.Digamma(a) - Math.Log(a)) * da;
             if (xg.Length > 3)
             {
                 double xxxdddg = xg[3];
                 double x4d4logf = xdlogf[3];
                 double xdb = da - xdg;
-                double ddxix = (xdg + xxddg) / a * dxix - xdg / (a * a) * xdb;
+                double ddxix = (xdg + xxddg) / a * dxix - xdg / a * (xdb / a);
                 double x2a2 = -2 * xxddlogf - 4 * xxxdddlogf - x4d4logf;
                 double dda = (-2 * xxddg - xxxdddg) * dxix + x2a2 * dxix * dxix + xa1 * ddxix;
-                v = xdg * dxix + (MMath.Trigamma(a) - 1 / a) * da * da + (MMath.Digamma(a) - Math.Log(a)) * dda;
+                v = xdg * dxix;
+                if (dda != 0) // avoid 0 * infinity
+                    v += (MMath.Trigamma(a) - 1 / a) * da * da + (MMath.Digamma(a) - Math.Log(a)) * dda;
                 if (v < 0)
                     throw new Exception("v < 0");
             }

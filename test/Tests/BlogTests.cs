@@ -2552,7 +2552,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Bernoulli drawnFromGeneralExpected = new Bernoulli(0.6955);
                 Bernoulli drawnFromGeneralActual = engine.Infer<Bernoulli>(drawnFromGeneral);
                 Assert.True(drawnFromGeneralExpected.MaxDiff(drawnFromGeneralActual) < 1e-4);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (CompilationFailedException ex)
             {

@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double error = hist.MaxDiff(unif);
             if (error > TOLERANCE)
             {
-                Assert.True(false, $"Uniform: error={error}");
+                Assert.Fail($"Uniform: error={error}");
             }
 
             hist.SetAllElementsTo(0);
@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             error = hist.MaxDiff(p);
             if (error > TOLERANCE)
             {
-                Assert.True(false, $"Sample([0.1,0.2,0.3,0.4]) error={error}");
+                Assert.Fail($"Sample([0.1,0.2,0.3,0.4]) error={error}");
             }
         }
 
@@ -94,14 +94,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = System.Math.Abs(m);
             if (dError > 4 / System.Math.Sqrt(nsamples))
             {
-                Assert.True(false, $"m: error = {dError}");
+                Assert.Fail($"m: error = {dError}");
             }
 
             // the sample variance is Gamma(n/2,n/2) whose stddev = sqrt(2/n)
             dError = System.Math.Abs(v - 1.0);
             if (dError > 4 * System.Math.Sqrt(2.0 / nsamples))
             {
-                Assert.True(false, $"v: error = {dError}");
+                Assert.Fail($"v: error = {dError}");
             }
         }
 
@@ -134,14 +134,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = System.Math.Abs(m - meanExpected);
             if (dError > 4 / System.Math.Sqrt(nsamples))
             {
-                Assert.True(false, $"m: error = {dError}");
+                Assert.Fail($"m: error = {dError}");
             }
 
             // the sample variance is Gamma(n/2,n/2) whose stddev = sqrt(2/n)
             dError = System.Math.Abs(v - varianceExpected);
             if (dError > 4 * System.Math.Sqrt(2.0 / nsamples))
             {
-                Assert.True(false, $"v: error = {dError}");
+                Assert.Fail($"v: error = {dError}");
             }
         }
 
@@ -171,14 +171,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = System.Math.Abs(m - meanExpected);
             if (dError > 4 / System.Math.Sqrt(nsamples))
             {
-                Assert.True(false, $"m: error = {dError}");
+                Assert.Fail($"m: error = {dError}");
             }
 
             // the sample variance is Gamma(n/2,n/2) whose stddev = sqrt(2/n)
             dError = System.Math.Abs(v - varianceExpected);
             if (dError > 4 * System.Math.Sqrt(2.0 / nsamples))
             {
-                Assert.True(false, $"v: error = {dError}");
+                Assert.Fail($"v: error = {dError}");
             }
         }
 
@@ -206,13 +206,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = System.Math.Abs(m - a);
             if (dError > 4 * System.Math.Sqrt(a / nsamples))
             {
-                Assert.True(false, $"m: error = {dError}");
+                Assert.Fail($"m: error = {dError}");
             }
 
             dError = System.Math.Abs(v - a);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, $"v: error = {dError}");
+                Assert.Fail($"v: error = {dError}");
             }
         }
 
@@ -238,13 +238,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = m.MaxDiff(mt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, $"m: error = {dError}");
+                Assert.Fail($"m: error = {dError}");
             }
 
             dError = v.MaxDiff(vt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, $"v: error = {dError}");
+                Assert.Fail($"v: error = {dError}");
             }
         }
 
@@ -272,13 +272,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = m.MaxDiff(mt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, $"m: error = {dError}");
+                Assert.Fail($"m: error = {dError}");
             }
 
             dError = v.MaxDiff(vt);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, $"v: error = {dError}");
+                Assert.Fail($"v: error = {dError}");
             }
         }
 
@@ -311,11 +311,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             double dError = m.MaxDiff(mTrue);
             if (dError > TOLERANCE)
             {
-                Assert.True(false, $"Wishart({a}) mean: (should be {a}*I), error = {dError}");
+                Assert.Fail($"Wishart({a}) mean: (should be {a}*I), error = {dError}");
             }
             if (System.Math.Abs(s - sTrue) > TOLERANCE)
             {
-                Assert.True(false, $"E[logdet]: {s} (should be {sTrue})");
+                Assert.Fail($"E[logdet]: {s} (should be {sTrue})");
             }
         }
 
@@ -348,12 +348,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             double error = MMath.AbsDiff(meanExpected, mean, 1e-6);
             if (error > System.Math.Sqrt(varianceExpected) * 5)
             {
-                Assert.True(false, $"Binomial({p},{n}) mean = {mean} should be {meanExpected}, error = {error}");
+                Assert.Fail($"Binomial({p},{n}) mean = {mean} should be {meanExpected}, error = {error}");
             }
             error = MMath.AbsDiff(varianceExpected, variance, 1e-6);
             if (error > System.Math.Sqrt(varianceExpected) * 5)
             {
-                Assert.True(false, $"Binomial({p},{n}) variance = {variance} should be {varianceExpected}, error = {error}");
+                Assert.Fail($"Binomial({p},{n}) variance = {variance} should be {varianceExpected}, error = {error}");
             }
         }
 

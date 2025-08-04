@@ -84,6 +84,7 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
+
             bool runAllTests = false;
             if (runAllTests)
             {

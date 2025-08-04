@@ -624,7 +624,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // Exception correctly thrown
                 return;
             }
-            Assert.True(false, "Null variable was not detected.");
+            Assert.Fail("Null variable was not detected.");
         }
 
         [Fact]
@@ -641,7 +641,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // Exception correctly thrown
                 return;
             }
-            Assert.True(false, "Null variable was not detected.");
+            Assert.Fail("Null variable was not detected.");
         }
 
         [Fact]
@@ -658,7 +658,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // Exception correctly thrown
                 return;
             }
-            Assert.True(false, "Null variable was not detected.");
+            Assert.Fail("Null variable was not detected.");
         }
 
         [Fact]
@@ -3251,7 +3251,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 VariableArray2D<bool> bools = Variable.Array<bool>(n, m).Named("bools");
                 bools[n, m] = Variable.Bernoulli(0.5).ForEach(i, n, m);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (NotSupportedException ex)
             {
@@ -3297,7 +3297,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 VariableArray2D<bool> constBools = Variable.Constant(init2d, n, m).Named("constBools");
                 constBools[n, m] = Variable.Bernoulli(0.5).ForEach(i, n, m);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (NotSupportedException ex)
             {
@@ -3342,7 +3342,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 VariableArray2D<bool> givenBools = Variable.Observed(init2d, n, m).Named("givenBools");
                 givenBools[n, m] = Variable.Bernoulli(0.5).ForEach(i, n, m);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (NotSupportedException ex)
             {

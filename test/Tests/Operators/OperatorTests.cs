@@ -1037,7 +1037,7 @@ zL = (L - mx)*sqrt(prec)
             Assert.Throws<AllZeroException>(() =>
             {
                 Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(new Gaussian(0, 1), 1, 0).GetProbTrue());
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             });
             Assert.Equal(1.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(0), 0, 1).GetProbTrue());
             Assert.Equal(0.0, IsBetweenGaussianOp.IsBetweenAverageConditional(Gaussian.PointMass(-1), Gaussian.PointMass(0), Gaussian.FromMeanAndVariance(1, 1)).GetProbTrue());

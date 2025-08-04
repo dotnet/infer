@@ -67,7 +67,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsWindows)'=='true'">
-    <PackageReference Include="OxyPlot.Wpf" Version="2.0.0" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

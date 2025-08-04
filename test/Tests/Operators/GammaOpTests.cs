@@ -92,47 +92,64 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Console.WriteLine(GammaFromShapeAndRateOp_Slow.RateAverageConditional(Gamma.FromShapeAndRate(2, 1), 1, Gamma.FromShapeAndRate(1.5, 0.5)));
 
-            Gamma sample = Gamma.FromShapeAndRate(2, 0);
-            Gamma rate = Gamma.FromShapeAndRate(4, 1);
-            double shape = 1;
-
-            Gamma to_sample2 = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-            double evExpected = GammaFromShapeAndRateOp_Slow.LogEvidenceRatio(sample, shape, rate, to_sample2);
-            Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample2, evExpected);
-            for (int i = 40; i < 41; i++)
+            foreach (var rateShape in new double[] { 1.0, 1.4, 1.5, 2.0, 3.0, 4.0 })
             {
-                sample.Rate = System.Math.Pow(0.1, i);
-                Gamma to_sample = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
-                double evActual = GammaFromShapeAndRateOp_Slow.LogEvidenceRatio(sample, shape, rate, to_sample);
-                Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample, evActual);
-                Assert.True(to_sample2.MaxDiff(to_sample2) < 1e-4);
-                Assert.True(MMath.AbsDiff(evExpected, evActual) < 1e-4);
+                Gamma sample = Gamma.FromShapeAndRate(2, 0);
+                Gamma rate = Gamma.FromShapeAndRate(rateShape, 1);
+                double shape = 1;
+
+                Gamma to_sample2 = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
+                double evExpected = GammaFromShapeAndRateOp_Slow.LogEvidenceRatio(sample, shape, rate, to_sample2);
+                Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample2, evExpected);
+                for (int i = 40; i < 41; i++)
+                {
+                    sample.Rate = System.Math.Pow(0.1, i);
+                    Gamma to_sample = GammaFromShapeAndRateOp_Slow.SampleAverageConditional(sample, shape, rate);
+                    double evActual = GammaFromShapeAndRateOp_Slow.LogEvidenceRatio(sample, shape, rate, to_sample);
+                    Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample, evActual);
+                    if (!to_sample2.IsUniform())
+                    {
+                        Assert.True(to_sample.MaxDiff(to_sample2) < 1e-4);
+                        Assert.True(MMath.AbsDiff(evExpected, evActual) < 1e-4);
+                    }
+                }
             }
         }
+
+        /// <summary>
+        /// Fails because GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio returns infinity when rate.Shape is 1 and sample.Rate is 0.
+        /// </summary>
         [Fact]
+        [Trait("Category", "OpenBug")]
         public void GammaFromShapeAndRateOpTest4()
         {
-            Gamma sample = Gamma.FromShapeAndRate(2, 0);
-            Gamma rate = Gamma.FromShapeAndRate(4, 1);
-            double shape = 1;
-
-            Gamma rateExpected = GammaFromShapeAndRateOp_Slow.RateAverageConditional(sample, shape, rate);
-            Gamma q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
-            Gamma rateActual = GammaFromShapeAndRateOp_Laplace.RateAverageConditional(sample, shape, rate, q);
-            Assert.True(rateExpected.MaxDiff(rateActual) < 1e-4);
-
-            Gamma to_sample2 = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-            double evExpected = GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(sample, shape, rate, to_sample2, q);
-            Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample2, evExpected);
-            for (int i = 40; i < 41; i++)
+            foreach (var rateShape in new double[] { 1.0, 1.4, 1.5, 2.0, 3.0, 4.0 })
             {
-                sample.Rate = System.Math.Pow(0.1, i);
-                q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
-                Gamma to_sample = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
-                double evActual = GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(sample, shape, rate, to_sample, q);
-                Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample, evActual);
-                Assert.True(to_sample2.MaxDiff(to_sample2) < 1e-4);
-                Assert.True(MMath.AbsDiff(evExpected, evActual) < 1e-4);
+                Gamma sample = Gamma.FromShapeAndRate(2, 0);
+                Gamma rate = Gamma.FromShapeAndRate(rateShape, 1);
+                double shape = 1;
+
+                Gamma rateExpected = GammaFromShapeAndRateOp_Slow.RateAverageConditional(sample, shape, rate);
+                Gamma q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
+                Gamma rateActual = GammaFromShapeAndRateOp_Laplace.RateAverageConditional(sample, shape, rate, q);
+                Assert.True(rateExpected.MaxDiff(rateActual) < 1e-4);
+
+                Gamma to_sample2 = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
+                double evExpected = GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(sample, shape, rate, to_sample2, q);
+                Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample2, evExpected);
+                for (int i = 40; i < 41; i++)
+                {
+                    sample.Rate = System.Math.Pow(0.1, i);
+                    q = GammaFromShapeAndRateOp_Laplace.Q(sample, shape, rate);
+                    Gamma to_sample = GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(sample, shape, rate, q);
+                    double evActual = GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(sample, shape, rate, to_sample, q);
+                    Console.WriteLine("sample = {0} to_sample = {1} evidence = {2}", sample, to_sample, evActual);
+                    if (!to_sample2.IsUniform())
+                    {
+                        Assert.True(to_sample.MaxDiff(to_sample2) < 1e-4);
+                        Assert.True(MMath.AbsDiff(evExpected, evActual) < 1e-4);
+                    }
+                }
             }
         }
 

@@ -44,13 +44,13 @@
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
+	  <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
+	<Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
     <Compile Include="..\..\Shared\SharedAssemblyInfo.cs" />
   </ItemGroup>
 </Project>

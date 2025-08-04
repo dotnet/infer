@@ -71,6 +71,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// The median value.
+        /// </summary>
+        /// <returns></returns>
+        public double GetMedian()
+        {
+            if (IsPointMass)
+                return Point;
+            else if (!IsProper())
+                throw new ImproperDistributionException(this);
+            // Reference:
+            // Lyon, "Closed-form Tight Bounds and Approximations for the Median of a Gamma Distribution"
+            // https://arxiv.org/pdf/2011.04060
+            const double expDigamma1 = 0.56145948356688513;
+            return Math.Pow(2, -1 / Shape) * (Shape + expDigamma1) / Rate;
+        }
+
+        /// <summary>
         /// Gets the expected value E(x) - calculated as shape/rate
         /// </summary>
         /// <returns>E(x)</returns>
@@ -976,7 +993,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else if (forceProper && (numerator.Shape < denominator.Shape || numerator.Rate < denominator.Rate))
             {
-                double mean = numerator.GetMean();
+                double mean = (numerator.Shape > 0) ? numerator.GetMean() : double.Epsilon;
                 double shape = mean * denominator.Rate + (1 - denominator.Shape);
                 if (shape < 1)
                 {

@@ -941,8 +941,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringDistribution pointMass2 = StringDistribution.PointMass(Point);
             Assert.True(pointMass1.IsPointMass);
             Assert.True(pointMass2.IsPointMass);
-            Assert.Equal(pointMass1.Point, Point);
-            Assert.Equal(pointMass2.Point, Point);
+            Assert.Equal(Point, pointMass1.Point);
+            Assert.Equal(Point, pointMass2.Point);
             StringInferenceTestUtilities.TestProbability(pointMass1, 1.0, Point);
             StringInferenceTestUtilities.TestProbability(pointMass2, 1.0, Point);
             StringInferenceTestUtilities.TestProbability(pointMass1, 0.0, string.Empty, "x", "hello", "world");

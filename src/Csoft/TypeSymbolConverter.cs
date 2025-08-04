@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 else
                 {
                     // Types in the compilation will have a temporary assembly name so that can't be used. Instead, look them up in the original assembly
-                    if (namedTypeSymbol.ContainingAssembly == compilationAssembly)
+                    if (SymbolEqualityComparer.Default.Equals(namedTypeSymbol.ContainingAssembly, compilationAssembly))
                     {
                         return originalAssembly.GetType(fullTypeName);
                     }

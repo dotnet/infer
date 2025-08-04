@@ -1569,7 +1569,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         // Here we are testing that a sparse Dirichlet is not generating the same
                         // sample value for all common value indices
                         if (dic.ContainsKey(r))
-                            Assert.True(false, "Dirichlet sampler: repeat element");
+                            Assert.Fail("Dirichlet sampler: repeat element");
                         dic[r] = true;
                     }
                 }
@@ -2355,7 +2355,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     try
                     {
                         b.SetToProduct(pt, pt2);
-                        Assert.True(false, "AllZeroException not thrown");
+                        Assert.Fail("AllZeroException not thrown");
                     }
                     catch (AllZeroException)
                     {
@@ -2383,7 +2383,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 b.SetToRatio(a, pt);
-                Assert.True(false, "DivideByZeroException not thrown");
+                Assert.Fail("DivideByZeroException not thrown");
             }
             catch (DivideByZeroException)
             {
@@ -2393,7 +2393,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 try
                 {
                     b.SetToRatio(pt, pt);
-                    Assert.True(false, "DivideByZeroException not thrown");
+                    Assert.Fail("DivideByZeroException not thrown");
                 }
                 catch (DivideByZeroException)
                 {
@@ -2415,7 +2415,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     try
                     {
                         b.SetToRatio(pt, pt2);
-                        Assert.True(false, "DivideByZeroException not thrown");
+                        Assert.Fail("DivideByZeroException not thrown");
                     }
                     catch (DivideByZeroException)
                     {
@@ -2501,7 +2501,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 c.SetToPower(c, -0.1);
-                Assert.True(false, "DivideByZeroException not thrown");
+                Assert.Fail("DivideByZeroException not thrown");
             }
             catch (DivideByZeroException)
             {
@@ -2550,7 +2550,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             try
             {
                 c.SetToSum(0.0, a, -1.0, c);
-                Assert.True(false, "Did not throw exception");
+                Assert.Fail("Did not throw exception");
             }
             catch (ArgumentException)
             {
