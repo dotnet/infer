@@ -23195,6 +23195,33 @@
         <paramref name="max" /> is not a proper distribution.</exception>
     </message_doc>
   </message_op_class>
+  <message_op_class name="MaxGammaOp_PointMax">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="AAverageConditional(TruncatedGamma, double)">
+      <summary>EP message to <c>val1</c>.</summary>
+      <param name="max">Incoming message from <c>max</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>val2</c>.</param>
+      <returns>The outgoing EP message to the <c>val1</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>val1</c> as the random arguments are varied. The formula is <c>proj[p(val1) sum_(max) p(max) factor(max,val1,val2)]/p(val1)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="max" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(TruncatedGamma, double)">
+      <summary>EP message to <c>val2</c>.</summary>
+      <param name="max">Incoming message from <c>max</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
+      <returns>The outgoing EP message to the <c>val2</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>val2</c> as the random arguments are varied. The formula is <c>proj[p(val2) sum_(max) p(max) factor(max,val1,val2)]/p(val2)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="max" /> is not a proper distribution.</exception>
+    </message_doc>
+  </message_op_class>
   <message_op_class name="MaxTruncatedGammaOp">
     <doc>
       <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
@@ -23329,6 +23356,33 @@
       <param name="min">Incoming message from <c>min</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
       <param name="a">Constant value for <c>val1</c>.</param>
       <param name="b">Incoming message from <c>val2</c>.</param>
+      <returns>The outgoing EP message to the <c>val2</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>val2</c> as the random arguments are varied. The formula is <c>proj[p(val2) sum_(min) p(min) factor(min,val1,val2)]/p(val2)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="min" /> is not a proper distribution.</exception>
+    </message_doc>
+  </message_op_class>
+  <message_op_class name="MinGammaOp_PointMin">
+    <doc>
+      <summary>Provides outgoing messages for <see cref="System.Math.Min(double, double)" />, given random arguments to the function.</summary>
+    </doc>
+    <message_doc name="AAverageConditional(TruncatedGamma, double)">
+      <summary>EP message to <c>val1</c>.</summary>
+      <param name="min">Incoming message from <c>min</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="b">Constant value for <c>val2</c>.</param>
+      <returns>The outgoing EP message to the <c>val1</c> argument.</returns>
+      <remarks>
+        <para>The outgoing message is a distribution matching the moments of <c>val1</c> as the random arguments are varied. The formula is <c>proj[p(val1) sum_(min) p(min) factor(min,val1,val2)]/p(val1)</c>.</para>
+      </remarks>
+      <exception cref="ImproperMessageException">
+        <paramref name="min" /> is not a proper distribution.</exception>
+    </message_doc>
+    <message_doc name="BAverageConditional(TruncatedGamma, double)">
+      <summary>EP message to <c>val2</c>.</summary>
+      <param name="min">Incoming message from <c>min</c>. Must be a proper distribution. If uniform, the result will be uniform.</param>
+      <param name="a">Constant value for <c>val1</c>.</param>
       <returns>The outgoing EP message to the <c>val2</c> argument.</returns>
       <remarks>
         <para>The outgoing message is a distribution matching the moments of <c>val2</c> as the random arguments are varied. The formula is <c>proj[p(val2) sum_(min) p(min) factor(min,val1,val2)]/p(val2)</c>.</para>
