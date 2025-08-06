@@ -8,7 +8,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    [FactorMethod(new string[] { "max", "a", "b" }, typeof(Math), "Max", typeof(double), typeof(double))]
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGammaOp"]/doc/*'/>
+    [FactorMethod(new string[] { "max", "a", "b" }, typeof(Math), "Max", typeof(double), typeof(double), Default = true)]
     [Quality(QualityBand.Preview)]
     public static class MaxGammaOp
     {
@@ -56,6 +57,25 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGammaOp_PointMax"]/doc/*'/>
+    [FactorMethod(new string[] { "max", "a", "b" }, typeof(Math), "Max", typeof(double), typeof(double))]
+    [Quality(QualityBand.Preview)]
+    public static class MaxGammaOp_PointMax
+    {
+        public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma max, double b)
+        {
+            if (!max.IsPointMass)
+                throw new ArgumentException($"{nameof(max)} is not a point mass: {max}", nameof(max));
+            return Gamma.PointMass(max.Point);
+        }
+
+        public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma max, double a)
+        {
+            return AAverageConditional(max, a);
+        }
+    }
+
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxTruncatedGammaOp"]/doc/*'/>
     [FactorMethod(new string[] { "max", "a", "b" }, typeof(Math), "Max", typeof(double), typeof(double))]
     [Quality(QualityBand.Preview)]
     public static class MaxTruncatedGammaOp

@@ -9,7 +9,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp"]/doc/*'/>
-    [FactorMethod(new string[] { "min", "a", "b" }, typeof(Math), "Min", typeof(double), typeof(double))]
+    [FactorMethod(new string[] { "min", "a", "b" }, typeof(Math), "Min", typeof(double), typeof(double), Default = true)]
     [Quality(QualityBand.Preview)]
     public static class MinGammaOp
     {
@@ -58,6 +58,24 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma min, double a, Gamma b)
         {
             return AAverageConditional(min, b, a);
+        }
+    }
+
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MinGammaOp_PointMin"]/doc/*'/>
+    [FactorMethod(new string[] { "min", "a", "b" }, typeof(Math), "Min", typeof(double), typeof(double))]
+    [Quality(QualityBand.Preview)]
+    public static class MinGammaOp_PointMin
+    {
+        public static Gamma AAverageConditional([SkipIfUniform] TruncatedGamma min, double b)
+        {
+            if (!min.IsPointMass)
+                throw new ArgumentException($"{nameof(min)} is not a point mass: {min}", nameof(min));
+            return Gamma.PointMass(min.Point);
+        }
+
+        public static Gamma BAverageConditional([SkipIfUniform] TruncatedGamma min, double a)
+        {
+            return AAverageConditional(min, a);
         }
     }
 
