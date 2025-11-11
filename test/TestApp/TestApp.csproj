@@ -5,7 +5,6 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>Microsoft.ML.Probabilistic.TestApp</AssemblyName>
     <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>TRACE;SUPPRESS_UNREACHABLE_CODE_WARNINGS</DefineConstants>
     <RootNamespace>TestApp</RootNamespace>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
@@ -20,12 +19,12 @@
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net8.0;net8.0-windows;net472</TargetFrameworks>
+        <TargetFrameworks>net10.0;net10.0-windows;net472</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>

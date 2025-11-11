@@ -7,6 +7,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Linq;
 
     /// <summary>
@@ -157,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             Func<string, bool> handlerWrapper = parameterValueString =>
             {
                 int parameterValue;
-                if (!int.TryParse(parameterValueString, out parameterValue))
+                if (!int.TryParse(parameterValueString, CultureInfo.InvariantCulture, out parameterValue))
                 {
                     return false;
                 }
@@ -189,7 +190,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             Func<string, bool> handlerWrapper = parameterValueString =>
             {
                 double parameterValue;
-                if (!double.TryParse(parameterValueString, out parameterValue))
+                if (!double.TryParse(parameterValueString, CultureInfo.InvariantCulture, out parameterValue))
                 {
                     return false;
                 }

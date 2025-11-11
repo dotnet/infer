@@ -4,7 +4,6 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <Configurations>Debug;DebugFull;DebugCore;Release;ReleaseFull;ReleaseCore</Configurations>
-    <Prefer32Bit>false</Prefer32Bit>
     <ErrorReport>prompt</ErrorReport>
     <OutputType>WinExe</OutputType>
     <UseWpf>true</UseWpf>

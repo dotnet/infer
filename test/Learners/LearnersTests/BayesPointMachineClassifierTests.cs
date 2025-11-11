@@ -95,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
             public override Vector GetFeatures(string instance, string instanceSource = null)
             {
-                var array = instance.Split(",".ToCharArray()).Skip(1).Select(Convert.ToDouble).ToArray();
+                var array = instance.Split(",".ToCharArray()).Skip(1).Select(t => double.Parse(t, CultureInfo.InvariantCulture)).ToArray();
                 return Vector.FromArray(array);
             }
 

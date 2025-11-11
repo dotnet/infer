@@ -3,7 +3,6 @@
 
   <PropertyGroup>
     <Configurations>Debug;DebugFull;DebugCore;Release;ReleaseFull;ReleaseCore</Configurations>
-    <Prefer32Bit>false</Prefer32Bit>
     <ErrorReport>prompt</ErrorReport>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
@@ -18,12 +17,12 @@
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net8.0-windows;net472</TargetFrameworks>
+        <TargetFrameworks>net10.0-windows;net472</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>

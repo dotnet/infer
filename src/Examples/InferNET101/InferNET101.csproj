@@ -4,7 +4,6 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
     <DefineConstants>TRACE</DefineConstants>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
   </PropertyGroup>
@@ -12,16 +11,17 @@
     <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
       <PropertyGroup>
         <TargetFramework>net472</TargetFramework>
+        <Prefer32Bit>true</Prefer32Bit>
       </PropertyGroup>
     </When>
     <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
       <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net8.0;net472</TargetFrameworks>
+        <TargetFrameworks>net10.0;net472</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>
