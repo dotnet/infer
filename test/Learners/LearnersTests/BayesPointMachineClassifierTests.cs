@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -25,7 +26,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using StandardPredictiveDistribution = System.Collections.Generic.Dictionary<string, double>;
     using BoolPredictiveDistribution = System.Collections.Generic.Dictionary<bool, double>;
     using IntPredictiveDistribution = System.Collections.Generic.Dictionary<int, double>;
-    using Microsoft.ML.Probabilistic.Models;
 
     /// <summary>
     /// Tests for the Bayes point machine classifier.

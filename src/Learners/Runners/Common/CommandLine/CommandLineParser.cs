@@ -158,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             Func<string, bool> handlerWrapper = parameterValueString =>
             {
                 int parameterValue;
-                if (!int.TryParse(parameterValueString, CultureInfo.InvariantCulture, out parameterValue))
+                if (!int.TryParse(parameterValueString, NumberStyles.Integer, CultureInfo.InvariantCulture, out parameterValue))
                 {
                     return false;
                 }
@@ -190,7 +190,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             Func<string, bool> handlerWrapper = parameterValueString =>
             {
                 double parameterValue;
-                if (!double.TryParse(parameterValueString, CultureInfo.InvariantCulture, out parameterValue))
+                if (!double.TryParse(parameterValueString, NumberStyles.Float, CultureInfo.InvariantCulture, out parameterValue))
                 {
                     return false;
                 }

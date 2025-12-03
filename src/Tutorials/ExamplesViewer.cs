@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -280,6 +281,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         /// <summary>
         /// The type to use to find examples - the assembly containing this type will be searched.
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Type ExampleType
         {
             get { return exampleType; }

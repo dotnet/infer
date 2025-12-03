@@ -15,16 +15,22 @@
         <TargetFramework>net472</TargetFramework>
       </PropertyGroup>
     </When>
-    <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
-      <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <TargetFrameworks>net10.0;net10.0-windows;net472</TargetFrameworks>
-      </PropertyGroup>
-    </Otherwise>
+	  <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
+		  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+			  <TargetFramework>net10.0-windows</TargetFramework>
+		  </PropertyGroup>
+		  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+			  <TargetFramework>net10.0</TargetFramework>
+		  </PropertyGroup>
+	  </When>
+	  <Otherwise>
+		  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+			  <TargetFramework>net10.0-windows;net472</TargetFramework>
+		  </PropertyGroup>
+		  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+			  <TargetFramework>net10.0</TargetFramework>
+		  </PropertyGroup>
+	  </Otherwise>
   </Choose>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
