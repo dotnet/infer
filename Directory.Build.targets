@@ -2,8 +2,22 @@
 	<PropertyGroup Condition="'$(OS)' != 'Windows_NT' and '$(UseWindowsForms)' == 'true'">
 		<!-- Capture the original chain (for debugging if needed) -->
 		<_OriginalBuildDependsOn>$(BuildDependsOn)</_OriginalBuildDependsOn>
-		<!-- Replace BuildDependsOn with a no-op -->
+		<_OriginalRebuildDependsOn>$(RebuildDependsOn)</_OriginalRebuildDependsOn>
+		<_OriginalPublishDependsOn>$(PublishDependsOn)</_OriginalPublishDependsOn>
+		<_OriginalPackDependsOn>$(PackDependsOn)</_OriginalPackDependsOn>
+		<_OriginalCompileDependsOn>$(CompileDependsOn)</_OriginalCompileDependsOn>
+
+		<!-- Rewire entry points to a no-op -->
 		<BuildDependsOn>_SkipBuildOnNonWindows</BuildDependsOn>
+		<RebuildDependsOn>_SkipBuildOnNonWindows</RebuildDependsOn>
+		<PublishDependsOn>_SkipBuildOnNonWindows</PublishDependsOn>
+		<PackDependsOn>_SkipBuildOnNonWindows</PackDependsOn>
+
+		<!-- Make sure nothing in the compile chain runs either -->
+		<CompileDependsOn>_SkipBuildOnNonWindows</CompileDependsOn>
+
+		<!-- Prevent test/adapters attempting to build -->
+		<IsTestProject>false</IsTestProject>
 	</PropertyGroup>
 
 	<Target Name="_SkipBuildOnNonWindows" Condition="'$(UseWindowsForms)' == 'true'">
