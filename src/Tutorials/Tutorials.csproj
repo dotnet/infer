@@ -53,7 +53,7 @@
     <ProjectReference Include="..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\Runtime\Runtime.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>

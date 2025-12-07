@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" Condition="'$(OS)' == 'Windows_NT'">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
 
-  <PropertyGroup>
+	<PropertyGroup>
     <OutputType>WinExe</OutputType>
     <Configurations>Debug;DebugFull;DebugCore;Release;ReleaseFull;ReleaseCore</Configurations>
     <ErrorReport>prompt</ErrorReport>
@@ -27,7 +27,7 @@
     </Otherwise>
   </Choose>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
@@ -69,7 +69,11 @@
     <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
   </ItemGroup>
-
+	
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+	<PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
+  </ItemGroup>
+	
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>

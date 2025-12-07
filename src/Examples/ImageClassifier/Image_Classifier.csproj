@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" Condition="'$(OS)' == 'Windows_NT'">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
 
   <PropertyGroup>

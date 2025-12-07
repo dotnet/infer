@@ -1,0 +1,13 @@
+﻿<Project>
+	<PropertyGroup Condition="'$(OS)' != 'Windows_NT' and '$(UseWindowsForms)' == 'true'">
+		<!-- Capture the original chain (for debugging if needed) -->
+		<_OriginalBuildDependsOn>$(BuildDependsOn)</_OriginalBuildDependsOn>
+		<!-- Replace BuildDependsOn with a no-op -->
+		<BuildDependsOn>_SkipBuildOnNonWindows</BuildDependsOn>
+	</PropertyGroup>
+
+	<Target Name="_SkipBuildOnNonWindows" Condition="'$(UseWindowsForms)' == 'true'">
+		<Message Importance="high"
+				 Text="Skipping project '$(MSBuildProjectName)' (non-Windows OS detected and UseWindowsForms=true)." />
+	</Target>
+</Project>

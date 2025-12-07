@@ -3,19 +3,35 @@
 
   <PropertyGroup>
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains visualization tools for exploring and analyzing models on Windows platform.</Description>
-    <TargetFrameworks>net10.0-windows;net472</TargetFrameworks>
     <AssemblyName>Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows</AssemblyName>
     <PackageId>Microsoft.ML.Probabilistic.Visualizers.Windows$(NuGetPackageIdSuffix)</PackageId>
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic.Compiler.Visualizers</RootNamespace>
-    <Configurations>Debug;Release</Configurations>
-    <MonoSupport>false</MonoSupport>
+    <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
+	<MonoSupport>false</MonoSupport>
     <UseWindowsForms>true</UseWindowsForms>
     <DefineConstants Condition=" '$(MonoSupport)' == 'false' ">$(DefineConstants);INCLUDE_TRANSFORM_BROWSER</DefineConstants>
   </PropertyGroup>
+	<Choose>
+		<When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
+			<PropertyGroup>
+				<TargetFramework>net472</TargetFramework>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
+			<PropertyGroup>
+				<TargetFramework>net10.0-windows</TargetFramework>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<TargetFrameworks>net10.0-windows;net472</TargetFrameworks>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
@@ -26,11 +42,20 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
 
-  <ItemGroup>
+	<Choose>
+  <When Condition="'$(TargetFramework)'=='net472'">
+    <ItemGroup>
     <PackageReference Include="AutomaticGraphLayout" Version="1.1.12" />
     <PackageReference Include="AutomaticGraphLayout.Drawing" Version="1.1.12" />
     <PackageReference Include="AutomaticGraphLayout.GraphViewerGDI" Version="1.1.12" />
-  </ItemGroup>
+    </ItemGroup>
+  </When>
+  <Otherwise>
+	<ItemGroup>
+      <Compile Remove="GraphViews\*.cs" />
+    </ItemGroup>
+  </Otherwise>
+	</Choose>
 
   <PropertyGroup Condition=" $(DefineConstants.Contains('INCLUDE_TRANSFORM_BROWSER'))">
     <UseWpf>true</UseWpf>

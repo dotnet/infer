@@ -2,10 +2,26 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
 
   <PropertyGroup>
-    <Configurations>Debug;Release;DebugFull;ReleaseFull</Configurations>
+	  <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net472</TargetFrameworks>
   </PropertyGroup>
+	<Choose>
+		<When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
+			<PropertyGroup>
+				<TargetFramework>net472</TargetFramework>
+			</PropertyGroup>
+		</When>
+		<When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
+			<PropertyGroup>
+				<TargetFramework>net10.0</TargetFramework>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<TargetFrameworks>net10.0;net472</TargetFrameworks>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
 
   <ItemGroup>
     <ProjectReference Include="..\Tests\Tests.csproj" />

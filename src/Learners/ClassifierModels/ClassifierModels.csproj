@@ -67,7 +67,7 @@
     <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK')) OR $(TargetFramework.Contains('windows'))">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472' OR $(TargetFramework.Contains('windows'))">
     <ProjectReference Include="..\..\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
 

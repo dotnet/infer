@@ -67,7 +67,7 @@
     <ProjectReference Include="..\..\src\Runtime\Runtime.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK'))">
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   

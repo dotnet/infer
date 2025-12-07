@@ -27,7 +27,7 @@
 	  </When>
 	  <Otherwise>
 		  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-			  <TargetFramework>net10.0-windows;net472</TargetFramework>
+			  <TargetFrameworks>net10.0-windows;net472</TargetFrameworks>
 		  </PropertyGroup>
 		  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
 			  <TargetFramework>net10.0</TargetFramework>
@@ -63,7 +63,7 @@
     <ProjectReference Include="..\TestPublic\TestPublic.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(DefineConstants.Contains('NETFRAMEWORK')) OR $(TargetFramework.Contains('windows'))">
+  <ItemGroup Condition="$(TargetFramework) == 'net472' OR $(TargetFramework.Contains('windows'))">
     <ProjectReference Include="..\..\src\Visualizers\Windows\Visualizers.Windows.csproj" />
   </ItemGroup>
 

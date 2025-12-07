@@ -20,13 +20,28 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
     {
         internal override IFactorManager FactorManager { get; } = new DefaultVisualizer().FactorManager;
 
-        internal override IDependencyGraphVisualizer DependencyGraphVisualizer { get; } = new FormsDependencyGraphVisualizer();
+        internal override IDependencyGraphVisualizer DependencyGraphVisualizer { get; }
+#if NETFRAMEWORK
+            = new FormsDependencyGraphVisualizer();
+#else
+            = new DefaultVisualizer().DependencyGraphVisualizer;
+#endif
 
         internal override ITransformerChainVisualizer TransformerChainVisualizer { get; } = new WPFTransformerChainVisualizer();
 
-        internal override ITaskGraphVisualizer TaskGraphVisualizer { get; } = new FormsTaskGraphVisualizer();
+        internal override ITaskGraphVisualizer TaskGraphVisualizer { get; }
+#if NETFRAMEWORK
+            = new FormsTaskGraphVisualizer();
+#else
+            = new DefaultVisualizer().TaskGraphVisualizer;
+#endif
 
-        internal override IFactorGraphVisualizer FactorGraphVisualizer { get; } = new FormsFactorGraphVisualizer();
+        internal override IFactorGraphVisualizer FactorGraphVisualizer { get; }
+#if NETFRAMEWORK
+            = new FormsFactorGraphVisualizer();
+#else
+            = new DefaultVisualizer().FactorGraphVisualizer;
+#endif
 
         internal override IGraphWriter GraphWriter { get; } = new DefaultVisualizer().GraphWriter;
         
@@ -103,6 +118,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             }
         }
 
+#if NETFRAMEWORK
         internal class FormsDependencyGraphVisualizer : IDependencyGraphVisualizer
         {
             public void VisualizeDependencyGraph(IndexedGraph dg, IEnumerable<EdgeStylePredicate> edgeStyles = null, Func<int, string> nodeName = null, Func<int, string> edgeName = null, string visualizationTitle = "Infer.NET Dependency Graph Viewer")
@@ -129,5 +145,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 modelView.ShowInForm(model.modelType.Name, false);
             }
         }
+#endif
     }
 }
