@@ -6,9 +6,8 @@
     <FileVersion>65534.0.0.0</FileVersion>
   </PropertyGroup>
 
-	<!-- On non-Windows, for projects that opted in, allow Windows targeting during Restore
-       to avoid NETSDK1100, but we will still skip Build later via Directory.Build.targets. -->
-	<PropertyGroup Condition="'$(OS)' != 'Windows_NT' and '$(UseWindowsForms)' == 'true'">
+	<!-- On non-Windows, allow Windows targeting during Restore to avoid NETSDK1100, but we will still skip Build later via Directory.Build.targets. -->
+	<PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
 		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 </Project>
