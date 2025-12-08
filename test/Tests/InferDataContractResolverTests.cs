@@ -119,7 +119,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             void TestCase(Type type)
             {
                 // Avoid repeating tests.
-                if (!alreadyTested.Add(type))
+                if (!alreadyTested.Add(type) || type.IsPointer)
                 {
                     return;
                 }

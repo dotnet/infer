@@ -263,3 +263,4 @@ _site/
 *.png
 /src/Examples/Crowdsourcing/Results
 /src/Examples/ImageClassifier/Images/Features.txt
+**/*.binlog
