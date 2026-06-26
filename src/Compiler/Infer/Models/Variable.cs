@@ -3115,6 +3115,20 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <summary>
+        /// Generates a bivariate copula pseudo-observation pair (u, v) whose dependence is
+        /// governed by a latent score, for the GPVINE method (Lopez-Paz et al., 2013).
+        /// </summary>
+        /// <param name="score">Latent function value f(z); mapped to Kendall's tau inside the
+        /// factor via tau = 2*Phi(score) - 1.</param>
+        /// <param name="family">The <see cref="Distributions.Copulas.CopulaFamily"/> as an int.</param>
+        /// <returns>A new variable equal to the (u, v) pair; observe it to drive inference on
+        /// <paramref name="score"/> via the copula likelihood.</returns>
+        public static Variable<Vector> BivariateCopula(Variable<double> score, int family)
+        {
+            return Variable<Vector>.Factor(Factor.BivariateCopula, score, family);
+        }
+
+        /// <summary>
         /// Returns a boolean random variable indicating if the supplied double random variable is positive.
         /// </summary>
         /// <param name="x">The random variable to test for positivity</param>
