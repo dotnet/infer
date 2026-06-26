@@ -875,6 +875,39 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <summary>
+        /// Generates a pair of copula pseudo-observations (u, v) whose dependence is
+        /// governed by a latent score, for the GPVINE method (Lopez-Paz et al., 2013).
+        /// </summary>
+        /// <param name="score">Latent function value f(z); maps to Kendall's tau via the
+        /// paper's link tau = g(score) = 2*Phi(score) - 1 (Sec. 3).</param>
+        /// <param name="family">The <see cref="Distributions.Copulas.CopulaFamily"/> as an int.</param>
+        /// <returns>A length-2 vector (u, v) of pseudo-observations in (0, 1).</returns>
+        /// <remarks>
+        /// This generative form is used only for sampling and testing. Expectation
+        /// Propagation never calls it; instead it invokes the message operator
+        /// <c>BivariateCopulaOp</c>, which injects c(u, v | tau = g(score)) as a
+        /// non-conjugate likelihood term on the Gaussian latent <paramref name="score"/>.
+        /// </remarks>
+        [Stochastic]
+        [ParameterNames("pair", "score", "family")]
+        public static Vector BivariateCopula(double score, int family)
+        {
+            double tau = 2.0 * MMath.NormalCdf(score) - 1.0;
+            switch ((Distributions.Copulas.CopulaFamily)family)
+            {
+                case Distributions.Copulas.CopulaFamily.Gaussian:
+                    // Sample (a, b) from a bivariate standard normal with correlation theta,
+                    // then map back to the unit square via the standard normal CDF.
+                    double theta = new Distributions.Copulas.GaussianCopula().TauToTheta(tau);
+                    double a = Rand.Normal();
+                    double b = theta * a + System.Math.Sqrt(1.0 - theta * theta) * Rand.Normal();
+                    return Vector.FromArray(MMath.NormalCdf(a), MMath.NormalCdf(b));
+                default:
+                    throw new NotImplementedException($"Copula family '{(Distributions.Copulas.CopulaFamily)family}' is not yet implemented.");
+            }
+        }
+
+        /// <summary>
         /// Rotate a 2D vector about the origin
         /// </summary>
         /// <param name="x">First coordinate of vector</param>
