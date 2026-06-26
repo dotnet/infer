@@ -7,6 +7,7 @@ using Xunit;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Copulas;
+using Microsoft.ML.Probabilistic.Distributions.Copulas.Vine;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
 using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Math;
@@ -96,6 +97,51 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine($"logEvidence={logEvidence:g4} corr={corr:g4} rmse={rmse:g4}");
             Assert.True(corr > 0.8, $"correlation between recovered and true tau too low: {corr}");
             Assert.True(rmse < 0.25, $"RMSE between recovered and true tau too high: {rmse}");
+        }
+
+        /// <summary>
+        /// The paper's central result (Sec. 4, Fig. 3): when the conditional copula genuinely
+        /// depends on its conditioning variable, GPVINE (conditional deeper trees) achieves a
+        /// higher held-out log-likelihood than SVINE (the simplifying-assumption baseline).
+        /// </summary>
+        [Fact]
+        [Trait("Category", "Performance")]
+        public void GPVine_BeatsSVine_WhenConditionalDependenceVaries()
+        {
+            double[][] train = ConditionalDependenceData(seed: 5, n: 300);
+            double[][] test = ConditionalDependenceData(seed: 6, n: 300);
+
+            // SVINE: deeper trees use the unconditional simplifying assumption.
+            double llSvine = new RegularVine().Fit(train, nTrees: 2).LogLikelihood(test);
+
+            // GPVINE: the T_2 conditional copula is fitted with a sparse GP + EP.
+            var fitter = new GaussianProcessCopulaFitter { NumInducing = 15, NumberOfIterations = 15 };
+            double llGpvine = new RegularVine().Fit(train, nTrees: 2, fitter).LogLikelihood(test);
+
+            Console.WriteLine($"SVINE test ll={llSvine:g5}  GPVINE test ll={llGpvine:g5}");
+            Assert.False(double.IsNaN(llGpvine));
+            Assert.True(llGpvine > llSvine + 5.0,
+                $"GPVINE did not beat SVINE on held-out data: gpvine={llGpvine}, svine={llSvine}");
+        }
+
+        // Three variables (X, Y, Z): X and Y are each marginally dependent on Z (so T_1 selects
+        // the hub edges X-Z, Y-Z), while the copula of (X, Y) | Z has a Kendall's tau that varies
+        // with Z -- exactly the structure the simplifying assumption fails to capture.
+        private static double[][] ConditionalDependenceData(int seed, int n)
+        {
+            Rand.Restart(seed);
+            double[][] x = new double[n][];
+            for (int i = 0; i < n; i++)
+            {
+                double z = Rand.Normal();
+                double rho = 0.9 * System.Math.Sin(1.5 * z);            // conditional correlation g(z)
+                double ex = Rand.Normal();
+                double ey = rho * ex + System.Math.Sqrt(1 - rho * rho) * Rand.Normal();
+                double xx = 0.7 * z + 0.6 * ex;                          // marginal dependence on Z ...
+                double yy = 0.7 * z + 0.6 * ey;                          // ... gives the hub structure
+                x[i] = new[] { xx, yy, z };
+            }
+            return x;
         }
 
         private static double TrueTau(double z) => 0.6 * System.Math.Sin(z);
