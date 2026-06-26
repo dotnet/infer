@@ -90,11 +90,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x[i] = row;
             }
 
-            var vine = new RegularVine(CopulaFamily.Gaussian).Fit(x);
+            var vine = new RegularVine(CopulaFamily.Gaussian).Fit(x, nTrees: 1);
             VineTree t1 = vine.Trees[0];
             Assert.Equal(3, t1.Edges.Count);
 
-            var selected = new HashSet<(int, int)>(t1.Edges.Select(e => e.Conditioned));
+            var selected = new HashSet<(int, int)>(t1.Edges.Select(Conditioned));
             Assert.Equal(new HashSet<(int, int)> { (0, 1), (1, 2), (2, 3) }, selected);
 
             // For a Gaussian copula, tau = (2/pi) arcsin(rho).
@@ -123,14 +123,91 @@ namespace Microsoft.ML.Probabilistic.Tests
                 independent[i] = new[] { Rand.Normal(), Rand.Normal(), Rand.Normal() };
             }
 
-            double llDep = new RegularVine().Fit(dependent).LogLikelihood(dependent);
-            double llIndep = new RegularVine().Fit(independent).LogLikelihood(independent);
+            double llDep = new RegularVine().Fit(dependent, nTrees: 1).LogLikelihood(dependent);
+            double llIndep = new RegularVine().Fit(independent, nTrees: 1).LogLikelihood(independent);
 
             // Dependence is real -> the copula adds substantial likelihood; independence data
             // fits tau ~ 0 -> near-zero contribution.
             Assert.True(llDep > 100.0, $"dependent log-lik unexpectedly low: {llDep}");
             Assert.True(llDep > llIndep + 100.0, $"llDep={llDep} not clearly above llIndep={llIndep}");
             Assert.True(System.Math.Abs(llIndep) < 50.0, $"independent log-lik unexpectedly large: {llIndep}");
+        }
+
+        [Fact]
+        public void DeeperTrees_HaveValidVineStructure()
+        {
+            // Equicorrelated Gaussian: every pair is dependent, so all d-1 trees are non-trivial.
+            double[][] x = Equicorrelated(seed: 3, n: 1500, d: 4, rho: 0.6);
+            var vine = new RegularVine().Fit(x); // all d-1 trees, SVINE (no fitter)
+
+            int d = 4;
+            Assert.Equal(d - 1, vine.Trees.Count);
+
+            int totalEdges = 0;
+            for (int level = 1; level <= vine.Trees.Count; level++)
+            {
+                VineTree tree = vine.Trees[level - 1];
+                Assert.Equal(level, tree.Level);
+                // Tree T_level has d - level edges.
+                Assert.Equal(d - level, tree.Edges.Count);
+                foreach (VineEdge e in tree.Edges)
+                {
+                    Assert.Equal(level - 1, e.Conditioning.Length); // |D(e)| grows by one per level
+                    Assert.Equal(level + 1, e.N().Length);          // |N(e)| = |C| + |D| = 2 + (level-1)
+                    Assert.NotEqual(e.Left, e.Right);
+                    if (level >= 2)
+                    {
+                        // Proximity: the two joined previous-tree edges share a node.
+                        VineEdge a = vine.Trees[level - 2].Edges[e.Endpoints.A];
+                        VineEdge b = vine.Trees[level - 2].Edges[e.Endpoints.B];
+                        Assert.True(ShareEndpoint(a, b), $"edge {e.Label} joins non-adjacent edges");
+                    }
+                }
+                totalEdges += tree.Edges.Count;
+            }
+            Assert.Equal(d * (d - 1) / 2, totalEdges); // full vine has d(d-1)/2 edges
+        }
+
+        [Fact]
+        public void SVine_HeldOutLogLikelihood_IncreasesWithTrees()
+        {
+            // Gaussian data: the simplifying assumption is exactly correct, so each deeper tree
+            // captures real (constant) conditional dependence and raises the held-out likelihood.
+            double[][] train = Equicorrelated(seed: 21, n: 2000, d: 4, rho: 0.6);
+            double[][] test = Equicorrelated(seed: 22, n: 2000, d: 4, rho: 0.6);
+
+            double ll1 = new RegularVine().Fit(train, nTrees: 1).LogLikelihood(test);
+            double ll2 = new RegularVine().Fit(train, nTrees: 2).LogLikelihood(test);
+            double ll3 = new RegularVine().Fit(train, nTrees: 3).LogLikelihood(test);
+
+            Assert.True(ll2 > ll1 + 20.0, $"T_2 did not improve held-out log-lik: ll1={ll1}, ll2={ll2}");
+            Assert.True(ll3 > ll2 + 20.0, $"T_3 did not improve held-out log-lik: ll2={ll2}, ll3={ll3}");
+        }
+
+        // --- helpers ---------------------------------------------------------------------------
+
+        private static (int, int) Conditioned(VineEdge e) =>
+            (System.Math.Min(e.Left, e.Right), System.Math.Max(e.Left, e.Right));
+
+        private static bool ShareEndpoint(VineEdge a, VineEdge b) =>
+            a.Endpoints.A == b.Endpoints.A || a.Endpoints.A == b.Endpoints.B ||
+            a.Endpoints.B == b.Endpoints.A || a.Endpoints.B == b.Endpoints.B;
+
+        // Equicorrelated Gaussian via a shared latent factor: corr(x_i, x_j) = rho for i != j.
+        private static double[][] Equicorrelated(int seed, int n, int d, double rho)
+        {
+            Rand.Restart(seed);
+            double sr = System.Math.Sqrt(rho), se = System.Math.Sqrt(1 - rho);
+            double[][] x = new double[n][];
+            for (int i = 0; i < n; i++)
+            {
+                double w = Rand.Normal();
+                double[] row = new double[d];
+                for (int k = 0; k < d; k++)
+                    row[k] = sr * w + se * Rand.Normal();
+                x[i] = row;
+            }
+            return x;
         }
     }
 }

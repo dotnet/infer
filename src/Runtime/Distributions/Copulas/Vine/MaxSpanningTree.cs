@@ -15,10 +15,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
     public static class MaxSpanningTree
     {
         /// <summary>
-        /// Returns the <c>m - 1</c> edges <c>(i, j)</c> of the maximum spanning tree of a
-        /// complete graph with the given symmetric, non-negative weight matrix.
+        /// Returns the edges <c>(i, j)</c> of the maximum spanning tree (or forest) of a graph
+        /// with the given symmetric weight matrix.
         /// </summary>
-        /// <param name="weights">Symmetric <c>m x m</c> weight matrix; the diagonal is ignored.</param>
+        /// <param name="weights">
+        /// Symmetric <c>m x m</c> weight matrix; the diagonal is ignored. Use
+        /// <see cref="double.NegativeInfinity"/> to mark a disallowed pair (e.g. for the vine
+        /// proximity condition); if the allowed edges do not connect all nodes the result is a
+        /// spanning forest with fewer than <c>m - 1</c> edges.
+        /// </param>
         /// <returns>The selected edges, each as a pair with <c>i &lt; j</c>.</returns>
         public static List<(int I, int J)> Prim(double[,] weights)
         {
@@ -50,7 +55,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                     }
                 }
 
-                // bestJ is always assigned for a connected complete graph (m > 1).
+                // No allowed edge crosses the cut: the graph is disconnected under the
+                // proximity constraint, so return the spanning forest found so far.
+                if (bestJ < 0 || double.IsNegativeInfinity(bestW))
+                    break;
                 inTree[bestJ] = true;
                 count++;
                 edges.Add(bestI < bestJ ? (bestI, bestJ) : (bestJ, bestI));
