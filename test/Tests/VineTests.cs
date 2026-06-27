@@ -205,7 +205,78 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(llClayton > llGaussian, $"true family did not win: clayton={llClayton}, gaussian={llGaussian}");
         }
 
+        [Fact]
+        public void Sample_RequiresCanonicalStructure()
+        {
+            var vine = new RegularVine().Fit(Equicorrelated(seed: 1, n: 500, d: 3, rho: 0.6)); // Regular
+            Assert.Throws<NotSupportedException>(() => vine.Sample(10));
+        }
+
+        [Fact]
+        public void CVine_Sample_ReproducesPairwiseDependenceAndMarginals()
+        {
+            double[][] x = Equicorrelated(seed: 50, n: 2000, d: 3, rho: 0.6);
+            var vine = new RegularVine(CopulaFamily.Gaussian).Fit(x, structure: VineStructure.Canonical);
+            double[][] s = vine.Sample(4000);
+
+            Assert.Equal(4000, s.Length);
+            Assert.Equal(3, s[0].Length);
+
+            // The sampled joint reproduces the pairwise Kendall's tau of the training data ...
+            for (int i = 0; i < 3; i++)
+                for (int j = i + 1; j < 3; j++)
+                {
+                    double tauData = KendallTau.Compute(Col(x, i), Col(x, j));
+                    double tauSamp = KendallTau.Compute(Col(s, i), Col(s, j));
+                    Assert.True(System.Math.Abs(tauData - tauSamp) < 0.05,
+                        $"pair ({i},{j}): data tau={tauData}, sample tau={tauSamp}");
+                }
+
+            // ... and the empirical marginals (data-scale draws via the inverse PIT).
+            for (int j = 0; j < 3; j++)
+                Assert.True(System.Math.Abs(Mean(Col(s, j)) - Mean(Col(x, j))) < 0.1,
+                    $"marginal {j} mean mismatch");
+        }
+
+        [Fact]
+        public void CVine_Sample_RoundTripRecoversTau()
+        {
+            double[][] x = Equicorrelated(seed: 71, n: 2000, d: 3, rho: 0.6);
+            var v1 = new RegularVine(CopulaFamily.Gaussian).Fit(x, structure: VineStructure.Canonical);
+            double[][] s = v1.Sample(4000);
+            var v2 = new RegularVine(CopulaFamily.Gaussian).Fit(s, structure: VineStructure.Canonical);
+
+            // First-tree dependences recovered after sample -> refit.
+            double[] t1 = v1.Trees[0].Edges.Select(e => e.Tau).OrderBy(t => t).ToArray();
+            double[] t2 = v2.Trees[0].Edges.Select(e => e.Tau).OrderBy(t => t).ToArray();
+            for (int i = 0; i < t1.Length; i++)
+                Assert.True(System.Math.Abs(t1[i] - t2[i]) < 0.05, $"tau[{i}]: {t1[i]} vs {t2[i]}");
+        }
+
+        [Fact]
+        public void CVine_Sample_Clayton_ReproducesDependence()
+        {
+            double[][] x = ClaytonSample(seed: 60, n: 3000, tau: 0.5);
+            var vine = new RegularVine(CopulaFamily.Clayton).Fit(x, structure: VineStructure.Canonical);
+            double[][] s = vine.Sample(4000);
+            double tauData = KendallTau.Compute(Col(x, 0), Col(x, 1));
+            double tauSamp = KendallTau.Compute(Col(s, 0), Col(s, 1));
+            Assert.True(System.Math.Abs(tauData - tauSamp) < 0.05, $"data tau={tauData}, sample tau={tauSamp}");
+        }
+
         // --- helpers ---------------------------------------------------------------------------
+
+        private static double[] Col(double[][] m, int j)
+        {
+            double[] c = new double[m.Length];
+            for (int i = 0; i < m.Length; i++) c[i] = m[i][j];
+            return c;
+        }
+
+        private static double Mean(double[] a)
+        {
+            double s = 0; foreach (double v in a) s += v; return s / a.Length;
+        }
 
         // Bivariate Clayton samples via conditional inversion; returned as raw (n x 2) data.
         private static double[][] ClaytonSample(int seed, int n, double tau)

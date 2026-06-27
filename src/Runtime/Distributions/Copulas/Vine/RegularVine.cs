@@ -5,9 +5,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Rand = Microsoft.ML.Probabilistic.Math.Rand;
 
 namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
 {
+    /// <summary>The tree-selection strategy for a <see cref="RegularVine"/>.</summary>
+    public enum VineStructure
+    {
+        /// <summary>Maximum spanning tree on |tau| at each level (a general R-vine).</summary>
+        Regular,
+
+        /// <summary>
+        /// A canonical vine (C-vine): each tree is a star centred on the variable with the
+        /// strongest summed dependence. Required by <see cref="RegularVine.Sample"/>.
+        /// </summary>
+        Canonical,
+    }
+
     /// <summary>
     /// A regular vine (R-vine) copula model (Lopez-Paz et al., 2013, Sec. 2): a nested sequence
     /// of trees that factorizes a d-dimensional copula density into a product of bivariate
@@ -37,6 +51,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         /// <summary>The trees of the vine, in order, populated by <see cref="Fit"/>.</summary>
         public List<VineTree> Trees { get; } = new List<VineTree>();
 
+        /// <summary>
+        /// The empirical marginals captured at <see cref="Fit"/> time, one per variable, used to
+        /// map generated pseudo-observations back to the data scale.
+        /// </summary>
+        public EmpiricalMarginal[] Marginals { get; private set; }
+
+        /// <summary>The tree-selection strategy used by the most recent <see cref="Fit"/>.</summary>
+        public VineStructure Structure { get; private set; }
+
         /// <summary>Creates a regular vine that uses the given bivariate copula family.</summary>
         public RegularVine(CopulaFamily family = CopulaFamily.Gaussian)
         {
@@ -60,8 +83,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         /// Conditional-copula fitter for deeper trees (the GP fit). If null, deeper trees use the
         /// unconditional simplifying assumption (SVINE).
         /// </param>
+        /// <param name="structure">
+        /// Tree-selection strategy. <see cref="VineStructure.Regular"/> (default) builds a maximum
+        /// spanning tree per level; <see cref="VineStructure.Canonical"/> builds a C-vine and is
+        /// required by <see cref="Sample"/>.
+        /// </param>
         /// <returns>This vine, fitted.</returns>
-        public RegularVine Fit(double[][] x, int nTrees = 0, IConditionalCopulaFitter fitter = null)
+        public RegularVine Fit(double[][] x, int nTrees = 0, IConditionalCopulaFitter fitter = null,
+            VineStructure structure = VineStructure.Regular)
         {
             double[][] u = Pit.Transform(x);
             int n = u.Length;
@@ -69,15 +98,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
             int d = u[0].Length;
             int maxTrees = d - 1;
             if (nTrees <= 0 || nTrees > maxTrees) nTrees = maxTrees;
+            Structure = structure;
+
+            // Capture the marginals so generated samples can be returned on the data scale.
+            Marginals = new EmpiricalMarginal[d];
+            for (int j = 0; j < d; j++)
+                Marginals[j] = new EmpiricalMarginal(Column(x, j));
 
             Trees.Clear();
-            VineTree t1 = BuildFirstTree(u);
+            VineTree t1 = BuildFirstTree(u, structure);
             FitTree(t1, u, fitter);
             Trees.Add(t1);
 
             for (int level = 2; level <= nTrees; level++)
             {
-                VineTree next = BuildNextTree(Trees[level - 2], u, level);
+                VineTree next = BuildNextTree(Trees[level - 2], u, level, structure);
                 if (next.Edges.Count == 0) break;
                 FitTree(next, u, fitter);
                 Trees.Add(next);
@@ -90,7 +125,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         /// tree on the absolute-Kendall's-tau weight matrix, with each edge's tau set to the
         /// empirical value.
         /// </summary>
-        public VineTree BuildFirstTree(double[][] u)
+        public VineTree BuildFirstTree(double[][] u) => BuildFirstTree(u, VineStructure.Regular);
+
+        /// <summary>Builds the first tree using the given structure strategy.</summary>
+        public VineTree BuildFirstTree(double[][] u, VineStructure structure)
         {
             if (u == null) throw new ArgumentNullException(nameof(u));
             int n = u.Length;
@@ -114,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
             }
 
             var tree = new VineTree(1);
-            foreach (var (i, j) in MaxSpanningTree.Prim(weights))
+            foreach (var (i, j) in SelectEdges(weights, structure))
             {
                 tree.Edges.Add(new VineEdge
                 {
@@ -138,7 +176,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         /// observations are the previous edges' h-functions; the tree is the maximum spanning
         /// tree on the <c>|tau|</c> of those candidate series.
         /// </summary>
-        public VineTree BuildNextTree(VineTree prev, double[][] u, int level)
+        public VineTree BuildNextTree(VineTree prev, double[][] u, int level) =>
+            BuildNextTree(prev, u, level, VineStructure.Regular);
+
+        /// <summary>Builds tree <c>T_level</c> using the given structure strategy.</summary>
+        public VineTree BuildNextTree(VineTree prev, double[][] u, int level, VineStructure structure)
         {
             int m = prev.Edges.Count;
             var tree = new VineTree(level);
@@ -161,12 +203,50 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                 }
             }
 
-            foreach (var (a, b) in MaxSpanningTree.Prim(weights))
+            foreach (var (a, b) in SelectEdges(weights, structure))
             {
                 if (candidates.TryGetValue((a, b), out VineEdge edge))
                     tree.Edges.Add(edge);
             }
             return tree;
+        }
+
+        /// <summary>
+        /// Selects the edges of a tree from a symmetric weight matrix: a maximum spanning tree
+        /// for <see cref="VineStructure.Regular"/>, or a maximum-weight star (all nodes joined to
+        /// a single centre) for <see cref="VineStructure.Canonical"/>.
+        /// </summary>
+        private static List<(int, int)> SelectEdges(double[,] weights, VineStructure structure)
+        {
+            if (structure == VineStructure.Regular)
+                return MaxSpanningTree.Prim(weights);
+
+            int m = weights.GetLength(0);
+            var edges = new List<(int, int)>();
+            if (m <= 1) return edges;
+
+            // Centre = the node whose finite weights to the others sum to the most.
+            int center = -1;
+            double bestSum = double.NegativeInfinity;
+            for (int c = 0; c < m; c++)
+            {
+                double sum = 0.0;
+                bool any = false;
+                for (int j = 0; j < m; j++)
+                {
+                    if (j == c || double.IsNegativeInfinity(weights[c, j])) continue;
+                    sum += weights[c, j];
+                    any = true;
+                }
+                if (any && sum > bestSum) { bestSum = sum; center = c; }
+            }
+            if (center < 0) return edges;
+            for (int j = 0; j < m; j++)
+            {
+                if (j == center || double.IsNegativeInfinity(weights[center, j])) continue;
+                edges.Add(center < j ? (center, j) : (j, center));
+            }
+            return edges;
         }
 
         /// <summary>
@@ -218,6 +298,133 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                 prevH = thisH;
             }
             return total;
+        }
+
+        /// <summary>
+        /// Draws <paramref name="n"/> samples from the fitted vine via the inverse-Rosenblatt
+        /// transform, returned on the data scale (using the empirical marginals). Requires the
+        /// vine to have been fitted with <see cref="VineStructure.Canonical"/>.
+        /// </summary>
+        /// <param name="n">Number of joint samples to draw.</param>
+        /// <returns>An [n][d] array of samples in the original data units.</returns>
+        public double[][] Sample(int n)
+        {
+            if (Trees.Count == 0) throw new InvalidOperationException("Call Fit() before Sample().");
+            if (Structure != VineStructure.Canonical)
+                throw new NotSupportedException(
+                    "Sampling requires a canonical (C-vine) structure. Refit with structure: VineStructure.Canonical.");
+
+            int d = Marginals.Length;
+            int[] order = BuildCanonicalOrder(d);
+            int[] posOf = new int[d];
+            for (int p = 0; p < d; p++) posOf[order[p]] = p;
+            var lookup = BuildEdgeLookup();
+
+            double[][] result = new double[n][];
+            for (int s = 0; s < n; s++)
+                result[s] = SampleOne(d, order, posOf, lookup);
+            return result;
+        }
+
+        // One C-vine draw (Aas et al. 2009, Algorithm 2), returned on the data scale.
+        private double[] SampleOne(int d, int[] order, int[] posOf, Dictionary<string, VineEdge> lookup)
+        {
+            double[] x = new double[d];      // pseudo-observations by position in the C-vine order
+            double[][] v = new double[d][];
+            for (int i = 0; i < d; i++) v[i] = new double[d];
+
+            x[0] = Rand.Double();
+            v[0][0] = x[0];
+            for (int i = 1; i < d; i++)
+            {
+                v[i][0] = Rand.Double();
+                for (int k = i - 1; k >= 0; k--)
+                {
+                    double tau = TauForCell(k, i, order, posOf, x, lookup);
+                    v[i][0] = copula.InverseHFunction(v[i][0], v[k][k], tau, 1);
+                }
+                x[i] = v[i][0];
+                if (i == d - 1) break;
+                for (int k = 0; k < i; k++)
+                {
+                    double tau = TauForCell(k, i, order, posOf, x, lookup);
+                    v[i][k + 1] = copula.HFunction(v[i][k], v[k][k], tau, 1);
+                }
+            }
+
+            // Map positions back to variable ids and through the empirical marginals.
+            double[] row = new double[d];
+            for (int p = 0; p < d; p++)
+                row[order[p]] = Marginals[order[p]].Quantile(x[p]);
+            return row;
+        }
+
+        // Kendall's tau for the C-vine cell coupling roots order[k] and order[i], conditioned on
+        // order[0..k-1]. Missing edges (truncated vine) are independence (tau = 0).
+        private double TauForCell(int k, int i, int[] order, int[] posOf, double[] x, Dictionary<string, VineEdge> lookup)
+        {
+            int[] condIds = new int[k];
+            for (int p = 0; p < k; p++) condIds[p] = order[p];
+            Array.Sort(condIds);
+            if (!lookup.TryGetValue(EdgeKey(order[k], order[i], condIds), out VineEdge edge))
+                return 0.0;
+            if (edge.Posterior == null) return edge.Tau;
+            double[] z = new double[condIds.Length];
+            for (int p = 0; p < condIds.Length; p++) z[p] = x[posOf[condIds[p]]];
+            return edge.Posterior.SampleTau(z); // posterior-predictive: propagate GP uncertainty
+        }
+
+        private Dictionary<string, VineEdge> BuildEdgeLookup()
+        {
+            var map = new Dictionary<string, VineEdge>();
+            foreach (VineTree tree in Trees)
+                foreach (VineEdge e in tree.Edges)
+                    map[EdgeKey(e.Left, e.Right, e.Conditioning)] = e;
+            return map;
+        }
+
+        private static string EdgeKey(int a, int b, int[] conditioning)
+        {
+            int lo = System.Math.Min(a, b), hi = System.Math.Max(a, b);
+            return $"{lo},{hi}|{string.Join(",", conditioning)}";
+        }
+
+        // The C-vine diagonal order: the centre (shared conditioned variable) of each tree, then
+        // any remaining variables (roots of unbuilt/independence trees plus the last variable).
+        private int[] BuildCanonicalOrder(int d)
+        {
+            int[] order = new int[d];
+            bool[] assigned = new bool[d];
+            int filled = 0;
+            foreach (VineTree tree in Trees)
+            {
+                int center = CanonicalCenter(tree, assigned);
+                order[filled++] = center;
+                assigned[center] = true;
+            }
+            for (int v = 0; v < d && filled < d; v++)
+                if (!assigned[v]) { order[filled++] = v; assigned[v] = true; }
+            return order;
+        }
+
+        // The variable common to every edge's conditioned set in a star tree (smallest unassigned
+        // such variable when the tree has a single edge).
+        private static int CanonicalCenter(VineTree tree, bool[] assigned)
+        {
+            HashSet<int> common = null;
+            foreach (VineEdge e in tree.Edges)
+            {
+                var conditioned = new HashSet<int> { e.Left, e.Right };
+                if (common == null) common = conditioned;
+                else common.IntersectWith(conditioned);
+            }
+            if (common == null || common.Count == 0)
+                throw new NotSupportedException("Vine is not canonical (no shared centre); sampling needs VineStructure.Canonical.");
+            int best = -1;
+            foreach (int c in common)
+                if (!assigned[c] && (best < 0 || c < best)) best = c;
+            if (best < 0) best = common.Min(); // all assigned (shouldn't happen for a canonical fit)
+            return best;
         }
 
         // --- internals -----------------------------------------------------------------------

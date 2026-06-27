@@ -81,6 +81,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             return System.Math.Exp(-w + lnLeading + (1.0 / theta - 1.0) * lnA) / denom;
         }
 
+        /// <inheritdoc/>
+        public double InverseHFunction(double w, double x, double tau, int given)
+        {
+            // No closed form: the conditional CDF is monotone increasing in the unknown variable,
+            // so solve HFunction(unknown | x) = w by bisection on (0, 1).
+            double lo = 1e-12, hi = 1.0 - 1e-12;
+            for (int it = 0; it < 60; it++)
+            {
+                double mid = 0.5 * (lo + hi);
+                double h = (given == 1) ? HFunction(mid, x, tau, 1) : HFunction(x, mid, tau, 0);
+                if (h < w) lo = mid; else hi = mid;
+            }
+            return 0.5 * (lo + hi);
+        }
+
         private static double ClampTau(double tau)
         {
             if (tau < 0.0) return 0.0;

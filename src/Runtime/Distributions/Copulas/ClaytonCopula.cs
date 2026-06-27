@@ -76,6 +76,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             return leading * sPow;
         }
 
+        /// <inheritdoc/>
+        public double InverseHFunction(double w, double x, double tau, int given)
+        {
+            // Inverting w = x^(-theta-1) (unknown^-theta + x^-theta - 1)^(-1/theta-1) gives
+            // unknown = ( (w x^(theta+1))^(-theta/(theta+1)) - x^-theta + 1 )^(-1/theta).
+            // Clayton is exchangeable, so the formula is the same for given 0 and 1.
+            double theta = TauToTheta(tau);
+            if (theta < IndependenceTheta) return w; // independence: P(u|v) = u
+            double s = System.Math.Pow(w * System.Math.Pow(x, theta + 1.0), -theta / (theta + 1.0));
+            double inner = s - System.Math.Pow(x, -theta) + 1.0;
+            return System.Math.Pow(inner, -1.0 / theta);
+        }
+
         private static double ClampTau(double tau)
         {
             if (tau < TauEpsilon) return TauEpsilon;

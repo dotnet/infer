@@ -220,6 +220,37 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Theory]
+        [InlineData(CopulaFamily.Gaussian)]
+        [InlineData(CopulaFamily.Clayton)]
+        [InlineData(CopulaFamily.Gumbel)]
+        public void InverseHFunction_RoundTrips(CopulaFamily family)
+        {
+            // InverseHFunction must invert HFunction: recover the unknown variable from its
+            // conditional-CDF level. This is the core of inverse-Rosenblatt sampling.
+            IBivariateCopula c = CopulaFactory.Create(family);
+            foreach (double tau in new[] { 0.2, 0.5, 0.75 })
+            {
+                foreach (double u in new[] { 0.2, 0.5, 0.8 })
+                {
+                    foreach (double v in new[] { 0.3, 0.6, 0.85 })
+                    {
+                        // given = 1: unknown is u, known is v.
+                        double w1 = c.HFunction(u, v, tau, 1);
+                        double uBack = c.InverseHFunction(w1, v, tau, 1);
+                        Assert.True(System.Math.Abs(uBack - u) < 1e-6,
+                            $"{family} given=1: u={u}, recovered={uBack}");
+
+                        // given = 0: unknown is v, known is u.
+                        double w0 = c.HFunction(u, v, tau, 0);
+                        double vBack = c.InverseHFunction(w0, u, tau, 0);
+                        Assert.True(System.Math.Abs(vBack - v) < 1e-6,
+                            $"{family} given=0: v={v}, recovered={vBack}");
+                    }
+                }
+            }
+        }
+
         // Gaussian copula CDF C(u,v|theta) via the bivariate normal CDF.
         private static double Cdf(double u, double v, double theta)
         {

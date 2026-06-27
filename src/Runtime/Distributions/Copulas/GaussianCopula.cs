@@ -64,6 +64,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             return MMath.NormalCdf(z);
         }
 
+        /// <inheritdoc/>
+        public double InverseHFunction(double w, double x, double tau, int given)
+        {
+            // P(u|v) = Phi((Phi^{-1}(u) - theta Phi^{-1}(v))/sqrt(1-theta^2)) = w
+            // => Phi^{-1}(u) = theta Phi^{-1}(x) + sqrt(1-theta^2) Phi^{-1}(w).
+            // The Gaussian copula is exchangeable, so given 0 and 1 share this form.
+            double theta = TauToTheta(tau);
+            double a = MMath.NormalCdfInv(x);
+            double score = theta * a + System.Math.Sqrt(1.0 - theta * theta) * MMath.NormalCdfInv(w);
+            return MMath.NormalCdf(score);
+        }
+
         private static double ClampTheta(double theta)
         {
             if (theta < -1.0 + ThetaEpsilon) return -1.0 + ThetaEpsilon;

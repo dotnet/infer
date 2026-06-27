@@ -15,6 +15,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
     {
         /// <summary>Predicted Kendall's tau at a single conditioning vector <paramref name="z"/>.</summary>
         double TauAt(double[] z);
+
+        /// <summary>
+        /// A Kendall's tau drawn from the posterior at <paramref name="z"/> (a posterior-predictive
+        /// draw that reflects the latent function's uncertainty), rather than the posterior mean.
+        /// </summary>
+        double SampleTau(double[] z);
     }
 
     /// <summary>
@@ -61,6 +67,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         {
             double meanF = gp.Marginal(Vector.FromArray(z)).GetMean();
             return 2.0 * MMath.NormalCdf(meanF) - 1.0;
+        }
+
+        /// <inheritdoc/>
+        public double SampleTau(double[] z)
+        {
+            double f = gp.Marginal(Vector.FromArray(z)).Sample();
+            return 2.0 * MMath.NormalCdf(f) - 1.0;
         }
     }
 }

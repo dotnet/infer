@@ -165,6 +165,43 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(corr > 0.6, $"recovered Clayton tau(z) does not track the truth: corr={corr}");
         }
 
+        /// <summary>
+        /// Posterior-predictive sampling: a canonical GPVINE fitted with the sparse-GP conditional
+        /// copula generates joint data that reproduces the (strong) hub dependence, with draws
+        /// reflecting the GP posterior.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "Performance")]
+        public void GPVine_Sample_PosteriorPredictive_ReproducesHubDependence()
+        {
+            double[][] train = ConditionalDependenceData(seed: 8, n: 250);
+            var fitter = new GaussianProcessCopulaFitter { NumInducing = 15, NumberOfIterations = 15 };
+            var vine = new RegularVine().Fit(train, nTrees: 2, fitter, VineStructure.Canonical);
+
+            double[][] s = vine.Sample(1000);
+            Assert.Equal(1000, s.Length);
+            foreach (double[] row in s)
+                foreach (double val in row)
+                    Assert.False(double.IsNaN(val) || double.IsInfinity(val));
+
+            // Variables 0 and 1 (X, Y) each depend on variable 2 (Z): the hub edges are strong,
+            // and posterior-predictive draws should reproduce them.
+            foreach (int hub in new[] { 0, 1 })
+            {
+                double tauData = KendallTau.Compute(ColG(train, hub), ColG(train, 2));
+                double tauSamp = KendallTau.Compute(ColG(s, hub), ColG(s, 2));
+                Assert.True(System.Math.Abs(tauData - tauSamp) < 0.1,
+                    $"hub ({hub},2): data tau={tauData}, sample tau={tauSamp}");
+            }
+        }
+
+        private static double[] ColG(double[][] m, int j)
+        {
+            double[] c = new double[m.Length];
+            for (int i = 0; i < m.Length; i++) c[i] = m[i][j];
+            return c;
+        }
+
         // Three variables (X, Y, Z): X and Y are each marginally dependent on Z (so T_1 selects
         // the hub edges X-Z, Y-Z), while the copula of (X, Y) | Z has a Kendall's tau that varies
         // with Z -- exactly the structure the simplifying assumption fails to capture.

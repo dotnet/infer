@@ -66,5 +66,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         /// </param>
         /// <returns>A conditional probability in (0, 1).</returns>
         double HFunction(double u, double v, double tau, int given);
+
+        /// <summary>
+        /// The inverse of <see cref="HFunction"/>: given a uniform <paramref name="w"/> and the
+        /// known conditioning value <paramref name="x"/>, returns the variable value that maps to
+        /// <paramref name="w"/> under the conditional CDF. This is the building block of the
+        /// inverse-Rosenblatt transform used to sample from a vine.
+        /// </summary>
+        /// <param name="w">A uniform value in (0, 1) (the conditional-CDF level).</param>
+        /// <param name="x">The known conditioning value in (0, 1).</param>
+        /// <param name="tau">Kendall's tau in <see cref="TauRange"/>.</param>
+        /// <param name="given">
+        /// Matches <see cref="HFunction"/>: with <c>given = 1</c>, <paramref name="x"/> is v and the
+        /// result is the u solving <c>P(u | v) = w</c>; with <c>given = 0</c>, <paramref name="x"/> is
+        /// u and the result is the v solving <c>P(v | u) = w</c>.
+        /// </param>
+        /// <returns>The recovered variable value in (0, 1).</returns>
+        double InverseHFunction(double w, double x, double tau, int given);
     }
 }
