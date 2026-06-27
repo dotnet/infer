@@ -45,5 +45,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
             double frac = pos - lo;
             return sorted[lo - 1] + frac * (sorted[lo] - sorted[lo - 1]);
         }
+
+        /// <summary>
+        /// The empirical CDF (forward PIT) of a data value: the inverse of <see cref="Quantile"/>,
+        /// used to map a known observation to its pseudo-observation in (0, 1).
+        /// </summary>
+        public double Cdf(double value)
+        {
+            int n = sorted.Length;
+            if (value <= sorted[0]) return 1.0 / (n + 1);
+            if (value >= sorted[n - 1]) return n / (double)(n + 1);
+            int idx = Array.BinarySearch(sorted, value);
+            if (idx >= 0) return (idx + 1) / (double)(n + 1); // exact match: sorted[idx] is at pos idx+1
+            int k = ~idx; // first index with sorted[k] > value, so sorted[k-1] <= value < sorted[k]
+            double denom = sorted[k] - sorted[k - 1];
+            double frac = denom > 0 ? (value - sorted[k - 1]) / denom : 0.0;
+            return (k + frac) / (n + 1);
+        }
     }
 }

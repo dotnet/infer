@@ -264,6 +264,43 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(System.Math.Abs(tauData - tauSamp) < 0.05, $"data tau={tauData}, sample tau={tauSamp}");
         }
 
+        [Fact]
+        public void CVine_SampleConditional_FixesValueAndShiftsConditional()
+        {
+            // Equicorrelated Gaussian: E[X_j | X_0 = x0] = rho * x0, so conditioning on a high vs
+            // low X_0 must shift the sampled X_1, X_2 in the same direction.
+            double[][] x = Equicorrelated(seed: 80, n: 2000, d: 3, rho: 0.6);
+            var vine = new RegularVine(CopulaFamily.Gaussian)
+                .Fit(x, structure: VineStructure.Canonical, rootOrder: new[] { 0 });
+
+            double[][] hi = vine.SampleConditional(new Dictionary<int, double> { { 0, 2.0 } }, 2000);
+            double[][] lo = vine.SampleConditional(new Dictionary<int, double> { { 0, -2.0 } }, 2000);
+
+            // The conditioned variable is returned exactly.
+            Assert.All(hi, r => Assert.Equal(2.0, r[0], 9));
+            Assert.All(lo, r => Assert.Equal(-2.0, r[0], 9));
+
+            // The sampled others shift with the conditioned value (E ~ rho*x0 = +-1.2).
+            Assert.True(Mean(Col(hi, 1)) > 0.7 && Mean(Col(hi, 2)) > 0.7,
+                $"hi means: {Mean(Col(hi, 1))}, {Mean(Col(hi, 2))}");
+            Assert.True(Mean(Col(lo, 1)) < -0.7 && Mean(Col(lo, 2)) < -0.7,
+                $"lo means: {Mean(Col(lo, 1))}, {Mean(Col(lo, 2))}");
+        }
+
+        [Fact]
+        public void SampleConditional_RejectsNonRootOrRegular()
+        {
+            var canonical = new RegularVine(CopulaFamily.Gaussian)
+                .Fit(Equicorrelated(seed: 2, n: 800, d: 3, rho: 0.6), structure: VineStructure.Canonical, rootOrder: new[] { 0 });
+            // Variable 1 is not the leading root -> must throw with guidance.
+            Assert.Throws<NotSupportedException>(() =>
+                canonical.SampleConditional(new Dictionary<int, double> { { 1, 0.5 } }, 10));
+
+            var regular = new RegularVine().Fit(Equicorrelated(seed: 3, n: 800, d: 3, rho: 0.6));
+            Assert.Throws<NotSupportedException>(() =>
+                regular.SampleConditional(new Dictionary<int, double> { { 0, 0.5 } }, 10));
+        }
+
         // --- helpers ---------------------------------------------------------------------------
 
         private static double[] Col(double[][] m, int j)

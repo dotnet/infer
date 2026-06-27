@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using Xunit;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Distributions;
@@ -193,6 +194,33 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.True(System.Math.Abs(tauData - tauSamp) < 0.1,
                     $"hub ({hub},2): data tau={tauData}, sample tau={tauSamp}");
             }
+        }
+
+        /// <summary>
+        /// Imputation / posterior-predictive given a partial observation: conditioning a GPVINE on
+        /// the value of Z must reproduce the Z-dependent sign of the (X, Y) | Z copula in the
+        /// imputed X, Y.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "Performance")]
+        public void GPVine_SampleConditional_ImputesZDependentDependence()
+        {
+            double[][] train = ConditionalDependenceData(seed: 9, n: 300);
+            var fitter = new GaussianProcessCopulaFitter { NumInducing = 15, NumberOfIterations = 15 };
+            // Z is variable 2; make it the root so we can condition on it exactly.
+            var vine = new RegularVine().Fit(train, nTrees: 2, fitter, VineStructure.Canonical, rootOrder: new[] { 2 });
+
+            // rho(z) = 0.9 sin(1.5 z): positive conditional dependence at z=1, negative at z=-1.
+            double[][] posZ = vine.SampleConditional(new Dictionary<int, double> { { 2, 1.0 } }, 2000);
+            double[][] negZ = vine.SampleConditional(new Dictionary<int, double> { { 2, -1.0 } }, 2000);
+
+            double tauPos = KendallTau.Compute(ColG(posZ, 0), ColG(posZ, 1));
+            double tauNeg = KendallTau.Compute(ColG(negZ, 0), ColG(negZ, 1));
+            Console.WriteLine($"imputed tau(X,Y | Z=1)={tauPos:g3}, tau(X,Y | Z=-1)={tauNeg:g3}");
+
+            Assert.All(posZ, r => Assert.Equal(1.0, r[2], 9)); // Z held at the conditioned value
+            Assert.True(tauPos > 0.3, $"expected positive conditional dependence at Z=1, got {tauPos}");
+            Assert.True(tauNeg < -0.3, $"expected negative conditional dependence at Z=-1, got {tauNeg}");
         }
 
         private static double[] ColG(double[][] m, int j)
