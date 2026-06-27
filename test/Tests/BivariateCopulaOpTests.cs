@@ -99,20 +99,55 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         // --- Brute-force references (fine-grid trapezoid over the cavity) -------------------
 
-        // Returns the projected/cavity Gaussian message computed from a fine grid.
-        private Gaussian BruteForceMessage(Gaussian cavity, double u, double v)
+        [Theory]
+        [InlineData(CopulaFamily.Clayton)]
+        [InlineData(CopulaFamily.Gumbel)]
+        public void Message_And_LogZ_MatchBruteForce_ForArchimedeanFamily(CopulaFamily family)
         {
-            double z = BruteForceIntegral(cavity, u, v, s => 1.0);
-            double mean = BruteForceIntegral(cavity, u, v, s => s) / z;
-            double mean2 = BruteForceIntegral(cavity, u, v, s => s * s) / z;
+            // Run the EP factor for the new families and check it against brute-force quadrature.
+            // Concordant pairs (positive dependence) are where Clayton/Gumbel are well-defined.
+            IBivariateCopula cop = CopulaFactory.Create(family);
+            foreach (double m in new[] { -0.4, 0.3, 0.9 })
+            {
+                foreach (var (u, pv) in new[] { (0.75, 0.8), (0.4, 0.6), (0.85, 0.7) })
+                {
+                    Gaussian cavity = Gaussian.FromMeanAndVariance(m, 0.7);
+                    Vector pair = Vector.FromArray(u, pv);
+
+                    Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(pair, cavity, (int)family, Gaussian.Uniform());
+                    Gaussian expected = BruteForceMessage(cop, cavity, u, pv);
+                    Assert.True(System.Math.Abs(msg.Precision - expected.Precision) < 2e-3,
+                        $"{family} precision: op={msg.Precision}, bf={expected.Precision}");
+                    Assert.True(System.Math.Abs(msg.MeanTimesPrecision - expected.MeanTimesPrecision) < 2e-3,
+                        $"{family} mTp: op={msg.MeanTimesPrecision}, bf={expected.MeanTimesPrecision}");
+
+                    double logZ = BivariateCopulaOp.LogAverageFactor(pair, cavity, (int)family, Gaussian.Uniform());
+                    double expectedLogZ = System.Math.Log(BruteForceIntegral(cop, cavity, u, pv, s => 1.0));
+                    Assert.True(System.Math.Abs(logZ - expectedLogZ) < 2e-3,
+                        $"{family} lnZ: op={logZ}, bf={expectedLogZ}");
+                }
+            }
+        }
+
+        // Returns the projected/cavity Gaussian message computed from a fine grid.
+        private Gaussian BruteForceMessage(Gaussian cavity, double u, double v) => BruteForceMessage(copula, cavity, u, v);
+
+        private Gaussian BruteForceMessage(IBivariateCopula cop, Gaussian cavity, double u, double v)
+        {
+            double z = BruteForceIntegral(cop, cavity, u, v, s => 1.0);
+            double mean = BruteForceIntegral(cop, cavity, u, v, s => s) / z;
+            double mean2 = BruteForceIntegral(cop, cavity, u, v, s => s * s) / z;
             Gaussian projected = Gaussian.FromMeanAndVariance(mean, mean2 - mean * mean);
             Gaussian msg = new Gaussian();
             msg.SetToRatio(projected, cavity, BivariateCopulaOp.ForceProper);
             return msg;
         }
 
+        private double BruteForceIntegral(Gaussian cavity, double u, double v, Func<double, double> h) =>
+            BruteForceIntegral(copula, cavity, u, v, h);
+
         // int h(s) N(s;m,v) c(u,v | g(s)) ds via dense trapezoid over +-10 sigma.
-        private double BruteForceIntegral(Gaussian cavity, double u, double v, Func<double, double> h)
+        private double BruteForceIntegral(IBivariateCopula cop, Gaussian cavity, double u, double v, Func<double, double> h)
         {
             cavity.GetMeanAndVariance(out double m, out double sd2);
             double sd = System.Math.Sqrt(sd2);
@@ -124,7 +159,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 double s = lo + i * step;
                 double tau = 2.0 * MMath.NormalCdf(s) - 1.0;
-                double integrand = System.Math.Exp(Gaussian.GetLogProb(s, m, sd2) + copula.LogDensity(u, v, tau)) * h(s);
+                double integrand = System.Math.Exp(Gaussian.GetLogProb(s, m, sd2) + cop.LogDensity(u, v, tau)) * h(s);
                 double w = (i == 0 || i == n) ? 0.5 : 1.0;
                 sum += w * integrand;
             }

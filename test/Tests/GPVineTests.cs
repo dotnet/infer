@@ -124,6 +124,47 @@ namespace Microsoft.ML.Probabilistic.Tests
                 $"GPVINE did not beat SVINE on held-out data: gpvine={llGpvine}, svine={llSvine}");
         }
 
+        /// <summary>
+        /// End-to-end check that a non-Gaussian family flows through the real EP factor and
+        /// compiler: a conditional Clayton copula whose tau varies with z is fitted with the
+        /// sparse GP, and the recovered tau(z) tracks the truth.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "Performance")]
+        public void ClaytonConditionalCopula_FitsThroughEpFactor()
+        {
+            // z ~ N(0,1); tau(z) in (0,1) varies with z; (u, v) ~ Clayton copula given tau(z).
+            Rand.Restart(17);
+            int n = 250;
+            double[] uu = new double[n], vv = new double[n];
+            double[][] z = new double[n][];
+            double[] trueTau = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                double zi = Rand.Normal();
+                double tau = 0.45 + 0.35 * System.Math.Sin(1.2 * zi); // in (0.1, 0.8)
+                double theta = 2.0 * tau / (1.0 - tau);
+                double u1 = Rand.Double();
+                double p = Rand.Double();
+                double u2 = System.Math.Pow(
+                    System.Math.Pow(u1, -theta) * (System.Math.Pow(p, -theta / (1.0 + theta)) - 1.0) + 1.0,
+                    -1.0 / theta);
+                uu[i] = u1; vv[i] = u2; z[i] = new[] { zi }; trueTau[i] = tau;
+            }
+
+            // Raw (non-PIT) conditioning inputs, so use a unit length-scale (cf. the GP classifier).
+            var fitter = new GaussianProcessCopulaFitter { NumInducing = 15, NumberOfIterations = 15, LogLengthScale = 0.0 };
+            IConditionalCopulaPosterior post = fitter.Fit(uu, vv, z, CopulaFamily.Clayton);
+
+            Assert.False(double.IsNaN(fitter.LastLogEvidence), "log evidence is NaN");
+            double[] pred = new double[n];
+            for (int i = 0; i < n; i++)
+                pred[i] = post.TauAt(z[i]);
+            double corr = Correlation(trueTau, pred);
+            Console.WriteLine($"Clayton conditional fit: corr(tau_true, tau_pred)={corr:g4}");
+            Assert.True(corr > 0.6, $"recovered Clayton tau(z) does not track the truth: corr={corr}");
+        }
+
         // Three variables (X, Y, Z): X and Y are each marginally dependent on Z (so T_1 selects
         // the hub edges X-Z, Y-Z), while the copula of (X, Y) | Z has a Kendall's tau that varies
         // with Z -- exactly the structure the simplifying assumption fails to capture.

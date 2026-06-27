@@ -184,7 +184,47 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(ll3 > ll2 + 20.0, $"T_3 did not improve held-out log-lik: ll2={ll2}, ll3={ll3}");
         }
 
+        [Fact]
+        public void Clayton_FitsClaytonDataBetterThanGaussian()
+        {
+            // Data drawn from a Clayton copula (lower-tail dependence). Fitting with the true
+            // family should recover its tau and achieve a higher log-likelihood than a Gaussian
+            // copula constrained to the same tau.
+            const double trueTau = 0.5;
+            double[][] x = ClaytonSample(seed: 31, n: 3000, tau: trueTau);
+
+            var clayton = new RegularVine(CopulaFamily.Clayton).Fit(x); // d=2 -> single T_1 edge
+            var gaussian = new RegularVine(CopulaFamily.Gaussian).Fit(x);
+
+            double tauHat = clayton.Trees[0].Edges[0].Tau;
+            Assert.True(System.Math.Abs(tauHat - trueTau) < 0.04, $"recovered tau={tauHat}, expected ~{trueTau}");
+
+            double llClayton = clayton.LogLikelihood(x);
+            double llGaussian = gaussian.LogLikelihood(x);
+            Assert.True(llClayton > 0.0, $"Clayton log-lik unexpectedly low: {llClayton}");
+            Assert.True(llClayton > llGaussian, $"true family did not win: clayton={llClayton}, gaussian={llGaussian}");
+        }
+
         // --- helpers ---------------------------------------------------------------------------
+
+        // Bivariate Clayton samples via conditional inversion; returned as raw (n x 2) data.
+        private static double[][] ClaytonSample(int seed, int n, double tau)
+        {
+            Rand.Restart(seed);
+            double theta = 2.0 * tau / (1.0 - tau);
+            double[][] x = new double[n][];
+            for (int i = 0; i < n; i++)
+            {
+                double u1 = Rand.Double();
+                double p = Rand.Double();
+                double u2 = System.Math.Pow(
+                    System.Math.Pow(u1, -theta) * (System.Math.Pow(p, -theta / (1.0 + theta)) - 1.0) + 1.0,
+                    -1.0 / theta);
+                x[i] = new[] { u1, u2 };
+            }
+            return x;
+        }
+
 
         private static (int, int) Conditioned(VineEdge e) =>
             (System.Math.Min(e.Left, e.Right), System.Math.Max(e.Left, e.Right));

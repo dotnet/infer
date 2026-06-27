@@ -50,6 +50,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             {
                 case CopulaFamily.Gaussian:
                     return new GaussianCopula();
+                case CopulaFamily.Clayton:
+                    return new ClaytonCopula();
+                case CopulaFamily.Gumbel:
+                    return new GumbelCopula();
                 default:
                     throw new NotImplementedException($"Copula family '{family}' is not yet implemented.");
             }
