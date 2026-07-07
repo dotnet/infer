@@ -86,7 +86,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void GaussianCopula_HFunctionInUnitInterval()
+        public void GaussianCopula_ConditionalCdfInUnitInterval()
         {
             foreach (double tau in new[] { -0.7, 0.0, 0.5 })
             {
@@ -94,33 +94,32 @@ namespace Microsoft.ML.Probabilistic.Tests
                 {
                     foreach (double v in new[] { 0.1, 0.5, 0.9 })
                     {
-                        double h0 = gaussian.HFunction(u, v, tau, 0);
-                        double h1 = gaussian.HFunction(u, v, tau, 1);
-                        Assert.True(h0 > 0.0 && h0 < 1.0, $"h(given=0)={h0} out of (0,1)");
-                        Assert.True(h1 > 0.0 && h1 < 1.0, $"h(given=1)={h1} out of (0,1)");
+                        double h0 = gaussian.ConditionalCdf(u, v, tau, 0);
+                        double h1 = gaussian.ConditionalCdf(u, v, tau, 1);
+                        Assert.True(h0 > 0.0 && h0 < 1.0, $"conditional CDF (given=0)={h0} out of (0,1)");
+                        Assert.True(h1 > 0.0 && h1 < 1.0, $"conditional CDF (given=1)={h1} out of (0,1)");
                     }
                 }
             }
         }
 
         [Fact]
-        public void GaussianCopula_HFunctionMatchesNumericalConditionalCdf()
+        public void GaussianCopula_ConditionalCdfMatchesNumericalDerivative()
         {
-            // C(u,v|theta) = Phi_2(Phi^{-1}(u), Phi^{-1}(v) | theta) = MMath.NormalCdf(a, b, theta).
-            // h(given=0) = dC/du ; h(given=1) = dC/dv. Compare to a central difference.
+            // ConditionalCdf(given=0) = dC/du ; ConditionalCdf(given=1) = dC/dv. Compare each to a
+            // central difference of the copula CDF.
             const double eps = 1e-5;
             foreach (double tau in new[] { -0.6, 0.3, 0.7 })
             {
-                double theta = gaussian.TauToTheta(tau);
                 foreach (double u in new[] { 0.3, 0.5, 0.7 })
                 {
                     foreach (double v in new[] { 0.25, 0.55, 0.8 })
                     {
-                        double dCdu = (Cdf(u + eps, v, theta) - Cdf(u - eps, v, theta)) / (2 * eps);
-                        double dCdv = (Cdf(u, v + eps, theta) - Cdf(u, v - eps, theta)) / (2 * eps);
-                        Assert.True(System.Math.Abs(dCdu - gaussian.HFunction(u, v, tau, 0)) < 1e-4,
+                        double dCdu = (gaussian.Cdf(u + eps, v, tau) - gaussian.Cdf(u - eps, v, tau)) / (2 * eps);
+                        double dCdv = (gaussian.Cdf(u, v + eps, tau) - gaussian.Cdf(u, v - eps, tau)) / (2 * eps);
+                        Assert.True(System.Math.Abs(dCdu - gaussian.ConditionalCdf(u, v, tau, 0)) < 1e-4,
                             $"dC/du mismatch at u={u},v={v},tau={tau}");
-                        Assert.True(System.Math.Abs(dCdv - gaussian.HFunction(u, v, tau, 1)) < 1e-4,
+                        Assert.True(System.Math.Abs(dCdv - gaussian.ConditionalCdf(u, v, tau, 1)) < 1e-4,
                             $"dC/dv mismatch at u={u},v={v},tau={tau}");
                     }
                 }
@@ -195,24 +194,23 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Theory]
         [InlineData(CopulaFamily.Clayton)]
         [InlineData(CopulaFamily.Gumbel)]
-        public void Archimedean_HFunctionInUnitIntervalAndMatchesNumericalCdf(CopulaFamily family)
+        public void Archimedean_ConditionalCdfInUnitIntervalAndMatchesNumericalCdf(CopulaFamily family)
         {
             IBivariateCopula c = CopulaFactory.Create(family);
             const double eps = 1e-6;
             foreach (double tau in new[] { 0.2, 0.5, 0.75 })
             {
-                double theta = c.TauToTheta(tau);
                 foreach (double u in new[] { 0.3, 0.5, 0.7 })
                 {
                     foreach (double v in new[] { 0.25, 0.55, 0.8 })
                     {
-                        double h0 = c.HFunction(u, v, tau, 0);
-                        double h1 = c.HFunction(u, v, tau, 1);
-                        Assert.True(h0 > 0.0 && h0 < 1.0, $"{family} h(given=0)={h0} out of (0,1)");
-                        Assert.True(h1 > 0.0 && h1 < 1.0, $"{family} h(given=1)={h1} out of (0,1)");
+                        double h0 = c.ConditionalCdf(u, v, tau, 0);
+                        double h1 = c.ConditionalCdf(u, v, tau, 1);
+                        Assert.True(h0 > 0.0 && h0 < 1.0, $"{family} conditional CDF (given=0)={h0} out of (0,1)");
+                        Assert.True(h1 > 0.0 && h1 < 1.0, $"{family} conditional CDF (given=1)={h1} out of (0,1)");
 
-                        double dCdu = (ArchimedeanCdf(family, u + eps, v, theta) - ArchimedeanCdf(family, u - eps, v, theta)) / (2 * eps);
-                        double dCdv = (ArchimedeanCdf(family, u, v + eps, theta) - ArchimedeanCdf(family, u, v - eps, theta)) / (2 * eps);
+                        double dCdu = (c.Cdf(u + eps, v, tau) - c.Cdf(u - eps, v, tau)) / (2 * eps);
+                        double dCdv = (c.Cdf(u, v + eps, tau) - c.Cdf(u, v - eps, tau)) / (2 * eps);
                         Assert.True(System.Math.Abs(dCdu - h0) < 1e-4, $"{family} dC/du mismatch at u={u},v={v},tau={tau}");
                         Assert.True(System.Math.Abs(dCdv - h1) < 1e-4, $"{family} dC/dv mismatch at u={u},v={v},tau={tau}");
                     }
@@ -224,10 +222,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         [InlineData(CopulaFamily.Gaussian)]
         [InlineData(CopulaFamily.Clayton)]
         [InlineData(CopulaFamily.Gumbel)]
-        public void InverseHFunction_RoundTrips(CopulaFamily family)
+        public void InverseConditionalCdf_RoundTrips(CopulaFamily family)
         {
-            // InverseHFunction must invert HFunction: recover the unknown variable from its
-            // conditional-CDF level. This is the core of inverse-Rosenblatt sampling.
+            // InverseConditionalCdf must invert ConditionalCdf: recover the unknown variable from
+            // its conditional-CDF level. This is the core of inverse-Rosenblatt sampling.
             IBivariateCopula c = CopulaFactory.Create(family);
             foreach (double tau in new[] { 0.2, 0.5, 0.75 })
             {
@@ -236,41 +234,18 @@ namespace Microsoft.ML.Probabilistic.Tests
                     foreach (double v in new[] { 0.3, 0.6, 0.85 })
                     {
                         // given = 1: unknown is u, known is v.
-                        double w1 = c.HFunction(u, v, tau, 1);
-                        double uBack = c.InverseHFunction(w1, v, tau, 1);
+                        double w1 = c.ConditionalCdf(u, v, tau, 1);
+                        double uBack = c.InverseConditionalCdf(w1, v, tau, 1);
                         Assert.True(System.Math.Abs(uBack - u) < 1e-6,
                             $"{family} given=1: u={u}, recovered={uBack}");
 
                         // given = 0: unknown is v, known is u.
-                        double w0 = c.HFunction(u, v, tau, 0);
-                        double vBack = c.InverseHFunction(w0, u, tau, 0);
+                        double w0 = c.ConditionalCdf(u, v, tau, 0);
+                        double vBack = c.InverseConditionalCdf(w0, u, tau, 0);
                         Assert.True(System.Math.Abs(vBack - v) < 1e-6,
                             $"{family} given=0: v={v}, recovered={vBack}");
                     }
                 }
-            }
-        }
-
-        // Gaussian copula CDF C(u,v|theta) via the bivariate normal CDF.
-        private static double Cdf(double u, double v, double theta)
-        {
-            double a = MMath.NormalCdfInv(u);
-            double b = MMath.NormalCdfInv(v);
-            return MMath.NormalCdf(a, b, theta);
-        }
-
-        // Closed-form CDFs for the Archimedean families, used to check the h-functions.
-        private static double ArchimedeanCdf(CopulaFamily family, double u, double v, double theta)
-        {
-            switch (family)
-            {
-                case CopulaFamily.Clayton:
-                    return System.Math.Pow(System.Math.Pow(u, -theta) + System.Math.Pow(v, -theta) - 1.0, -1.0 / theta);
-                case CopulaFamily.Gumbel:
-                    double a = System.Math.Pow(-System.Math.Log(u), theta) + System.Math.Pow(-System.Math.Log(v), theta);
-                    return System.Math.Exp(-System.Math.Pow(a, 1.0 / theta));
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(family));
             }
         }
     }

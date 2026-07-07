@@ -11,9 +11,10 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
     /// <summary>
-    /// Expectation Propagation message operator for the <see cref="Factor.BivariateCopula(double, int)"/>
-    /// factor, the core inference component of the GPVINE method (Lopez-Paz,
-    /// Hernandez-Lobato and Ghahramani, ICML 2013).
+    /// Expectation Propagation message operator for the
+    /// <see cref="CopulaFactor.BivariateCopula(double, IBivariateCopula)"/> factor, the core
+    /// inference component of the GPVINE method (Lopez-Paz, Hernandez-Lobato and Ghahramani,
+    /// ICML 2013).
     /// </summary>
     /// <remarks>
     /// <para>
@@ -33,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// contribution used for hyperparameter tuning and family selection (Sec. 4).
     /// </para>
     /// </remarks>
-    [FactorMethod(typeof(Factor), "BivariateCopula")]
+    [FactorMethod(typeof(CopulaFactor), "BivariateCopula")]
     [Quality(QualityBand.Experimental)]
     public static class BivariateCopulaOp
     {
@@ -53,16 +54,15 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// </summary>
         /// <param name="pair">Observed pseudo-observation pair (u, v) in (0, 1)^2.</param>
         /// <param name="score">Incoming message from <c>score</c> (the cavity).</param>
-        /// <param name="family">The <see cref="CopulaFamily"/> as an int.</param>
+        /// <param name="copula">The copula family evaluator.</param>
         /// <param name="result">Previous outgoing message; used only as a quadrature proposal.</param>
         /// <returns>The outgoing message to <c>score</c>.</returns>
-        public static Gaussian ScoreAverageConditional(Vector pair, [Proper] Gaussian score, int family, Gaussian result)
+        public static Gaussian ScoreAverageConditional(Vector pair, [Proper] Gaussian score, IBivariateCopula copula, Gaussian result)
         {
             // Without a proper, finite-variance cavity there is nothing to moment-match against.
             if (score.IsUniform() || score.IsPointMass)
                 return Gaussian.Uniform();
 
-            IBivariateCopula copula = CopulaFactory.Create((CopulaFamily)family);
             Gaussian proposal = (result != null && result.IsProper() && !result.IsUniform()) ? score * result : score;
             ComputeMoments(pair, score, proposal, copula, out _, out double mean, out double variance);
 
@@ -95,15 +95,14 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// </summary>
         /// <param name="pair">Observed pseudo-observation pair (u, v).</param>
         /// <param name="score">Incoming message from <c>score</c> (the cavity).</param>
-        /// <param name="family">The <see cref="CopulaFamily"/> as an int.</param>
+        /// <param name="copula">The copula family evaluator.</param>
         /// <param name="to_score">Current outgoing message; used only as a quadrature proposal.</param>
-        public static double LogAverageFactor(Vector pair, Gaussian score, int family, Gaussian to_score)
+        public static double LogAverageFactor(Vector pair, Gaussian score, IBivariateCopula copula, Gaussian to_score)
         {
             if (score.IsPointMass)
-                return CopulaFactory.Create((CopulaFamily)family).LogDensity(pair[0], pair[1], 2.0 * MMath.NormalCdf(score.Point) - 1.0);
+                return copula.LogDensity(pair[0], pair[1], 2.0 * MMath.NormalCdf(score.Point) - 1.0);
             if (score.IsUniform())
                 return 0.0;
-            IBivariateCopula copula = CopulaFactory.Create((CopulaFamily)family);
             Gaussian proposal = (to_score != null && to_score.IsProper() && !to_score.IsUniform()) ? score * to_score : score;
             ComputeMoments(pair, score, proposal, copula, out double logZ, out _, out _);
             return logZ;
@@ -114,9 +113,9 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// the deterministic-output overloads of <see cref="ExpOp"/> / <c>LogisticOp</c>
         /// this equals <see cref="LogAverageFactor"/>.
         /// </summary>
-        public static double LogEvidenceRatio(Vector pair, Gaussian score, int family, [Fresh] Gaussian to_score)
+        public static double LogEvidenceRatio(Vector pair, Gaussian score, IBivariateCopula copula, [Fresh] Gaussian to_score)
         {
-            return LogAverageFactor(pair, score, family, to_score);
+            return LogAverageFactor(pair, score, copula, to_score);
         }
 
         /// <summary>

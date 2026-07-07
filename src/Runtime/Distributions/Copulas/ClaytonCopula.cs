@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using Microsoft.ML.Probabilistic.Math;
 
 namespace Microsoft.ML.Probabilistic.Distributions.Copulas
 {
@@ -62,7 +63,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         }
 
         /// <inheritdoc/>
-        public double HFunction(double u, double v, double tau, int given)
+        public double Cdf(double u, double v, double tau)
+        {
+            double theta = TauToTheta(tau);
+            if (theta < IndependenceTheta) return u * v; // independence
+            double s = System.Math.Pow(u, -theta) + System.Math.Pow(v, -theta) - 1.0;
+            return System.Math.Pow(s, -1.0 / theta);
+        }
+
+        /// <inheritdoc/>
+        public double ConditionalCdf(double u, double v, double tau, int given)
         {
             double theta = TauToTheta(tau);
             if (theta < IndependenceTheta) return given == 1 ? u : v; // independence: P(u|v)=u, P(v|u)=v
@@ -77,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         }
 
         /// <inheritdoc/>
-        public double InverseHFunction(double w, double x, double tau, int given)
+        public double InverseConditionalCdf(double w, double x, double tau, int given)
         {
             // Inverting w = x^(-theta-1) (unknown^-theta + x^-theta - 1)^(-1/theta-1) gives
             // unknown = ( (w x^(theta+1))^(-theta/(theta+1)) - x^-theta + 1 )^(-1/theta).
@@ -87,6 +97,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             double s = System.Math.Pow(w * System.Math.Pow(x, theta + 1.0), -theta / (theta + 1.0));
             double inner = s - System.Math.Pow(x, -theta) + 1.0;
             return System.Math.Pow(inner, -1.0 / theta);
+        }
+
+        /// <inheritdoc/>
+        public Vector Sample(double tau)
+        {
+            // Conditional-sampling (inverse-Rosenblatt) with the closed-form Clayton inverse
+            // h-function: draw u uniform and p uniform, then invert P(v | u) = p for v.
+            double theta = TauToTheta(tau);
+            double u = Rand.Double();
+            double p = Rand.Double();
+            double v = System.Math.Pow(
+                System.Math.Pow(u, -theta) * (System.Math.Pow(p, -theta / (1.0 + theta)) - 1.0) + 1.0,
+                -1.0 / theta);
+            return Vector.FromArray(u, v);
         }
 
         private static double ClampTau(double tau)

@@ -80,7 +80,7 @@ Variable<double> score = Variable.FunctionEvaluate(f, z[j]).Named("score"); // f
 // Folded INSIDE the copula factor so EP only deals with `score`.
 
 // Observed pair drives a copula likelihood term on `score`:
-uv[j] = Variable.BivariateCopula(score, family);   // NEW factor; uv observed
+uv[j] = BivariateCopula(score, copula);   // NEW factor; uv observed
 ```
 
 `τ_i = g(f(z_i)) = 2Φ(f(z_i)) − 1` is computed inside the factor, so to EP the
@@ -109,14 +109,17 @@ New folder, mirroring `Distributions/Kernels/` in style.
       double TauToTheta(double tau);
       double ThetaToTau(double theta);
       double LogDensity(double u, double v, double tau);     // log c(u,v|tau)
-      double HFunction(double u, double v, double tau, int given); // dC/dv or dC/du
+      double Cdf(double u, double v, double tau);            // C(u,v|tau)
+      double ConditionalCdf(double u, double v, double tau, int given);        // dC/dv or dC/du
+      double InverseConditionalCdf(double w, double x, double tau, int given); // inverse Rosenblatt
+      Vector Sample(double tau);                             // draw a (u,v) pair
   }
   ```
 - `GaussianCopula.cs` — the workhorse (Appendix A):
   - `TauToTheta`: `θ = sin(π/2 · τ)`; `ThetaToTau`: `τ = (2/π) arcsin θ`.
   - `LogDensity` (eq. 12) using `a=Φ⁻¹(u)`, `b=Φ⁻¹(v)` via `MMath.NormalCdfInv`:
     `−½ ln(1−θ²) − (θ²(a²+b²) − 2θab)/(2(1−θ²))`.
-  - `HFunction` (eqs. 13–14): `Φ((a − θb)/√(1−θ²))` / `Φ((b − θa)/√(1−θ²))`.
+  - `ConditionalCdf` (eqs. 13–14): `Φ((a − θb)/√(1−θ²))` / `Φ((b − θa)/√(1−θ²))`.
   - clamp `θ ∈ (−1+ε, 1−ε)`.
 - `ClaytonCopula.cs`, `GumbelCopula.cs`, `FrankCopula.cs` — Table 1 maps and
   densities (later phases; Frank's τ↔θ needs a 1‑D root find on the Debye
@@ -125,34 +128,35 @@ New folder, mirroring `Distributions/Kernels/` in style.
 
 These are pure numeric classes — directly unit‑testable without the compiler.
 
-### 3.2 The factor delegate — `src/Runtime/Factors/Factor.cs` (or new `CopulaFactor.cs`)
+### 3.2 The factor delegate — `src/Runtime/Factors/CopulaFactor.cs`
 
-Add a factor method that, given the latent `score`, *generates* the observed
-pair. Output is observed, so the factor acts as a likelihood on `score`:
+A thin factor method that, given the latent `score`, *generates* the observed
+pair via `copula.Sample`. Output is observed, so the factor acts as a likelihood
+on `score`:
 
 ```csharp
-[ParameterNames("pair", "score", "family")]
-public static Vector BivariateCopula(double score, int family)
+[ParameterNames("pair", "score", "copula")]
+public static Vector BivariateCopula(double score, IBivariateCopula copula)
 {
     // Generative form (used only for sampling/testing). tau = g(score).
     // EP never calls this; it calls the operator in BivariateCopulaOp.
 }
 ```
 
-(`family` passed as an observed `int`/enum constant so a single factor serves all
-families; alternatively define one factor per family to keep operators simple.)
+(The `copula` is passed as observed data so a single factor / EP operator serves
+every family; the per-family sampling lives on the copula classes.)
 
 ### 3.3 The EP message operator — `src/Runtime/Factors/BivariateCopulaOp.cs`
 
 This is the core deliverable. Templated on `LogisticOp` (`Logistic.cs`) and
-`SparseGPOp`. Annotated `[FactorMethod(typeof(Factor), "BivariateCopula")]` and
+`SparseGPOp`. Annotated `[FactorMethod(typeof(CopulaFactor), "BivariateCopula")]` and
 `[Quality(QualityBand.Experimental)]`. The factor graph: observed `pair=(u,v)`
 and Gaussian‑distributed latent `score`. EP needs three things:
 
 1. **Message to `score`** — `ScoreAverageConditional`:
    ```csharp
    public static Gaussian ScoreAverageConditional(
-       Vector pair, [RequiredArgument] Gaussian score, int family)
+       Vector pair, [RequiredArgument] Gaussian score, IBivariateCopula copula)
    ```
    - Let the incoming message/cavity be `score ~ N(m, v)`.
    - Define the tilted integrand `t(s) = c(u, v | g(s))` with `g(s)=2Φ(s)−1`.
@@ -227,7 +231,7 @@ Range j = z.Range;
 Variable<double> score = Variable.FunctionEvaluate(f, z[j]).Named("score");
 
 VariableArray<Vector> uv = Variable.Observed(pairs, j).Named("uv");
-uv[j] = Variable.BivariateCopula(score, (int)CopulaFamily.Gaussian);  // NEW
+uv[j] = BivariateCopula(score, new GaussianCopula());  // NEW (helper on the fitter)
 
 block.CloseBlock();
 
@@ -364,8 +368,7 @@ src/Runtime/Distributions/Copulas/
     Vine/RegularVine.cs         (new)
     Vine/EvidenceObjective.cs   (new, phase 5)
 src/Runtime/Factors/
-    Factor.cs                   (edit) add BivariateCopula factor method
-                                       (or new CopulaFactor.cs)
+    CopulaFactor.cs             (new)  thin BivariateCopula factor method
     BivariateCopulaOp.cs        (new)  EP operator — the core deliverable
 src/Tutorials/
     GaussianProcessVine.cs      (new)  driver mirroring GaussianProcessClassifier

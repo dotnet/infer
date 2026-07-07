@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.ML.Probabilistic.Math;
+
 namespace Microsoft.ML.Probabilistic.Distributions.Copulas
 {
     /// <summary>
@@ -54,8 +56,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         double LogDensity(double u, double v, double tau);
 
         /// <summary>
-        /// The conditional CDF (vine "h-function"), used to generate the
-        /// pseudo-observations that condition the deeper trees of a vine (eq. 5).
+        /// The copula CDF <c>C(u, v | tau)</c>.
+        /// </summary>
+        /// <param name="u">First pseudo-observation in (0, 1).</param>
+        /// <param name="v">Second pseudo-observation in (0, 1).</param>
+        /// <param name="tau">Kendall's tau in <see cref="TauRange"/>.</param>
+        /// <returns>The joint probability <c>C(u, v) = P(U &lt;= u, V &lt;= v)</c> in (0, 1).</returns>
+        double Cdf(double u, double v, double tau);
+
+        /// <summary>
+        /// The conditional CDF <c>P(U &lt;= u | V = v)</c> (or the reverse), used to generate the
+        /// pseudo-observations that condition the deeper trees of a vine (eq. 5). This is the
+        /// partial derivative of <see cref="Cdf"/>, known in the vine literature as the
+        /// "h-function".
         /// </summary>
         /// <param name="u">First pseudo-observation in (0, 1).</param>
         /// <param name="v">Second pseudo-observation in (0, 1).</param>
@@ -65,10 +78,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         /// <c>0</c> returns <c>P(v | u) = dC/du</c> (eq. 13).
         /// </param>
         /// <returns>A conditional probability in (0, 1).</returns>
-        double HFunction(double u, double v, double tau, int given);
+        double ConditionalCdf(double u, double v, double tau, int given);
 
         /// <summary>
-        /// The inverse of <see cref="HFunction"/>: given a uniform <paramref name="w"/> and the
+        /// The inverse of <see cref="ConditionalCdf"/>: given a uniform <paramref name="w"/> and the
         /// known conditioning value <paramref name="x"/>, returns the variable value that maps to
         /// <paramref name="w"/> under the conditional CDF. This is the building block of the
         /// inverse-Rosenblatt transform used to sample from a vine.
@@ -77,11 +90,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         /// <param name="x">The known conditioning value in (0, 1).</param>
         /// <param name="tau">Kendall's tau in <see cref="TauRange"/>.</param>
         /// <param name="given">
-        /// Matches <see cref="HFunction"/>: with <c>given = 1</c>, <paramref name="x"/> is v and the
+        /// Matches <see cref="ConditionalCdf"/>: with <c>given = 1</c>, <paramref name="x"/> is v and the
         /// result is the u solving <c>P(u | v) = w</c>; with <c>given = 0</c>, <paramref name="x"/> is
         /// u and the result is the v solving <c>P(v | u) = w</c>.
         /// </param>
         /// <returns>The recovered variable value in (0, 1).</returns>
-        double InverseHFunction(double w, double x, double tau, int given);
+        double InverseConditionalCdf(double w, double x, double tau, int given);
+
+        /// <summary>
+        /// Draws a single pseudo-observation pair <c>(u, v)</c> from the copula with the given
+        /// Kendall's <paramref name="tau"/>.
+        /// </summary>
+        /// <param name="tau">Kendall's tau in <see cref="TauRange"/>.</param>
+        /// <returns>A length-2 vector <c>(u, v)</c> of pseudo-observations in (0, 1).</returns>
+        Vector Sample(double tau);
     }
 }

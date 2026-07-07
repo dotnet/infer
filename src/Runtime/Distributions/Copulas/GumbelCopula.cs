@@ -67,7 +67,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         }
 
         /// <inheritdoc/>
-        public double HFunction(double u, double v, double tau, int given)
+        public double Cdf(double u, double v, double tau)
+        {
+            double theta = TauToTheta(tau);
+            double lnX = System.Math.Log(-System.Math.Log(u));
+            double lnY = System.Math.Log(-System.Math.Log(v));
+            double lnA = MMath.LogSumExp(theta * lnX, theta * lnY);
+            double w = System.Math.Exp(lnA / theta);
+            return System.Math.Exp(-w);
+        }
+
+        /// <inheritdoc/>
+        public double ConditionalCdf(double u, double v, double tau, int given)
         {
             double theta = TauToTheta(tau);
             double lnX = System.Math.Log(-System.Math.Log(u));
@@ -82,18 +93,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         }
 
         /// <inheritdoc/>
-        public double InverseHFunction(double w, double x, double tau, int given)
+        public double InverseConditionalCdf(double w, double x, double tau, int given)
         {
             // No closed form: the conditional CDF is monotone increasing in the unknown variable,
-            // so solve HFunction(unknown | x) = w by bisection on (0, 1).
+            // so solve ConditionalCdf(unknown | x) = w by bisection on (0, 1).
             double lo = 1e-12, hi = 1.0 - 1e-12;
             for (int it = 0; it < 60; it++)
             {
                 double mid = 0.5 * (lo + hi);
-                double h = (given == 1) ? HFunction(mid, x, tau, 1) : HFunction(x, mid, tau, 0);
+                double h = (given == 1) ? ConditionalCdf(mid, x, tau, 1) : ConditionalCdf(x, mid, tau, 0);
                 if (h < w) lo = mid; else hi = mid;
             }
             return 0.5 * (lo + hi);
+        }
+
+        /// <inheritdoc/>
+        public Vector Sample(double tau)
+        {
+            // No closed-form bivariate sampler; use conditional sampling (inverse-Rosenblatt):
+            // draw u uniform and a uniform conditional-CDF level, then invert P(v | u) for v.
+            double u = Rand.Double();
+            double p = Rand.Double();
+            double v = InverseConditionalCdf(p, u, tau, 0);
+            return Vector.FromArray(u, v);
         }
 
         private static double ClampTau(double tau)
