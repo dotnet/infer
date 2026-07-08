@@ -44,8 +44,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             var fitter = new GaussianProcessCopulaFitter(engine) { NumInducing = 15, NumberOfIterations = 15 };
             for (int nTrees = 1; nTrees <= 2; nTrees++)
             {
-                double svine = new RegularVine(CopulaFamily.Gaussian).Fit(train, nTrees).LogLikelihood(test);
-                double gpvine = new RegularVine(CopulaFamily.Gaussian).Fit(train, nTrees, fitter).LogLikelihood(test);
+                double svine = new RegularVine(new GaussianCopula()).Fit(train, nTrees).LogLikelihood(test);
+                double gpvine = new RegularVine(new GaussianCopula()).Fit(train, nTrees, fitter).LogLikelihood(test);
                 Console.WriteLine($"  {nTrees}   |     {svine,10:f2}     |     {gpvine,10:f2}");
             }
 

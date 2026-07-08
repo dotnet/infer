@@ -47,7 +47,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             double theta = TauToTheta(tau);
             double a = MMath.NormalCdfInv(u);
             double b = MMath.NormalCdfInv(v);
-            double oneMinusT2 = 1.0 - theta * theta;
+            // (1 - theta)(1 + theta) is more accurate than 1 - theta^2 as |theta| -> 1.
+            double oneMinusT2 = (1.0 - theta) * (1.0 + theta);
+            // The quadratic form loses accuracy near |theta| -> 1; the exponent-of-a-ratio
+            // approach used in MMath.NormalCdf_Helper could be adapted here for more stability.
             double quad = (theta * theta * (a * a + b * b) - 2.0 * theta * a * b) / (2.0 * oneMinusT2);
             return -0.5 * System.Math.Log(oneMinusT2) - quad;
         }
@@ -66,8 +69,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             double theta = TauToTheta(tau);
             double a = MMath.NormalCdfInv(u);
             double b = MMath.NormalCdfInv(v);
-            double denom = System.Math.Sqrt(1.0 - theta * theta);
+            double oneMinusT2 = (1.0 - theta) * (1.0 + theta);
+            double denom = System.Math.Sqrt(oneMinusT2);
             // given == 1: P(u | v) = dC/dv (eq. 14); given == 0: P(v | u) = dC/du (eq. 13).
+            // MMath.GetXMinusRY(a, b, theta, oneMinusT2) computes a - theta*b more stably (less
+            // readable), matching how MMath.NormalCdf forms this conditional argument.
             double z = (given == 1) ? (a - theta * b) / denom : (b - theta * a) / denom;
             return MMath.NormalCdf(z);
         }
@@ -80,7 +86,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             // The Gaussian copula is exchangeable, so given 0 and 1 share this form.
             double theta = TauToTheta(tau);
             double a = MMath.NormalCdfInv(x);
-            double score = theta * a + System.Math.Sqrt(1.0 - theta * theta) * MMath.NormalCdfInv(w);
+            double score = theta * a + System.Math.Sqrt((1.0 - theta) * (1.0 + theta)) * MMath.NormalCdfInv(w);
             return MMath.NormalCdf(score);
         }
 
@@ -91,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             // then map back to the unit square via the standard normal CDF.
             double theta = TauToTheta(tau);
             double a = Rand.Normal();
-            double b = theta * a + System.Math.Sqrt(1.0 - theta * theta) * Rand.Normal();
+            double b = theta * a + System.Math.Sqrt((1.0 - theta) * (1.0 + theta)) * Rand.Normal();
             return Vector.FromArray(MMath.NormalCdf(a), MMath.NormalCdf(b));
         }
 

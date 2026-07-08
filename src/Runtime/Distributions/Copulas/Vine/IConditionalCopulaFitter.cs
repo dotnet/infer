@@ -40,9 +40,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         /// <param name="u">First pseudo-observation series in (0, 1), length n.</param>
         /// <param name="v">Second pseudo-observation series in (0, 1), length n.</param>
         /// <param name="z">Conditioning matrix, shape [n][m] (m = size of the conditioning set).</param>
-        /// <param name="family">The copula family.</param>
+        /// <param name="copula">The bivariate copula family evaluator.</param>
         /// <returns>A fitted posterior over Kendall's tau as a function of <c>z</c>.</returns>
-        IConditionalCopulaPosterior Fit(double[] u, double[] v, double[][] z, CopulaFamily family);
+        IConditionalCopulaPosterior Fit(double[] u, double[] v, double[][] z, IBivariateCopula copula);
     }
 
     /// <summary>

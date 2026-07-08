@@ -45,7 +45,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
     /// </remarks>
     public class RegularVine
     {
-        private readonly CopulaFamily family;
         private readonly IBivariateCopula copula;
 
         /// <summary>The trees of the vine, in order, populated by <see cref="Fit"/>.</summary>
@@ -55,20 +54,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
         /// The empirical marginals captured at <see cref="Fit"/> time, one per variable, used to
         /// map generated pseudo-observations back to the data scale.
         /// </summary>
-        public EmpiricalMarginal[] Marginals { get; private set; }
+        public InnerQuantiles[] Marginals { get; private set; }
 
         /// <summary>The tree-selection strategy used by the most recent <see cref="Fit"/>.</summary>
         public VineStructure Structure { get; private set; }
 
-        /// <summary>Creates a regular vine that uses the given bivariate copula family.</summary>
-        public RegularVine(CopulaFamily family = CopulaFamily.Gaussian)
+        /// <summary>
+        /// Creates a regular vine that uses the given bivariate copula. Defaults to a
+        /// <see cref="GaussianCopula"/>.
+        /// </summary>
+        public RegularVine(IBivariateCopula copula = null)
         {
-            this.family = family;
-            this.copula = CopulaFactory.Create(family);
+            this.copula = copula ?? new GaussianCopula();
         }
 
-        /// <summary>The copula family used by this vine.</summary>
-        public CopulaFamily Family => family;
+        /// <summary>The bivariate copula used by this vine.</summary>
+        public IBivariateCopula Copula => copula;
 
         /// <summary>
         /// Fits the vine to raw data of shape [n][d]. Applies the empirical PIT, builds the
@@ -105,10 +106,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
             if (nTrees <= 0 || nTrees > maxTrees) nTrees = maxTrees;
             Structure = structure;
 
-            // Capture the marginals so generated samples can be returned on the data scale.
-            Marginals = new EmpiricalMarginal[d];
+            // Capture the marginals (as inner quantiles at ranks i/(n+1), matching the PIT) so
+            // generated samples can be returned on the data scale.
+            Marginals = new InnerQuantiles[d];
             for (int j = 0; j < d; j++)
-                Marginals[j] = new EmpiricalMarginal(Column(x, j));
+            {
+                double[] col = Column(x, j);
+                Array.Sort(col);
+                Marginals[j] = new InnerQuantiles(col);
+            }
 
             Trees.Clear();
             VineTree t1 = BuildFirstTree(u, structure, rootOrder);
@@ -392,7 +398,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
             var lookup = BuildEdgeLookup();
             double[] fixedByPos = new double[k];
             for (int p = 0; p < k; p++)
-                fixedByPos[p] = Marginals[order[p]].Cdf(known[order[p]]); // data -> pseudo-observation
+                fixedByPos[p] = Marginals[order[p]].GetProbLessThan(known[order[p]]); // data -> pseudo-observation
 
             double[][] result = new double[n][];
             for (int s = 0; s < n; s++)
@@ -442,7 +448,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
             // Map positions back to variable ids and through the empirical marginals.
             double[] row = new double[d];
             for (int p = 0; p < d; p++)
-                row[order[p]] = Marginals[order[p]].Quantile(x[p]);
+                row[order[p]] = Marginals[order[p]].GetQuantile(x[p]);
             return row;
         }
 
@@ -530,7 +536,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                 }
                 else if (fitter != null)
                 {
-                    edge.Posterior = fitter.Fit(edge.U, edge.V, edge.Z, family);
+                    edge.Posterior = fitter.Fit(edge.U, edge.V, edge.Z, copula);
                     tau = TauSeries(edge, u, n);
                 }
                 else
