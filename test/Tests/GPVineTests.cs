@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             // --- One vine edge fitted with a sparse GP + the copula-likelihood EP factor. ---
             var fitter = new GaussianProcessCopulaFitter { NumInducing = 12, NumberOfIterations = 15, LogLengthScale = 0.0 };
-            IConditionalCopulaPosterior post = fitter.Fit(u, v, z, CopulaFamily.Gaussian);
+            IConditionalCopulaPosterior post = fitter.Fit(u, v, z, copula);
             Assert.False(double.IsNaN(fitter.LastLogEvidence), "log evidence is NaN");
 
             // --- Predict tau on a held-out grid and compare to the truth. ---
@@ -121,7 +121,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             // Raw (non-PIT) conditioning inputs, so use a unit length-scale (cf. the GP classifier).
             var fitter = new GaussianProcessCopulaFitter { NumInducing = 15, NumberOfIterations = 15, LogLengthScale = 0.0 };
-            IConditionalCopulaPosterior post = fitter.Fit(uu, vv, z, CopulaFamily.Clayton);
+            IConditionalCopulaPosterior post = fitter.Fit(uu, vv, z, clayton);
 
             Assert.False(double.IsNaN(fitter.LastLogEvidence), "log evidence is NaN");
             double[] pred = new double[n];

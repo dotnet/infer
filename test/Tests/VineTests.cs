@@ -90,7 +90,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x[i] = row;
             }
 
-            var vine = new RegularVine(CopulaFamily.Gaussian).Fit(x, nTrees: 1);
+            var vine = new RegularVine(new GaussianCopula()).Fit(x, nTrees: 1);
             VineTree t1 = vine.Trees[0];
             Assert.Equal(3, t1.Edges.Count);
 
@@ -193,8 +193,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             const double trueTau = 0.5;
             double[][] x = ClaytonSample(seed: 31, n: 3000, tau: trueTau);
 
-            var clayton = new RegularVine(CopulaFamily.Clayton).Fit(x); // d=2 -> single T_1 edge
-            var gaussian = new RegularVine(CopulaFamily.Gaussian).Fit(x);
+            var clayton = new RegularVine(new ClaytonCopula()).Fit(x); // d=2 -> single T_1 edge
+            var gaussian = new RegularVine(new GaussianCopula()).Fit(x);
 
             double tauHat = clayton.Trees[0].Edges[0].Tau;
             Assert.True(System.Math.Abs(tauHat - trueTau) < 0.04, $"recovered tau={tauHat}, expected ~{trueTau}");
@@ -216,7 +216,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void CVine_Sample_ReproducesPairwiseDependenceAndMarginals()
         {
             double[][] x = Equicorrelated(seed: 50, n: 2000, d: 3, rho: 0.6);
-            var vine = new RegularVine(CopulaFamily.Gaussian).Fit(x, structure: VineStructure.Canonical);
+            var vine = new RegularVine(new GaussianCopula()).Fit(x, structure: VineStructure.Canonical);
             double[][] s = vine.Sample(4000);
 
             Assert.Equal(4000, s.Length);
@@ -242,9 +242,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void CVine_Sample_RoundTripRecoversTau()
         {
             double[][] x = Equicorrelated(seed: 71, n: 2000, d: 3, rho: 0.6);
-            var v1 = new RegularVine(CopulaFamily.Gaussian).Fit(x, structure: VineStructure.Canonical);
+            var v1 = new RegularVine(new GaussianCopula()).Fit(x, structure: VineStructure.Canonical);
             double[][] s = v1.Sample(4000);
-            var v2 = new RegularVine(CopulaFamily.Gaussian).Fit(s, structure: VineStructure.Canonical);
+            var v2 = new RegularVine(new GaussianCopula()).Fit(s, structure: VineStructure.Canonical);
 
             // First-tree dependences recovered after sample -> refit.
             double[] t1 = v1.Trees[0].Edges.Select(e => e.Tau).OrderBy(t => t).ToArray();
@@ -257,7 +257,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void CVine_Sample_Clayton_ReproducesDependence()
         {
             double[][] x = ClaytonSample(seed: 60, n: 3000, tau: 0.5);
-            var vine = new RegularVine(CopulaFamily.Clayton).Fit(x, structure: VineStructure.Canonical);
+            var vine = new RegularVine(new ClaytonCopula()).Fit(x, structure: VineStructure.Canonical);
             double[][] s = vine.Sample(4000);
             double tauData = KendallTau.Compute(Col(x, 0), Col(x, 1));
             double tauSamp = KendallTau.Compute(Col(s, 0), Col(s, 1));
@@ -270,7 +270,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // Equicorrelated Gaussian: E[X_j | X_0 = x0] = rho * x0, so conditioning on a high vs
             // low X_0 must shift the sampled X_1, X_2 in the same direction.
             double[][] x = Equicorrelated(seed: 80, n: 2000, d: 3, rho: 0.6);
-            var vine = new RegularVine(CopulaFamily.Gaussian)
+            var vine = new RegularVine(new GaussianCopula())
                 .Fit(x, structure: VineStructure.Canonical, rootOrder: new[] { 0 });
 
             double[][] hi = vine.SampleConditional(new Dictionary<int, double> { { 0, 2.0 } }, 2000);
@@ -290,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void SampleConditional_RejectsNonRootOrRegular()
         {
-            var canonical = new RegularVine(CopulaFamily.Gaussian)
+            var canonical = new RegularVine(new GaussianCopula())
                 .Fit(Equicorrelated(seed: 2, n: 800, d: 3, rho: 0.6), structure: VineStructure.Canonical, rootOrder: new[] { 0 });
             // Variable 1 is not the leading root -> must throw with guidance.
             Assert.Throws<NotSupportedException>(() =>

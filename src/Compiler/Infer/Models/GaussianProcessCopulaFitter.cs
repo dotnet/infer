@@ -66,11 +66,12 @@ namespace Microsoft.ML.Probabilistic.Models
         }
 
         /// <inheritdoc/>
-        public IConditionalCopulaPosterior Fit(double[] u, double[] v, double[][] z, CopulaFamily family)
+        public IConditionalCopulaPosterior Fit(double[] u, double[] v, double[][] z, IBivariateCopula copula)
         {
             if (u == null) throw new ArgumentNullException(nameof(u));
             if (v == null) throw new ArgumentNullException(nameof(v));
             if (z == null) throw new ArgumentNullException(nameof(z));
+            if (copula == null) throw new ArgumentNullException(nameof(copula));
             int n = u.Length;
             if (n == 0) throw new ArgumentException("No observations.", nameof(u));
             int dim = z[0].Length;
@@ -80,8 +81,6 @@ namespace Microsoft.ML.Probabilistic.Models
             Vector[] pairs = new Vector[n];
             for (int i = 0; i < n; i++)
                 pairs[i] = Vector.FromArray(u[i], v[i]);
-
-            IBivariateCopula copula = CopulaFactory.Create(family);
 
             // GP mean initialised from the unconditional Kendall's-tau MLE (Sec. 4),
             // clamped away from +-1 so the inverse-probit map stays finite.
