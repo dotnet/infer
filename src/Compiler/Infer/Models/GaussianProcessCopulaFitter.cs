@@ -9,6 +9,7 @@ using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Copulas;
 using Microsoft.ML.Probabilistic.Distributions.Copulas.Vine;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
+using Microsoft.ML.Probabilistic.Factors;
 using Microsoft.ML.Probabilistic.Math;
 
 namespace Microsoft.ML.Probabilistic.Models
@@ -22,8 +23,8 @@ namespace Microsoft.ML.Probabilistic.Models
     /// <remarks>
     /// The model mirrors the Gaussian-process classifier tutorial: a <see cref="SparseGP"/> prior
     /// over <c>f</c>, <c>score = f(z)</c> via <see cref="Variable.FunctionEvaluate"/>, and the
-    /// observed copula pair as the likelihood through <see cref="Variable.BivariateCopula"/>
-    /// (which folds in the link <c>tau = 2*Phi(score) - 1</c>). The GP mean is initialised to
+    /// observed copula pair as the likelihood through the <see cref="CopulaFactor.BivariateCopula"/>
+    /// factor (which folds in the link <c>tau = 2*Phi(score) - 1</c>). The GP mean is initialised to
     /// <c>Phi^{-1}((tau_MLE + 1)/2)</c> (Sec. 4) and the inducing inputs to a subset of the
     /// conditioning data (Sec. 3.1).
     /// </remarks>
@@ -80,9 +81,14 @@ namespace Microsoft.ML.Probabilistic.Models
             for (int i = 0; i < n; i++)
                 pairs[i] = Vector.FromArray(u[i], v[i]);
 
-            // GP mean initialised from the unconditional Kendall's-tau MLE (Sec. 4).
+            IBivariateCopula copula = CopulaFactory.Create(family);
+
+            // GP mean initialised from the unconditional Kendall's-tau MLE (Sec. 4),
+            // clamped away from +-1 so the inverse-probit map stays finite.
+            const double tauEps = 1e-4;
             double tauMle = KendallTau.Compute(u, v);
-            double meanInit = MMath.NormalCdfInv(0.5 * (Clamp(tauMle) + 1.0));
+            double clampedTau = System.Math.Min(System.Math.Max(tauMle, -1.0 + tauEps), 1.0 - tauEps);
+            double meanInit = MMath.NormalCdfInv(0.5 * (clampedTau + 1.0));
 
             // Model: SparseGP prior -> score = f(z) -> observed copula pair likelihood.
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -96,7 +102,7 @@ namespace Microsoft.ML.Probabilistic.Models
             Variable<double> score = Variable.FunctionEvaluate(f, zVar[j]).Named("score");
 
             VariableArray<Vector> uv = Variable.Observed(pairs, j).Named("uv");
-            uv[j] = Variable.BivariateCopula(score, (int)family);
+            uv[j] = BivariateCopula(score, copula);
 
             block.CloseBlock();
 
@@ -126,11 +132,15 @@ namespace Microsoft.ML.Probabilistic.Models
             return basis;
         }
 
-        private static double Clamp(double tau, double eps = 1e-4)
+        /// <summary>
+        /// The GPVINE copula likelihood: attaches the observed pair (u, v) to the latent
+        /// <paramref name="score"/> through the <see cref="CopulaFactor.BivariateCopula"/> factor,
+        /// which folds in the link tau = 2*Phi(score) - 1. The <paramref name="copula"/> is passed
+        /// as observed data so a single factor / EP operator serves every family.
+        /// </summary>
+        private static Variable<Vector> BivariateCopula(Variable<double> score, IBivariateCopula copula)
         {
-            if (tau < -1.0 + eps) return -1.0 + eps;
-            if (tau > 1.0 - eps) return 1.0 - eps;
-            return tau;
+            return Variable<Vector>.Factor(CopulaFactor.BivariateCopula, score, Variable.Observed(copula));
         }
     }
 }

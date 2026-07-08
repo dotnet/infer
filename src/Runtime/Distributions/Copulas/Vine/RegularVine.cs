@@ -312,8 +312,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                     for (int i = 0; i < n; i++)
                     {
                         total += copula.LogDensity(uu[i], vv[i], tau[i]);
-                        h[edge.Left][i] = copula.HFunction(uu[i], vv[i], tau[i], 1);  // P(Left | Right, D)
-                        h[edge.Right][i] = copula.HFunction(uu[i], vv[i], tau[i], 0); // P(Right | Left, D)
+                        h[edge.Left][i] = copula.ConditionalCdf(uu[i], vv[i], tau[i], 1);  // P(Left | Right, D)
+                        h[edge.Right][i] = copula.ConditionalCdf(uu[i], vv[i], tau[i], 0); // P(Right | Left, D)
                     }
                     thisH.Add(h);
                 }
@@ -427,7 +427,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                     for (int k = i - 1; k >= 0; k--)
                     {
                         double tau = TauForCell(k, i, order, posOf, x, lookup);
-                        v[i][0] = copula.InverseHFunction(v[i][0], v[k][k], tau, 1);
+                        v[i][0] = copula.InverseConditionalCdf(v[i][0], v[k][k], tau, 1);
                     }
                     x[i] = v[i][0];
                 }
@@ -435,7 +435,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                 for (int k = 0; k < i; k++)
                 {
                     double tau = TauForCell(k, i, order, posOf, x, lookup);
-                    v[i][k + 1] = copula.HFunction(v[i][k], v[k][k], tau, 1);
+                    v[i][k + 1] = copula.ConditionalCdf(v[i][k], v[k][k], tau, 1);
                 }
             }
 
@@ -544,8 +544,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas.Vine
                 edge.HByVar[edge.Right] = new double[n];
                 for (int i = 0; i < n; i++)
                 {
-                    edge.HByVar[edge.Left][i] = copula.HFunction(edge.U[i], edge.V[i], tau[i], 1);
-                    edge.HByVar[edge.Right][i] = copula.HFunction(edge.U[i], edge.V[i], tau[i], 0);
+                    edge.HByVar[edge.Left][i] = copula.ConditionalCdf(edge.U[i], edge.V[i], tau[i], 1);
+                    edge.HByVar[edge.Right][i] = copula.ConditionalCdf(edge.U[i], edge.V[i], tau[i], 0);
                 }
             }
         }

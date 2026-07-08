@@ -20,7 +20,6 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class BivariateCopulaOpTests
     {
         private readonly GaussianCopula copula = new GaussianCopula();
-        private const int GaussianFamily = (int)CopulaFamily.Gaussian;
 
         public static TheoryData<double, double, double, double> Cases()
         {
@@ -40,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian cavity = Gaussian.FromMeanAndVariance(m, cav);
             Vector pair = Vector.FromArray(u, pv);
 
-            Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(pair, cavity, GaussianFamily, Gaussian.Uniform());
+            Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(pair, cavity, copula, Gaussian.Uniform());
             Gaussian expected = BruteForceMessage(cavity, u, pv);
 
             Assert.True(System.Math.Abs(msg.Precision - expected.Precision) < 1e-3,
@@ -56,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian cavity = Gaussian.FromMeanAndVariance(m, cav);
             Vector pair = Vector.FromArray(u, pv);
 
-            double logZ = BivariateCopulaOp.LogAverageFactor(pair, cavity, GaussianFamily, Gaussian.Uniform());
+            double logZ = BivariateCopulaOp.LogAverageFactor(pair, cavity, copula, Gaussian.Uniform());
             double expected = System.Math.Log(BruteForceIntegral(cavity, u, pv, s => 1.0));
 
             Assert.True(System.Math.Abs(logZ - expected) < 1e-3, $"lnZ: op={logZ}, bf={expected}");
@@ -67,8 +66,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             // The Gaussian copula is symmetric: c(u,v) = c(v,u), so the message must match.
             Gaussian cavity = Gaussian.FromMeanAndVariance(0.3, 0.7);
-            Gaussian a = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.8, 0.25), cavity, GaussianFamily, Gaussian.Uniform());
-            Gaussian b = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.25, 0.8), cavity, GaussianFamily, Gaussian.Uniform());
+            Gaussian a = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.8, 0.25), cavity, copula, Gaussian.Uniform());
+            Gaussian b = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.25, 0.8), cavity, copula, Gaussian.Uniform());
             Assert.True(System.Math.Abs(a.Precision - b.Precision) < 1e-9);
             Assert.True(System.Math.Abs(a.MeanTimesPrecision - b.MeanTimesPrecision) < 1e-9);
         }
@@ -79,12 +78,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             // Strongly concordant (u,v) is evidence for positive tau, i.e. positive score.
             // The outgoing message should pull the mean upward relative to a zero-mean cavity.
             Gaussian cavity = Gaussian.FromMeanAndVariance(0.0, 1.0);
-            Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.9, 0.92), cavity, GaussianFamily, Gaussian.Uniform());
+            Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.9, 0.92), cavity, copula, Gaussian.Uniform());
             Gaussian post = msg * cavity;
             Assert.True(post.GetMean() > 0.0, $"posterior mean was {post.GetMean()}");
 
             // Discordant data pulls the other way.
-            Gaussian msgDisc = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.9, 0.08), cavity, GaussianFamily, Gaussian.Uniform());
+            Gaussian msgDisc = BivariateCopulaOp.ScoreAverageConditional(Vector.FromArray(0.9, 0.08), cavity, copula, Gaussian.Uniform());
             Gaussian postDisc = msgDisc * cavity;
             Assert.True(postDisc.GetMean() < 0.0, $"posterior mean was {postDisc.GetMean()}");
         }
@@ -93,8 +92,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void Message_UniformOrPointMassCavity_IsUniform()
         {
             Vector pair = Vector.FromArray(0.7, 0.8);
-            Assert.True(BivariateCopulaOp.ScoreAverageConditional(pair, Gaussian.Uniform(), GaussianFamily, Gaussian.Uniform()).IsUniform());
-            Assert.True(BivariateCopulaOp.ScoreAverageConditional(pair, Gaussian.PointMass(0.5), GaussianFamily, Gaussian.Uniform()).IsUniform());
+            Assert.True(BivariateCopulaOp.ScoreAverageConditional(pair, Gaussian.Uniform(), copula, Gaussian.Uniform()).IsUniform());
+            Assert.True(BivariateCopulaOp.ScoreAverageConditional(pair, Gaussian.PointMass(0.5), copula, Gaussian.Uniform()).IsUniform());
         }
 
         // --- Brute-force references (fine-grid trapezoid over the cavity) -------------------
@@ -114,14 +113,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                     Gaussian cavity = Gaussian.FromMeanAndVariance(m, 0.7);
                     Vector pair = Vector.FromArray(u, pv);
 
-                    Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(pair, cavity, (int)family, Gaussian.Uniform());
+                    Gaussian msg = BivariateCopulaOp.ScoreAverageConditional(pair, cavity, cop, Gaussian.Uniform());
                     Gaussian expected = BruteForceMessage(cop, cavity, u, pv);
                     Assert.True(System.Math.Abs(msg.Precision - expected.Precision) < 2e-3,
                         $"{family} precision: op={msg.Precision}, bf={expected.Precision}");
                     Assert.True(System.Math.Abs(msg.MeanTimesPrecision - expected.MeanTimesPrecision) < 2e-3,
                         $"{family} mTp: op={msg.MeanTimesPrecision}, bf={expected.MeanTimesPrecision}");
 
-                    double logZ = BivariateCopulaOp.LogAverageFactor(pair, cavity, (int)family, Gaussian.Uniform());
+                    double logZ = BivariateCopulaOp.LogAverageFactor(pair, cavity, cop, Gaussian.Uniform());
                     double expectedLogZ = System.Math.Log(BruteForceIntegral(cop, cavity, u, pv, s => 1.0));
                     Assert.True(System.Math.Abs(logZ - expectedLogZ) < 2e-3,
                         $"{family} lnZ: op={logZ}, bf={expectedLogZ}");

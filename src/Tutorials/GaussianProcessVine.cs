@@ -58,13 +58,17 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         private static double[][] MakeData(int seed, int n)
         {
             Rand.Restart(seed);
+            var copula = new GaussianCopula();
             double[][] x = new double[n][];
             for (int i = 0; i < n; i++)
             {
                 double z = Rand.Normal();
                 double rho = 0.9 * System.Math.Sin(1.5 * z);
-                double ex = Rand.Normal();
-                double ey = rho * ex + System.Math.Sqrt(1 - rho * rho) * Rand.Normal();
+                // Draw the (X, Y) | Z dependence from a Gaussian copula whose latent correlation
+                // (theta) is rho, then recover the underlying correlated normals.
+                Vector uv = copula.Sample(copula.ThetaToTau(rho));
+                double ex = MMath.NormalCdfInv(uv[0]);
+                double ey = MMath.NormalCdfInv(uv[1]);
                 x[i] = new[] { 0.7 * z + 0.6 * ex, 0.7 * z + 0.6 * ey, z };
             }
             return x;

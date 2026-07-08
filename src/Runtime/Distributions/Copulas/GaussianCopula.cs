@@ -53,7 +53,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         }
 
         /// <inheritdoc/>
-        public double HFunction(double u, double v, double tau, int given)
+        public double Cdf(double u, double v, double tau)
+        {
+            // C(u, v | theta) = Phi_2(Phi^{-1}(u), Phi^{-1}(v) | theta), the bivariate normal CDF.
+            double theta = TauToTheta(tau);
+            return MMath.NormalCdf(MMath.NormalCdfInv(u), MMath.NormalCdfInv(v), theta);
+        }
+
+        /// <inheritdoc/>
+        public double ConditionalCdf(double u, double v, double tau, int given)
         {
             double theta = TauToTheta(tau);
             double a = MMath.NormalCdfInv(u);
@@ -65,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
         }
 
         /// <inheritdoc/>
-        public double InverseHFunction(double w, double x, double tau, int given)
+        public double InverseConditionalCdf(double w, double x, double tau, int given)
         {
             // P(u|v) = Phi((Phi^{-1}(u) - theta Phi^{-1}(v))/sqrt(1-theta^2)) = w
             // => Phi^{-1}(u) = theta Phi^{-1}(x) + sqrt(1-theta^2) Phi^{-1}(w).
@@ -74,6 +82,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Copulas
             double a = MMath.NormalCdfInv(x);
             double score = theta * a + System.Math.Sqrt(1.0 - theta * theta) * MMath.NormalCdfInv(w);
             return MMath.NormalCdf(score);
+        }
+
+        /// <inheritdoc/>
+        public Vector Sample(double tau)
+        {
+            // Sample (a, b) from a bivariate standard normal with correlation theta,
+            // then map back to the unit square via the standard normal CDF.
+            double theta = TauToTheta(tau);
+            double a = Rand.Normal();
+            double b = theta * a + System.Math.Sqrt(1.0 - theta * theta) * Rand.Normal();
+            return Vector.FromArray(MMath.NormalCdf(a), MMath.NormalCdf(b));
         }
 
         private static double ClampTheta(double theta)
