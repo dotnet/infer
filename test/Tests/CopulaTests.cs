@@ -249,4 +249,53 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
     }
+
+    /// <summary>
+    /// The bivariate copula families of Lopez-Paz et al. (2013), Table 1. Used by the copula
+    /// tests to enumerate and construct the implemented families.
+    /// </summary>
+    public enum CopulaFamily
+    {
+        /// <summary>Bivariate Gaussian copula (Appendix A). <c>theta = sin(pi/2 tau)</c>.</summary>
+        Gaussian = 0,
+
+        /// <summary>Clayton copula. <c>theta = 2 tau / (1 - tau)</c>.</summary>
+        Clayton = 1,
+
+        /// <summary>Gumbel copula. <c>theta = 1 / (1 - tau)</c>.</summary>
+        Gumbel = 2,
+
+        /// <summary>Frank copula. theta via numerical inversion of the Debye function. (Not yet implemented.)</summary>
+        Frank = 3,
+    }
+
+    /// <summary>
+    /// Factory that maps a <see cref="CopulaFamily"/> to its
+    /// <see cref="IBivariateCopula"/> implementation.
+    /// </summary>
+    public static class CopulaFactory
+    {
+        /// <summary>
+        /// Creates the <see cref="IBivariateCopula"/> for the given family.
+        /// </summary>
+        /// <param name="family">The copula family.</param>
+        /// <returns>A stateless copula evaluator for that family.</returns>
+        /// <exception cref="NotImplementedException">
+        /// Thrown for families not yet implemented.
+        /// </exception>
+        public static IBivariateCopula Create(CopulaFamily family)
+        {
+            switch (family)
+            {
+                case CopulaFamily.Gaussian:
+                    return new GaussianCopula();
+                case CopulaFamily.Clayton:
+                    return new ClaytonCopula();
+                case CopulaFamily.Gumbel:
+                    return new GumbelCopula();
+                default:
+                    throw new NotImplementedException($"Copula family '{family}' is not yet implemented.");
+            }
+        }
+    }
 }

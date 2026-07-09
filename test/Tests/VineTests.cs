@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(new HashSet<(int, int)> { (0, 1), (1, 2), (2, 3) }, selected);
 
             // For a Gaussian copula, tau = (2/pi) arcsin(rho).
-            double expectedTau = 2.0 / System.Math.PI * System.Math.Asin(rho);
+            double expectedTau = new GaussianCopula().ThetaToTau(rho);
             foreach (var e in t1.Edges)
                 Assert.True(System.Math.Abs(e.Tau - expectedTau) < 0.04,
                     $"edge {e.Label}: tau={e.Tau}, expected ~{expectedTau}");
@@ -315,20 +315,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             double s = 0; foreach (double v in a) s += v; return s / a.Length;
         }
 
-        // Bivariate Clayton samples via conditional inversion; returned as raw (n x 2) data.
+        // Bivariate Clayton samples; returned as raw (n x 2) data.
         private static double[][] ClaytonSample(int seed, int n, double tau)
         {
             Rand.Restart(seed);
-            double theta = 2.0 * tau / (1.0 - tau);
+            var clayton = new ClaytonCopula();
             double[][] x = new double[n][];
             for (int i = 0; i < n; i++)
             {
-                double u1 = Rand.Double();
-                double p = Rand.Double();
-                double u2 = System.Math.Pow(
-                    System.Math.Pow(u1, -theta) * (System.Math.Pow(p, -theta / (1.0 + theta)) - 1.0) + 1.0,
-                    -1.0 / theta);
-                x[i] = new[] { u1, u2 };
+                Vector uv = clayton.Sample(tau);
+                x[i] = new[] { uv[0], uv[1] };
             }
             return x;
         }
