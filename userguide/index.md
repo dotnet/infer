@@ -47,6 +47,11 @@ layout: default
         *   [Undirected factors](Undirected factors.md)
         *   [List of factors and constraints](list of factors and constraints.md)
 
+    *   [Copulas and vines](Copulas and vines.md)
+        *   [Bivariate copula families](Bivariate copula families.md)
+        *   [Vine copulas](Vine copulas.md)
+        *   [Gaussian Process vine copulas](Gaussian Process vine copulas.md)
+
     *   Advanced model building
         *   [Adding attributes to your model](Adding attributes to your model.md)
         *   [The Model Specification Language](The Model Specification Language.md)

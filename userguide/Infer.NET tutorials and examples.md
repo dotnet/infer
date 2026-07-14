@@ -33,6 +33,7 @@ Short examples of using Infer.NET to solve a variety of different problems. Can 
 *   **[Click model](Click model example.md)** \- an information retrieval example which builds a model to reconcile document click counts and human relevance judgements of documents.
 *   **[Difficulty versus ability](Difficulty versus ability.md)** \- a model of multiple-choice tests and crowdsourcing.
 *   **[Gaussian Process classifier](Gaussian Process classifier.md)** \- a Bayes point machine that uses kernel functions to do nonlinear discrimination.
+*   **[Gaussian Process vine copulas](Gaussian Process vine copulas.md)** \- models multivariate dependence with a vine of bivariate copulas, letting the strength of each conditional copula vary with the variables it is conditioned on.
 *   **[Recommender System](Recommender System.md)** \- a matrix factorization model for collaborative filtering.
 *   **[Student skills](Student skills.md)** \- cognitive assessment models for inferring the skills of a test-taker.
 *   **[Chess Analysis](Chess Analysis.md)** \- comparing the strength of chess players over time.
